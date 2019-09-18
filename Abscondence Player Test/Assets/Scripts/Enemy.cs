@@ -47,8 +47,8 @@ public class Enemy : MonoBehaviour
         else if (health <= 0) // Make the enemy fall over when HP reaches 0
         {
             health = 0;
-            GetComponent<NavMeshAgent>().enabled = false;
             transform.rotation = Quaternion.AngleAxis(90, Vector3.right);
+            GetComponent<NavMeshAgent>().enabled = false;
         }
 
         // If the enemy took damage turn off the box collider
