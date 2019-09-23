@@ -56,11 +56,12 @@ public class Enemy : MonoBehaviour
         {
             timer += Time.deltaTime;
             EnemyInvulnerabilityOn();
-            GetComponent<NavMeshAgent>().enabled = false;
+            // Testing the enemy to fall off the map
+            //GetComponent<NavMeshAgent>().enabled = false;
         }
         else
         {
-            GetComponent<NavMeshAgent>().enabled = true;
+            //GetComponent<NavMeshAgent>().enabled = true;
             enemyAI.SetDestination(player.position);
             enemyMoveDirection = transform.forward;
             rb.Sleep();

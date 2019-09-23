@@ -3,8 +3,9 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public int health = 100;
     public float walkSpeed = 5;
+    // For Debug purposes [REMOVE IN ALPHA]
     public float runSpeed = 10;
 
     public float turnSmoothTime = 0.1f;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public GameObject meleeWeapon;
     public GameObject player;
     Animator meleeSwipe;
+
 
     void Start()
     {
@@ -32,10 +34,13 @@ public class PlayerController : MonoBehaviour
 
         if (inputDir != Vector2.zero)
         {
+            if (!(meleeSwipe.GetCurrentAnimatorStateInfo(0).normalizedTime > 1) && !meleeSwipe.IsInTransition(0))
+            {
             // Set the target rotation to be equal to the direction that the player is facing
             float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
-            // Change the rotation to the player to be equal to that direction with smoothing
-            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+                // Change the rotation to the player to be equal to that direction with smoothing
+                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+            }
         }
 
         // Debug addition to get around faster
@@ -89,9 +94,9 @@ public class PlayerController : MonoBehaviour
         //    }
         //}
     }
+
     void OnCollisionEnter(Collision collision)
     {
-
         if (collision.gameObject.tag == "Sword")
         {
             Physics.IgnoreCollision(collision.collider, meleeWeapon.GetComponent<Collider>(), true);
