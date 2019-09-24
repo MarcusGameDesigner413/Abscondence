@@ -5,16 +5,38 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public Slider healthBar;
-    PlayerController playerHealth;
+    public Slider playerHealthBar;
+    public Text healthText;
+    PlayerController player;
 
     void Start()
     {
-        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     void Update()
     {
-        healthBar.value = playerHealth.health;
+
+
+        if (player.health < 0)
+        {
+            player.health = 0;
+        }
+        else
+        {
+            playerHealthBar.value = player.health;
+            healthText.text = player.health.ToString();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            player.health += 10;
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            player.health -= 10;
+        }
     }
 }

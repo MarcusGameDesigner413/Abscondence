@@ -6,48 +6,47 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemyAI;
-    public Transform player;
+    private PlayerController player;
+    //public Transform playerTransform;
+    public Rigidbody enemyRigidbody;
+    public TextMesh healthCounter;
     public ParticleSystem deathParticles;
-    public Rigidbody rb;
     public float knockBackForce;
     public float knockBackTime;
     private float knockBackCounter;
 
     public int health = 100;
-    public TextMesh healthCounter;
     private bool wasDamaged = false;
     private float timer = 0;
     public float invulnerabilityTime = 0.5f;
 
     private Vector3 enemyMoveDirection;
-
     private BoxCollider enemyCollider;
-
 
     // Use this for initialization
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        //playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         enemyCollider = GetComponent<BoxCollider>();
-        rb = GetComponent<Rigidbody>();
+        enemyRigidbody = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // The direction they will be sent after being hit is opposite to the direction they are facing
-        // (Should be changed in future to be where they were hit when in contact with the sword)
-
-
         // Print the health to the text box above enemy
-        if (health > 0)
+        if (health > 0 || health == 0)
         {
             healthCounter.text = "HP: " + health.ToString();
         }
-        else if (health <= 0) // Make the enemy fall over when HP reaches 0
+
+        if (health <= 0) // Make the enemy fall over when HP reaches 0
         {
             health = 0;
-            transform.rotation = Quaternion.AngleAxis(90, Vector3.right);
+            transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
+
+            // Disable NavMesh to stop enemy from following the player
             GetComponent<NavMeshAgent>().enabled = false;
         }
 
@@ -56,15 +55,15 @@ public class Enemy : MonoBehaviour
         {
             timer += Time.deltaTime;
             EnemyInvulnerabilityOn();
-            // Testing the enemy to fall off the map
+            // Testing the enemy to fall off the map (Requires physics I think)
             //GetComponent<NavMeshAgent>().enabled = false;
         }
         else
         {
             //GetComponent<NavMeshAgent>().enabled = true;
-            enemyAI.SetDestination(player.position);
+            enemyAI.SetDestination(player.transform.position);
             enemyMoveDirection = transform.forward;
-            rb.Sleep();
+            enemyRigidbody.Sleep();
         }
 
         // And turn it back on after half a second (or change to be after the spin attack is finished)
@@ -74,13 +73,15 @@ public class Enemy : MonoBehaviour
             wasDamaged = false;
         }
 
-        Debug.Log(rb.velocity);
+        Debug.Log(enemyRigidbody.velocity);
     }
 
     // Code to destroy the enemy when it comes into contact with player's melee weapon
     void OnTriggerEnter(Collider other)
     {
-        Vector3 hitDirection = -transform.forward/*other.transform.position - transform.position*/;
+        // The direction they will be sent after being hit is opposite to the direction they are facing
+        // (Can be changed to where they were hit with the sword with commented code, but it's really awkward)
+        Vector3 hitDirection = -transform.forward /*other.transform.position - transform.posiion*/;
         hitDirection = hitDirection.normalized;
 
         if (other.tag == "Sword")
@@ -88,6 +89,11 @@ public class Enemy : MonoBehaviour
             wasDamaged = true;
             KnockBack(hitDirection);
             health -= 25;
+        }
+
+        if (other.tag == "Player")
+        {
+            player.health -= 10;
         }
     }
 
@@ -111,6 +117,6 @@ public class Enemy : MonoBehaviour
 
         enemyMoveDirection = direction * knockBackForce;
 
-        rb.AddForce(enemyMoveDirection, ForceMode.Impulse);
+        enemyRigidbody.AddForce(enemyMoveDirection, ForceMode.Impulse);
     }
 }
