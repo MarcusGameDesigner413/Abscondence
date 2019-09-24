@@ -147,10 +147,6 @@ public class PlayerController : MonoBehaviour
             PlayerInvulnerabilityOn();
             timer += Time.deltaTime;
         }
-        //else
-        //{
-        //    playerRigidBody.Sleep();
-        //}
 
         // And turn it back on after half a second (or change to be after the spin attack is finished)
         if (timer >= invulnerabilityTime)
