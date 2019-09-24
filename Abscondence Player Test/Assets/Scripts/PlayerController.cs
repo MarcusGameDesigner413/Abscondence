@@ -9,23 +9,34 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
     public float turnSmoothTime = 0.1f;
     public float speedSmoothTime = 0.1f;
+    public float invulnerabilityTime = 0.5f;
+    public float knockBackForce;
 
     float turnSmoothVelocity;
     float speedSmoothVelocity;
     float currentSpeed;
 
-    public GameObject meleeWeapon;
     public GameObject player;
+    public GameObject meleeWeapon;
     Animator meleeSwipe;
 
+    private CapsuleCollider playerCollider;
+    private Vector3 playerMoveDirection;
+    private bool playerWasDamaged;
+    private float timer = 0;
+    public CharacterController controller;
 
     void Start()
     {
         meleeSwipe = meleeWeapon.GetComponent<Animator>();
+        playerCollider = GetComponent<CapsuleCollider>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
+        Physics.IgnoreCollision(playerCollider, meleeWeapon.GetComponent<Collider>(), true);
+
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         // Normalize the input
@@ -58,6 +69,8 @@ public class PlayerController : MonoBehaviour
         // Make sure the health doesn't overcap
         if (health > maxHealth)
             health = maxHealth;
+
+        PlayerTookDamage();
 
         // Check for animation plays
         playLightAnimation();
@@ -104,14 +117,67 @@ public class PlayerController : MonoBehaviour
         }*/
     }
 
-    // ***W.I.P***
-    // MAKE IT SO THE SWORD COLLIDER BOX IGNORES THE PLAYER COLLIDER BOX 
-    // (No rigidbody currently applied to player cause of this issue)
-    void OnCollisionEnter(Collision collision)
+
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == "Sword")
+        Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
+        playerHitDirection = playerHitDirection.normalized;
+
+        if (other.tag == "Enemy")
         {
-            Physics.IgnoreCollision(collision.collider, meleeWeapon.GetComponent<Collider>(), true);
+            playerWasDamaged = true;
+            KnockBack(playerHitDirection);
+            health -= 10;
         }
+
+        // ***W.I.P***
+        // MAKE IT SO THE SWORD COLLIDER BOX IGNORES THE PLAYER COLLIDER BOX 
+        // (No rigidbody currently applied to player cause of this issue)
+        //if (other.gameObject.tag == "Sword")
+        //{
+        //Debug.Log("Collision ignored");
+        //}
+    }
+
+    void PlayerTookDamage()
+    {
+        // If the enemy took damage turn off the box collider
+        if (playerWasDamaged)
+        {
+            PlayerInvulnerabilityOn();
+            timer += Time.deltaTime;
+        }
+        //else
+        //{
+        //    playerRigidBody.Sleep();
+        //}
+
+        // And turn it back on after half a second (or change to be after the spin attack is finished)
+        if (timer >= invulnerabilityTime)
+        {
+            PlayerInvulnerabilityOff();
+            playerWasDamaged = false;
+        }
+    }
+
+    void PlayerInvulnerabilityOn()
+    {
+        playerCollider.enabled = false;
+        Debug.Log("Collider.enabled = " + playerCollider.enabled);
+    }
+
+    void PlayerInvulnerabilityOff()
+    {
+        playerCollider.enabled = true;
+        timer = 0;
+        Debug.Log("Collider.enabled = " + playerCollider.enabled);
+    }
+
+    public void KnockBack(Vector3 direction)
+    {
+        playerMoveDirection = direction * knockBackForce;
+
+        controller.Move(playerMoveDirection * Time.deltaTime);
+        playerMoveDirection = Vector3.Lerp(playerMoveDirection, Vector3.zero, 5 * Time.deltaTime);
     }
 }

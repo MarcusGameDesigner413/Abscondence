@@ -50,11 +50,36 @@ public class Enemy : MonoBehaviour
             GetComponent<NavMeshAgent>().enabled = false;
         }
 
+        // Function is called when the player takes damage
+        EnemyTookDamage();
+
+        //Debug.Log(enemyRigidbody.velocity);
+    }
+
+    // Code to damage the enemy when it comes into contact with player's melee weapon
+    void OnTriggerEnter(Collider other)
+    {
+        // The direction they will be sent after being hit is opposite to the direction they are facing
+        // (Can be changed to where they were hit with the sword with commented code, but it's really awkward)
+        Vector3 enemyHitDirection = -transform.forward /*other.transform.position - transform.posiion*/;
+        enemyHitDirection = enemyHitDirection.normalized;
+
+        if (other.tag == "Sword")
+        {
+            wasDamaged = true;
+            KnockBack(enemyHitDirection);
+            health -= 25;
+        }
+    }
+
+    void EnemyTookDamage()
+    {
         // If the enemy took damage turn off the box collider
         if (wasDamaged)
         {
             timer += Time.deltaTime;
             EnemyInvulnerabilityOn();
+            knockBackCounter -= Time.deltaTime;
             // Testing the enemy to fall off the map (Requires physics I think)
             //GetComponent<NavMeshAgent>().enabled = false;
         }
@@ -71,29 +96,6 @@ public class Enemy : MonoBehaviour
         {
             EnemyInvulnerabilityOff();
             wasDamaged = false;
-        }
-
-        Debug.Log(enemyRigidbody.velocity);
-    }
-
-    // Code to destroy the enemy when it comes into contact with player's melee weapon
-    void OnTriggerEnter(Collider other)
-    {
-        // The direction they will be sent after being hit is opposite to the direction they are facing
-        // (Can be changed to where they were hit with the sword with commented code, but it's really awkward)
-        Vector3 hitDirection = -transform.forward /*other.transform.position - transform.posiion*/;
-        hitDirection = hitDirection.normalized;
-
-        if (other.tag == "Sword")
-        {
-            wasDamaged = true;
-            KnockBack(hitDirection);
-            health -= 25;
-        }
-
-        if (other.tag == "Player")
-        {
-            player.health -= 10;
         }
     }
 
