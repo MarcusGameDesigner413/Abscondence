@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public int health = 100;
+    public int currentHealth = 100;
     public int maxHealth = 100;
     public float walkSpeed = 5;
     public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
@@ -18,13 +18,16 @@ public class PlayerController : MonoBehaviour
 
     public GameObject player;
     public GameObject meleeWeapon;
+    public CharacterController controller;
     Animator meleeSwipe;
 
     private CapsuleCollider playerCollider;
     private Vector3 playerMoveDirection;
     private bool playerWasDamaged;
     private float timer = 0;
-    public CharacterController controller;
+
+    public int storedPowerCell = 0;
+    public int maxPowerCell = 5;
 
     void Start()
     {
@@ -35,6 +38,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Ignore the collider box of the sword and player
+        // ***Don't think it works for some reason***
         Physics.IgnoreCollision(playerCollider, meleeWeapon.GetComponent<Collider>(), true);
 
         // Get the direction of input from the user
@@ -67,17 +72,25 @@ public class PlayerController : MonoBehaviour
         transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
 
         // Make sure the health doesn't overcap
-        if (health > maxHealth)
-            health = maxHealth;
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
 
+        // Player takes damage upon falling into hole
+        if (transform.position.y <= 0)
+        {
+            transform.position = new Vector3(0, 5, 0);
+            currentHealth -= 50;
+        }
+
+        // Check if player took damage
         PlayerTookDamage();
 
         // Check for animation plays
-        playLightAnimation();
-        playHeavyAnimation();
+        PlayLightAnimation();
+        PlayHeavyAnimation();
     }
 
-    public void playLightAnimation()
+    public void PlayLightAnimation()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -85,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void playHeavyAnimation()
+    public void PlayHeavyAnimation()
     {
         if (Input.GetMouseButtonDown(1))
         {
@@ -127,7 +140,7 @@ public class PlayerController : MonoBehaviour
         {
             playerWasDamaged = true;
             KnockBack(playerHitDirection);
-            health -= 10;
+            currentHealth -= 10;
         }
 
         // ***W.I.P***
@@ -175,5 +188,86 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(playerMoveDirection * Time.deltaTime);
         playerMoveDirection = Vector3.Lerp(playerMoveDirection, Vector3.zero, 5 * Time.deltaTime);
+    }
+
+    //updated with on trigger stay
+
+    void OnTriggerStay(Collider collision)
+    {
+        // Powercell pickup
+        if (collision.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
+        {
+            if (storedPowerCell >= maxPowerCell)
+            {
+                //play sound of --NO--, DO NOT ADD to SCORE
+            }
+            else
+            {
+                //update the score
+                storedPowerCell++;
+
+                //delete the power cell
+                Destroy(collision.gameObject);
+            }
+
+        }
+
+        // Door open -- this requires the panel object to have the tag 'Panel'
+        if (collision.gameObject.tag == "Panel" && Input.GetKeyDown(KeyCode.E))
+        {
+
+            //if the player has 1 or more power cells and the panel has not been activated before
+            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().activated) // panel activatd = false
+            {
+                //open the door
+                storedPowerCell--;
+
+                //play sound effect of door opening
+
+                //destroy the door
+                collision.gameObject.GetComponent<Panel>().activated = true;
+            }
+            else
+            {
+                //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
+
+            }
+
+
+        }
+
+        //health interact
+        if (collision.gameObject.tag == "Health" && Input.GetKeyDown(KeyCode.E))
+        {
+            //if the player has less than max health
+            if (currentHealth < maxHealth)
+            {
+
+                //sets up the amount to heal
+                int healthGained = collision.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
+
+                //heal the player
+                currentHealth = currentHealth + healthGained;
+
+                //if player gains more than max health
+                if (currentHealth > maxHealth)
+                {
+                    //current health gets set to max health
+                    currentHealth = maxHealth;
+                }
+
+                //play sound effect of healing
+
+                //destroy the door
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
+
+            }
+
+        }
+
     }
 }

@@ -85,8 +85,11 @@ public class Enemy : MonoBehaviour
         }
         else
         {
+            if (health > 0)
+            {
+                enemyAI.SetDestination(player.transform.position);
+            }
             //GetComponent<NavMeshAgent>().enabled = true;
-            enemyAI.SetDestination(player.transform.position);
             enemyMoveDirection = transform.forward;
             enemyRigidbody.Sleep();
         }
