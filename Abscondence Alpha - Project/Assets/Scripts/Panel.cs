@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class Panel : MonoBehaviour
 {
-    //SOMETHING TO NOTE: 'Panel' tag required on panel object
+    //SOMETHING TO NOTE: 'Panel' tag required on object
 
     //DESIGNER DO NOT MODIFY OR ELSE OBJECT WILL BE DESTROYED ON STARTUP
-    public bool activated = false;
+    public bool xActivatedX = false;
 
     //this exists so the code doesnt trigger more than once
     private bool wasActivated = false;
 
     //this is the item that will be deleted
-    public GameObject door;
+    public GameObject oldDoor;
+    
 
-
+    public float SecondsToDestroy = 1;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -27,16 +29,19 @@ public class Panel : MonoBehaviour
     void Update()
     {
         //if the panel has been activated only on the first time
-        if(activated && !wasActivated)
+        if(xActivatedX && !wasActivated)
         {
-            //destroy the door
-            Destroy(door);
+            
+            //destroy the old door after the amount of time
+            Destroy(oldDoor, SecondsToDestroy);
 
-            //this gets set to true so the code DOES NOT COMPILE AGAIN
+            //play the animation during time
+            oldDoor.gameObject.GetComponent<Animator>().SetTrigger("TriggerFade");
+
+            //this gets set to true so this code DOES NOT COMPILE AGAIN
             wasActivated = true;
+
+            
         }
-
-
-
     }
 }
