@@ -6,13 +6,9 @@ ModelImporter:
     100000: //RootNode
     400000: //RootNode
     2100000: lambert1
-    2100002: Purple_Light
-    2100004: Metal
-    2100006: Metal_Dark
     2300000: //RootNode
     3300000: //RootNode
     4300000: Pillar_Medium
-    4300002: Pillar_Medium1
   externalObjects: {}
   materials:
     importMaterials: 1
