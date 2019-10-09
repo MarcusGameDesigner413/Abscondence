@@ -56,10 +56,11 @@ public class Enemy : MonoBehaviour
 
         // Only use the timer if the counter has been activated
         if (knockBackCounter > 0)
+        {
             knockBackCounter -= Time.deltaTime;
-
+        }
         // Once the Counter reaches 0, removes the force applied to the enemy
-        if (knockBackCounter <= 0)
+        else if (knockBackCounter <= 0)
         {
             enemyRigidbody.Sleep();
         }
