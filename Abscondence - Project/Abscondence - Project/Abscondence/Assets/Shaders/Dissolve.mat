@@ -23,7 +23,7 @@ Material:
     - Vector1_1D9A2AE: 0.01
     - Vector1_EFE64959: 30
     - Vector1_FEFF47F1: 0
-    - _Dissolve: 0
+    - _Dissolve: 1
     - _Edge_Width: 0.05
     - _Edge_Width_1: 250
     m_Colors:
