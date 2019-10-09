@@ -7,7 +7,7 @@ public class Panel : MonoBehaviour
     //SOMETHING TO NOTE: 'Panel' tag required on object
 
     //DESIGNER DO NOT MODIFY OR ELSE OBJECT WILL BE DESTROYED ON STARTUP
-    public bool activated = false;
+    public bool xActivatedX = false;
 
     //this exists so the code doesnt trigger more than once
     private bool wasActivated = false;
@@ -27,7 +27,7 @@ public class Panel : MonoBehaviour
     void Update()
     {
         //if the panel has been activated only on the first time
-        if(activated && !wasActivated)
+        if(xActivatedX && !wasActivated)
         {
             //destroy the door
             Destroy(door);

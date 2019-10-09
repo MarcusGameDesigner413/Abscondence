@@ -30,6 +30,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private float startingHeight;
 
+    [HideInInspector]
+    public bool gamePaused;
+
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
 
@@ -126,7 +129,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayLightAnimation()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !gamePaused)
         {
             meleeSwipe.SetTrigger("ActiveLClick");
         }
@@ -134,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayHeavyAnimation()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && !gamePaused)
         {
             meleeSwipe.SetTrigger("ActiveRClick");
         }
@@ -242,7 +245,7 @@ public class PlayerController : MonoBehaviour
         {
 
             //if the player has 1 or more power cells and the panel has not been activated before
-            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().activated) // panel activatd = false
+            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
             {
                 //open the door
                 storedPowerCell--;
@@ -250,7 +253,7 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of door opening
 
                 //destroy the door
-                collision.gameObject.GetComponent<Panel>().activated = true;
+                collision.gameObject.GetComponent<Panel>().xActivatedX = true;
             }
             else
             {

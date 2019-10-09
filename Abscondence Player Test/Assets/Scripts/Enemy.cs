@@ -45,13 +45,18 @@ public class Enemy : MonoBehaviour
         if (health <= 0) // Make the enemy fall over when HP reaches 0
         {
             health = 0;
+            enemyCollider.enabled = false;
             transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
             transform.position = new Vector3(enemyPosition.x, 0.5f, enemyPosition.z);
-            enemyCollider.enabled = false;
             deathParticles.Play();
 
-            // Disable NavMesh to stop enemy from following the player
-            GetComponent<NavMeshAgent>().enabled = false;
+
+            // Stop enemy going through walls
+            if (knockBackCounter <= 0)
+            {
+                // Disable NavMesh to stop enemy from following the player
+                GetComponent<NavMeshAgent>().enabled = false;
+            }
         }
 
         // Only use the timer if the counter has been activated
@@ -85,7 +90,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // ***BUG: KnockbackTime is based on the Invulnerability time***
     void EnemyTookDamage()
     {
         // If the enemy took damage turn off the box collider
