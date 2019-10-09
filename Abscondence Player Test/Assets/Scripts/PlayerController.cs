@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public float speedSmoothTime = 0.1f;
     public float invulnerabilityTime = 0.5f;
     public float knockBackForce;
+    public float knockBackTime;
+    private float knockBackCounter;
+    public float slowDownAmount = 0.2f;
 
     float turnSmoothVelocity;
     float speedSmoothVelocity;
@@ -18,22 +21,27 @@ public class PlayerController : MonoBehaviour
 
     public GameObject player;
     public GameObject meleeWeapon;
-    public CharacterController controller;
     Animator meleeSwipe;
 
+    private CharacterController controller;
     private CapsuleCollider playerCollider;
     private Vector3 playerMoveDirection;
     private bool playerWasDamaged;
     private float timer = 0;
+    private Vector3 velocity;
+    private float startingHeight;
 
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
+
+
 
     void Start()
     {
         meleeSwipe = meleeWeapon.GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
+        startingHeight = transform.position.y;
     }
 
     void Update()
@@ -41,6 +49,7 @@ public class PlayerController : MonoBehaviour
         // Ignore the collider box of the sword and player
         // ***Don't think it works for some reason***
         Physics.IgnoreCollision(playerCollider, meleeWeapon.GetComponent<Collider>(), true);
+        Physics.IgnoreLayerCollision(0, 9, true);
 
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -69,17 +78,34 @@ public class PlayerController : MonoBehaviour
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
 
         // Move the character relevant to the set current speed
-        transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
+        //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
+        controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
+
+        // Subtract the velocity by the slowDownAmount to slow down the knockback
+        velocity -= velocity * slowDownAmount;
+
+        // If the velocity gets below a certain threshold, set it to zero
+        if (velocity.magnitude < 0.35f)
+            velocity = Vector3.zero;
+
+        Debug.Log(velocity);
 
         // Make sure the health doesn't overcap
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
 
         // Player takes damage upon falling into hole
-        if (transform.position.y <= 0)
+        if (transform.position.y < 0)
         {
             transform.position = new Vector3(0, 5, 0);
             currentHealth -= 50;
+        }
+        else if (transform.position.y > startingHeight) // Make sure the player stays on the ground
+        {
+            var previousX = transform.position.x;
+            var previousZ = transform.position.z;
+
+            transform.position = new Vector3(previousX, startingHeight, previousZ);
         }
 
         // Check if player took damage
@@ -130,26 +156,17 @@ public class PlayerController : MonoBehaviour
         }*/
     }
 
-
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
         Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
         playerHitDirection = playerHitDirection.normalized;
 
-        if (other.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy")
         {
             playerWasDamaged = true;
             KnockBack(playerHitDirection);
             currentHealth -= 10;
         }
-
-        // ***W.I.P***
-        // MAKE IT SO THE SWORD COLLIDER BOX IGNORES THE PLAYER COLLIDER BOX 
-        // (No rigidbody currently applied to player cause of this issue)
-        //if (other.gameObject.tag == "Sword")
-        //{
-        //Debug.Log("Collision ignored");
-        //}
     }
 
     void PlayerTookDamage()
@@ -186,12 +203,11 @@ public class PlayerController : MonoBehaviour
     {
         playerMoveDirection = direction * knockBackForce;
 
-        controller.Move(playerMoveDirection * Time.deltaTime);
-        playerMoveDirection = Vector3.Lerp(playerMoveDirection, Vector3.zero, 5 * Time.deltaTime);
+        // Apply velocity relative to the direction the player has been knocked back
+        velocity += playerMoveDirection;
     }
 
     //updated with on trigger stay
-
     void OnTriggerStay(Collider collision)
     {
         // Powercell pickup
@@ -209,7 +225,6 @@ public class PlayerController : MonoBehaviour
                 //delete the power cell
                 Destroy(collision.gameObject);
             }
-
         }
 
         // Door open -- this requires the panel object to have the tag 'Panel'
@@ -230,10 +245,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
-
             }
-
-
         }
 
         //health interact
@@ -264,10 +276,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
-
             }
-
         }
-
     }
 }
