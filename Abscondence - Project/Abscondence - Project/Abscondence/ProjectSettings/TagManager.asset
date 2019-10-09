@@ -10,6 +10,7 @@ TagManager:
   - Door
   - Panel
   - MiniMapCamera
+  - Jammer
   layers:
   - Default
   - TransparentFX
