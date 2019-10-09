@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         {
 
             //if the player has 1 or more power cells and the panel has not been activated before
-            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().activated) // panel activatd = false
+            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
             {
                 //open the door
                 storedPowerCell--;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of door opening
 
                 //destroy the door
-                collision.gameObject.GetComponent<Panel>().activated = true;
+                collision.gameObject.GetComponent<Panel>().xActivatedX = true;
             }
             else
             {
