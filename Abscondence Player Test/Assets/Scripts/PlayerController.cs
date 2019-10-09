@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
     float speedSmoothVelocity;
     float currentSpeed;
 
-    public GameObject player;
     public GameObject meleeWeapon;
     Animator meleeSwipe;
 
@@ -34,8 +33,6 @@ public class PlayerController : MonoBehaviour
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
 
-
-
     void Start()
     {
         meleeSwipe = meleeWeapon.GetComponent<Animator>();
@@ -46,9 +43,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Ignore the collider box of the sword and player
-        // ***Don't think it works for some reason***
-        Physics.IgnoreCollision(playerCollider, meleeWeapon.GetComponent<Collider>(), true);
+        // Ignore the collisions between the sword and the environment (mostly the enemy cause it would damage him)
         Physics.IgnoreLayerCollision(0, 9, true);
 
         // Get the direction of input from the user
@@ -70,6 +65,7 @@ public class PlayerController : MonoBehaviour
             //}
         }
 
+        bool movementDisabled = false;
         // Debug addition to get around faster
         bool running = Input.GetKey(KeyCode.LeftShift);
         // Set to walkSpeed in alpha test
@@ -79,7 +75,8 @@ public class PlayerController : MonoBehaviour
 
         // Move the character relevant to the set current speed
         //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
+        if (!movementDisabled)
+            controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
 
         // Subtract the velocity by the slowDownAmount to slow down the knockback
         velocity -= velocity * slowDownAmount;
@@ -87,8 +84,6 @@ public class PlayerController : MonoBehaviour
         // If the velocity gets below a certain threshold, set it to zero
         if (velocity.magnitude < 0.35f)
             velocity = Vector3.zero;
-
-        Debug.Log(velocity);
 
         // Make sure the health doesn't overcap
         if (currentHealth > maxHealth)
@@ -107,6 +102,19 @@ public class PlayerController : MonoBehaviour
 
             transform.position = new Vector3(previousX, startingHeight, previousZ);
         }
+
+        // Only use the timer if the counter has been activated
+        if (knockBackCounter > 0)
+        {
+            movementDisabled = true;
+            knockBackCounter -= Time.deltaTime;
+        }
+        // Once the Counter reaches 0, removes the force applied to the enemy
+        else if (knockBackCounter <= 0)
+        {
+            movementDisabled = false;
+        }
+
 
         // Check if player took damage
         PlayerTookDamage();
@@ -201,6 +209,8 @@ public class PlayerController : MonoBehaviour
 
     public void KnockBack(Vector3 direction)
     {
+        knockBackCounter = knockBackTime;
+
         playerMoveDirection = direction * knockBackForce;
 
         // Apply velocity relative to the direction the player has been knocked back
