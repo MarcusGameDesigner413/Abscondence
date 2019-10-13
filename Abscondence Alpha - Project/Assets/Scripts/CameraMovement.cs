@@ -129,6 +129,7 @@ public class CameraMovement : MonoBehaviour
             if (Input.GetKeyDown("f"))
             {
                 mainCam.cullingMask = everythingMask;
+                mainCam.cullingMask ^= 1 << LayerMask.NameToLayer("MiniMap");
                 firstPersonMode = false;
             }
         }
