@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< Updated upstream
-- path: Assets/Scenes/Tutorial - WH.unity
-=======
 - path: Assets/Scenes/LD_Scene.unity
->>>>>>> Stashed changes
   isLoaded: 1
   isActive: 1

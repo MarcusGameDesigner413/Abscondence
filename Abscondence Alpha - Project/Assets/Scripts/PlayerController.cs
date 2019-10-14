@@ -83,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
         // Move the character relevant to the set current speed
         //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled && !fallPit)
+        if (!movementDisabled)
             controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
 
         velocity += gravity * Time.deltaTime;
