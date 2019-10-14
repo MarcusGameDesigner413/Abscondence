@@ -3744,6 +3744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 1674714207}
+  playerTeleported: 0
 --- !u!65 &841264470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6512,6 +6513,7 @@ MonoBehaviour:
   gravityModifier: 10
   meleeWeapon: {fileID: 844803044}
   gamePaused: 0
+  startingHeight: 0
   storedPowerCell: 0
   maxPowerCell: 3
 --- !u!136 &1520307087
@@ -8350,11 +8352,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
-        type: 3}
-      propertyPath: gravityModifier
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 8037795497373905146, guid: e2d416f6531b6d04aa37ba70d5e96345,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8409,6 +8406,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
+        type: 3}
+      propertyPath: gravityModifier
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d416f6531b6d04aa37ba70d5e96345, type: 3}
@@ -10193,10 +10195,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6923107877798695272, guid: 8a7b5123728751e4e97e9f98a709cfb7,
+        type: 3}
+      propertyPath: maxTetherDistance
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6923107877798695273, guid: 8a7b5123728751e4e97e9f98a709cfb7,
         type: 3}
       propertyPath: m_Name
       value: AIFollow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923107877798695273, guid: 8a7b5123728751e4e97e9f98a709cfb7,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6923107877798695268, guid: 8a7b5123728751e4e97e9f98a709cfb7,
         type: 3}
@@ -10252,6 +10264,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923107877798695275, guid: 8a7b5123728751e4e97e9f98a709cfb7,
+        type: 3}
+      propertyPath: m_AgentTypeID
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923107877798695275, guid: 8a7b5123728751e4e97e9f98a709cfb7,
+        type: 3}
+      propertyPath: m_WalkableMask
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a7b5123728751e4e97e9f98a709cfb7, type: 3}

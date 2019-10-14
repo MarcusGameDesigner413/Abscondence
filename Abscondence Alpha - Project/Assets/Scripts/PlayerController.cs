@@ -231,6 +231,16 @@ public class PlayerController : MonoBehaviour
     //updated with on trigger stay
     void OnTriggerStay(Collider collision)
     {
+        //execution of enemy
+        if (collision.gameObject.tag == "Enemy")
+        {
+            bool enemyDeadCheck = collision.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
+            if (collision.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.E) && enemyDeadCheck == true)
+            {
+                collision.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
+            }
+        }
+
         // Powercell pickup
         if (collision.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
         {
