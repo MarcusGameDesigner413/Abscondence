@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":false,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":17.54332160949707,"y":-2.730116844177246,"z":-55.97974395751953},"rotation":{"x":0.48462969064712527,"y":-0.33370441198349,"z":0.2069002240896225,"w":0.7816442251205444},"size":18.29937171936035,"orthographic":false}
+=======
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 ﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":false,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":-29.62699317932129,"y":3.4218287467956545,"z":31.30906867980957},"rotation":{"x":0.46801722049713137,"y":-0.3518802523612976,"z":0.21036109328269959,"w":0.7828719615936279},"size":22.0,"orthographic":false}
 =======
@@ -7,3 +11,10 @@
 ﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":false,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":4.143471717834473,"y":1.7336905002593995,"z":1.41250741481781},"rotation":{"x":0.35387247800827029,"y":-0.5947682857513428,"z":0.3270971179008484,"w":0.6434535980224609},"size":4.531439304351807,"orthographic":false}
 >>>>>>> master
 >>>>>>> Stashed changes
+<<<<<<< HEAD
+=======
+﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":false,"audioPlay":false,"sceneViewState":{"showFog":true,"showMaterialUpdate":false,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true},"in2DMode":false,"pivot":{"x":146.54412841796876,"y":61.1258659362793,"z":-109.33394622802735},"rotation":{"x":0.1066175103187561,"y":0.014320285990834237,"z":-0.0015358872478827835,"w":0.994195818901062},"size":13.42876148223877,"orthographic":false}
+>>>>>>> Stashed changes
+=======
+>>>>>>> master
+>>>>>>> master
