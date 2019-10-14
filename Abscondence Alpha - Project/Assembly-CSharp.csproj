@@ -106,7 +106,6 @@
 >>>>>>> Stashed changes
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
-<<<<<<< HEAD
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
@@ -147,6 +146,7 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+<<<<<<< Updated upstream
 =======
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
     </Reference>
@@ -196,6 +196,8 @@
     <Reference Include="Unity.ProGrids.Editor">
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
 >>>>>>> master
+=======
+>>>>>>> Stashed changes
     </Reference>
 =======
 >>>>>>> Stashed changes
@@ -401,7 +403,6 @@
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-<<<<<<< HEAD
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
@@ -409,15 +410,6 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-=======
-      <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
->>>>>>> master
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

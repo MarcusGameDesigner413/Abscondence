@@ -23,6 +23,6 @@ public class AITeleport : MonoBehaviour
 
         aiFollower.SetDestination(playerPosition);
 
-        if ()
+        //if ()
     }
 }

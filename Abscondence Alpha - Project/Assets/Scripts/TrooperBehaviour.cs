@@ -26,6 +26,8 @@ public class TrooperBehaviour : MonoBehaviour
     //the hitbox used when enemy is downed
     private CapsuleCollider downedCollision;
 
+    public bool canSpawnOnDeath = true;
+
     //the item that spawns if the enemy dies
     public GameObject deathItem;
 
@@ -43,7 +45,7 @@ public class TrooperBehaviour : MonoBehaviour
 
 
     //current health trooper has
-    public int currentHealth = 100;
+    public float currentHealth = 100;
 
     //health the troop gains when it goes from downed to not being downed
     public int reviveHealthGain = 100;
@@ -66,6 +68,9 @@ public class TrooperBehaviour : MonoBehaviour
 
     //how close the trooper needs to be to hit the enemy
     public int attackRadius = 2;
+
+    //how close the enemy can walk to the player
+    public float MeleeRotation = 2;
 
     //addition of suspicious and alert radius
     private int combinedAlertRadius;
@@ -117,7 +122,7 @@ public class TrooperBehaviour : MonoBehaviour
     private float wasHitTimer = 0;
 
     //health lost when hit by the player
-    public int healthLostOnHit = 5;
+    public float healthLostOnHit = 5;
 
     //the object that the enemy sword is
     public GameObject meleeWeapon;
@@ -465,6 +470,8 @@ public class TrooperBehaviour : MonoBehaviour
 
                 //travel to the player
                 enemyAI.SetDestination(lastKnownPlayerPosition);
+                
+                
 
 
 
@@ -515,7 +522,14 @@ public class TrooperBehaviour : MonoBehaviour
         //attack if close
         if(distance < attackRadius)
         {
+            RotateTowards(playerPos);
+            gameObject.GetComponent<NavMeshAgent>().isStopped = true;
             PlayAttackAnimation();
+            
+        }
+        else
+        {
+            gameObject.GetComponent<NavMeshAgent>().isStopped = false;
         }
 
         //if outside alert radius become suspicious
@@ -581,8 +595,13 @@ public class TrooperBehaviour : MonoBehaviour
         {
             //play death animation
 
-            //spawn death object on self
-            Instantiate(deathItem, transform.position, transform.rotation);
+            //if the troop can spawn an item on death
+            if(canSpawnOnDeath)
+            {
+                //spawn death object on self
+                Instantiate(deathItem, transform.position, transform.rotation);
+            }
+         
         }
         else
         {
@@ -610,6 +629,14 @@ public class TrooperBehaviour : MonoBehaviour
         //play jump through door animation
 
         currentState = (trooperState)0;
+    }
+
+    void RotateTowards(Vector3 target)
+    {
+
+        Vector3 direction = (target - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * MeleeRotation);
     }
 
     // Code to damage the enemy when it comes into contact with player's melee weapon

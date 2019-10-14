@@ -12,6 +12,7 @@ TagManager:
   - MiniMapCamera
   - Jammer
   - EnemySword
+  - Enemy
   layers:
   - Default
   - TransparentFX
