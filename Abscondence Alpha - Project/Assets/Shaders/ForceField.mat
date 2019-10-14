@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_438F8365: 0.6
+    - Vector1_438F8365: 0.5
     - _FieldStrength: 1
     - _Power: 5
     - _Scroll_Speed: 5
