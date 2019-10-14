@@ -4765,6 +4765,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2029958893}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1173543131 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8037795497373905146, guid: e2d416f6531b6d04aa37ba70d5e96345,
+    type: 3}
+  m_PrefabInstance: {fileID: 2029958893}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1182791880 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3535030151155009911, guid: c25c72134cb9c8848a054efe9dcfe977,
@@ -10064,7 +10070,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 1520307090}
+      objectReference: {fileID: 1173543131}
     - target: {fileID: 6784090234582527209, guid: 09587939e6c95e4478e2e26b231d2032,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
