@@ -1,5 +1,7 @@
 Base path: C:/Program Files/Unity 2018.3.8f1/Editor/Data
 Cmd: initializeCompiler
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< HEAD
@@ -63,6 +65,7 @@ Cmd: preprocess
   insize=4407 outsize=3641 ok=1
 Cmd: preprocess
   insize=7327 outsize=2458 ok=1
+>>>>>>> master
 Cmd: preprocess
   insize=53622 outsize=1862 ok=1
 Cmd: preprocess
@@ -89,6 +92,105 @@ Cmd: preprocess
   insize=40636 outsize=1645 ok=1
 Cmd: preprocess
   insize=47439 outsize=1680 ok=1
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> master
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+>>>>>>> master
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+=======
+>>>>>>> Stashed changes
+Cmd: initializeCompiler
+>>>>>>> master
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
@@ -96,6 +198,7 @@ Cmd: initializeCompiler
 Cmd: initializeCompiler
 =======
 >>>>>>> Stashed changes
+>>>>>>> master
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
