@@ -6422,8 +6422,10 @@ MonoBehaviour:
   knockBackForce: 0
   knockBackTime: 0
   slowDownAmount: 0.2
+  gravityModifier: 10
   meleeWeapon: {fileID: 844803044}
   gamePaused: 0
+  startingHeight: 0
   storedPowerCell: 0
   maxPowerCell: 3
 --- !u!136 &1520307087
@@ -9555,7 +9557,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f19ce2b84604cd449899a1df9b553cc0, type: 2}
+      objectReference: {fileID: 2100000, guid: 6d4cbf8ed146d174dbc8d647322a4825, type: 2}
+    - target: {fileID: 9023538355327335558, guid: c25c72134cb9c8848a054efe9dcfe977,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6d4cbf8ed146d174dbc8d647322a4825, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c25c72134cb9c8848a054efe9dcfe977, type: 3}
 --- !u!1001 &4376739881513337847
