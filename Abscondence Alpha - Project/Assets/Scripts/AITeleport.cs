@@ -23,6 +23,9 @@ public class AITeleport : MonoBehaviour
 
         aiFollower.SetDestination(playerPosition);
 
+<<<<<<< Updated upstream
         //if ()
+=======
+>>>>>>> Stashed changes
     }
 }
