@@ -53,6 +53,7 @@ public class CameraMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update()
     {
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (!firstPersonMode)
         {
@@ -129,6 +130,7 @@ public class CameraMovement : MonoBehaviour
             if (Input.GetKeyDown("f"))
             {
                 mainCam.cullingMask = everythingMask;
+                mainCam.cullingMask ^= 1 << LayerMask.NameToLayer("MiniMap");
                 firstPersonMode = false;
             }
         }

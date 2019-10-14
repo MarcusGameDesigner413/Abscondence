@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2307125285902871115}
   - component: {fileID: 3818065860334428818}
   - component: {fileID: 6066514487967125071}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -111,15 +111,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0920b1d528aa74c86c4f7b73a06389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 75
+  maxHealth: 100
   walkSpeed: 5
   runSpeed: 10
   turnSmoothTime: 0.1
   speedSmoothTime: 0.1
-  currentHealth: 75
-  maxHealth: 100
+  invulnerabilityTime: 0.5
+  knockBackForce: 0
+  knockBackTime: 0
+  slowDownAmount: 0.2
+  meleeWeapon: {fileID: 2793093458454253424}
+  gamePaused: 0
   storedPowerCell: 0
   maxPowerCell: 5
-  meleeWeapon: {fileID: 2793093458454253424}
 --- !u!136 &6066514487967125071
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -141,11 +146,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8037795497373905146}
     m_Modifications:
-    - target: {fileID: 376613655657543165, guid: 98fe513fdf93c764284433896a34d504,
-        type: 3}
-      propertyPath: m_Name
-      value: MeleeWeapon
-      objectReference: {fileID: 0}
     - target: {fileID: 3767272191060319860, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -200,6 +200,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 376613655657543165, guid: 98fe513fdf93c764284433896a34d504,
+        type: 3}
+      propertyPath: m_Name
+      value: MeleeWeapon
       objectReference: {fileID: 0}
     - target: {fileID: 2467882560637107160, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
