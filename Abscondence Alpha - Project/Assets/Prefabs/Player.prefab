@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2307125285902871115}
   - component: {fileID: 3818065860334428818}
   - component: {fileID: 6066514487967125071}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -111,15 +111,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a0920b1d528aa74c86c4f7b73a06389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
+  currentHealth: 6
+  maxHealth: 6
+  walkSpeed: 7
   runSpeed: 10
   turnSmoothTime: 0.1
   speedSmoothTime: 0.1
-  currentHealth: 75
-  maxHealth: 100
+  invulnerabilityTime: 0.5
+  knockBackForce: 0
+  knockBackTime: 0
+  slowDownAmount: 0.2
+  meleeWeapon: {fileID: 2793093458454253424}
+  gamePaused: 0
   storedPowerCell: 0
   maxPowerCell: 5
-  meleeWeapon: {fileID: 2793093458454253424}
 --- !u!136 &6066514487967125071
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -206,7 +211,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 415a9606365ede24781d34271c8be24c, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 657349056074374225, guid: 98fe513fdf93c764284433896a34d504, type: 3}
+    - {fileID: 3354697675290602852, guid: 98fe513fdf93c764284433896a34d504, type: 3}
+    - {fileID: 3552712942282209571, guid: 98fe513fdf93c764284433896a34d504, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 98fe513fdf93c764284433896a34d504, type: 3}
 --- !u!1 &2793093458454253424 stripped
 GameObject:

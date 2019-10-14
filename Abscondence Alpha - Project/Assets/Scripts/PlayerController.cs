@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float knockBackTime;
     private float knockBackCounter;
     public float slowDownAmount = 0.2f;
+    public float gravityModifier = 10.0f;
 
     float turnSmoothVelocity;
     float speedSmoothVelocity;
@@ -28,20 +29,25 @@ public class PlayerController : MonoBehaviour
     private bool playerWasDamaged;
     private float timer = 0;
     private Vector3 velocity;
-    private float startingHeight;
+    private Vector3 gravity;
+    private BottomlessPit ifFallen;
 
     [HideInInspector]
     public bool gamePaused;
+    [HideInInspector]
+    public float startingHeight;
 
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
 
     void Start()
     {
+        gravity = Physics.gravity * gravityModifier;
         meleeSwipe = meleeWeapon.GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         startingHeight = transform.position.y;
+        ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
@@ -78,8 +84,10 @@ public class PlayerController : MonoBehaviour
 
         // Move the character relevant to the set current speed
         //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled)
+        if (!movementDisabled && !ifFallen)
             controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
+
+        velocity += gravity * Time.deltaTime;
 
         // Subtract the velocity by the slowDownAmount to slow down the knockback
         velocity -= velocity * slowDownAmount;
@@ -93,18 +101,18 @@ public class PlayerController : MonoBehaviour
             currentHealth = maxHealth;
 
         // Player takes damage upon falling into hole
-        if (transform.position.y < 0)
-        {
-            transform.position = new Vector3(0, 5, 0);
-            currentHealth -= 50;
-        }
-        else if (transform.position.y > startingHeight) // Make sure the player stays on the ground
-        {
-            var previousX = transform.position.x;
-            var previousZ = transform.position.z;
+        //if (transform.position.y < 0)
+        //{
+        //    transform.position = new Vector3(0, 5, 0);
+        //    currentHealth -= 50;
+        //}
+        ///*else */if (transform.position.y > startingHeight) // Make sure the player stays on the ground
+        //{
+        //    var previousX = transform.position.x;
+        //    var previousZ = transform.position.z;
 
-            transform.position = new Vector3(previousX, startingHeight, previousZ);
-        }
+        //    transform.position = new Vector3(previousX, startingHeight, previousZ);
+        //}
 
         // Only use the timer if the counter has been activated
         if (knockBackCounter > 0)
