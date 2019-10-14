@@ -89,9 +89,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9351e04e4a7614c869e71b8d5ece3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallAmount: 2
-  aiFollower: {fileID: 0}
-  playerFallen: 0
+  fallAmount: 5
+  aiFollower: {fileID: 6923107877798695272, guid: 8a7b5123728751e4e97e9f98a709cfb7,
+    type: 3}
 --- !u!1001 &4412672247287007653
 PrefabInstance:
   m_ObjectHideFlags: 0
