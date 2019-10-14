@@ -9,12 +9,17 @@ Cmd: preprocess
 Cmd: preprocess
   insize=64824 outsize=1970 ok=1
 Cmd: preprocess
+<<<<<<< HEAD
   insize=56659 outsize=2255 ok=1
 Cmd: preprocess
   insize=48352 outsize=1537 ok=1
 Cmd: preprocess
   insize=57203 outsize=1853 ok=1
 Cmd: preprocess
+=======
+  insize=48352 outsize=1537 ok=1
+Cmd: preprocess
+>>>>>>> master
   insize=44327 outsize=1733 ok=1
 Cmd: preprocess
   insize=40636 outsize=1645 ok=1
@@ -24,6 +29,7 @@ Cmd: compileSnippet
   api=4 type=0 insize=18919 outsize=3078 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
 Cmd: compileSnippet
   api=4 type=1 insize=18919 outsize=2918 kw=_MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
+<<<<<<< HEAD
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
@@ -51,5 +57,7 @@ Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
+=======
+>>>>>>> master
 Cmd: initializeCompiler
 Cmd: initializeCompiler
