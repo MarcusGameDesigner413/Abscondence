@@ -62,7 +62,11 @@
   <ItemGroup>
     <Compile Include="Assets\Default Folders\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Reference Include="Unity.ProGrids">
+<<<<<<< Updated upstream
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
+=======
+      <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
+>>>>>>> Stashed changes
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
 <<<<<<< HEAD
@@ -112,6 +116,9 @@
     <Reference Include="Unity.RenderPipelines.Core.Runtime">
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.ProGrids.Editor">
+      <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -145,6 +152,7 @@
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
+<<<<<<< Updated upstream
     <Reference Include="Unity.ProGrids">
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
     </Reference>
@@ -152,6 +160,8 @@
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
 >>>>>>> master
     </Reference>
+=======
+>>>>>>> Stashed changes
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>

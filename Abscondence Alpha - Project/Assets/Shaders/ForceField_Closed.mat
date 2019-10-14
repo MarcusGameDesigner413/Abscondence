@@ -31,6 +31,6 @@ Material:
     - Vector1_438F8365: 0.5
     - _FieldStrength: 1
     - _Power: 2.5
-    - _Scroll_Speed: 5
+    - _Scroll_Speed: 0
     m_Colors:
     - _Field_Colour: {r: 5.656854, g: 0, b: 0, a: 0}
