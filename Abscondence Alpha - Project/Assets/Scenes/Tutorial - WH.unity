@@ -8350,6 +8350,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
+        type: 3}
+      propertyPath: gravityModifier
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8037795497373905146, guid: e2d416f6531b6d04aa37ba70d5e96345,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8404,11 +8409,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
-        type: 3}
-      propertyPath: gravityModifier
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d416f6531b6d04aa37ba70d5e96345, type: 3}
@@ -9197,6 +9197,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cameraMode
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 189055619288883978, guid: c6422a8c1f942c3448370284e2b71efa,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2359
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6422a8c1f942c3448370284e2b71efa, type: 3}

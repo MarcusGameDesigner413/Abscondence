@@ -29,12 +29,13 @@ public class PlayerController : MonoBehaviour
     private bool playerWasDamaged;
     private float timer = 0;
     private Vector3 velocity;
-    private float startingHeight;
     private Vector3 gravity;
-    private bool fallPit;
+    private BottomlessPit ifFallen;
 
     [HideInInspector]
     public bool gamePaused;
+    [HideInInspector]
+    public float startingHeight;
 
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         startingHeight = transform.position.y;
-        fallPit = GetComponent<BottomlessPit>();
+        ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
@@ -83,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
         // Move the character relevant to the set current speed
         //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled && !fallPit)
+        if (!movementDisabled && !ifFallen)
             controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
 
         velocity += gravity * Time.deltaTime;

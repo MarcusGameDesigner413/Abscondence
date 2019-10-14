@@ -18,6 +18,11 @@ public class AITeleport : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        aiFollower.SetDestination(player.transform.position);
+        var playerPosition = player.transform.position;
+        var aiPosition = transform.position;
+
+        aiFollower.SetDestination(playerPosition);
+
+        if ()
     }
 }

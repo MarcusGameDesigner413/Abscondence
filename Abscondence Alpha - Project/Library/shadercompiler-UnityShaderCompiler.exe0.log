@@ -1,123 +1,108 @@
 Base path: C:/Program Files/Unity 2018.3.8f1/Editor/Data
 Cmd: initializeCompiler
-<<<<<<< HEAD
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-=======
+Cmd: preprocess
+  insize=2453 outsize=662 ok=1
+Cmd: preprocess
+  insize=3219 outsize=322 ok=1
+Cmd: preprocess
+  insize=6801 outsize=3266 ok=1
+Cmd: preprocessCompute
+  insize=2128 outsize=2134 ok=1
+Cmd: preprocess
+  insize=11823 outsize=980 ok=1
+Cmd: preprocess
+  insize=1579 outsize=233 ok=1
+Cmd: preprocessCompute
+  insize=1220 outsize=1226 ok=1
 Cmd: preprocessCompute
   insize=3152 outsize=3158 ok=1
+Cmd: preprocessCompute
+  insize=11166 outsize=11176 ok=1
+Cmd: preprocess
+  insize=1231 outsize=322 ok=1
 Cmd: preprocess
   insize=12668 outsize=566 ok=1
+Cmd: preprocess
+  insize=1867 outsize=322 ok=1
 Cmd: preprocessCompute
   insize=5024 outsize=5032 ok=1
 Cmd: preprocess
   insize=1396 outsize=451 ok=1
 Cmd: preprocess
+  insize=2581 outsize=863 ok=1
+Cmd: preprocessCompute
+  insize=3526 outsize=3532 ok=1
+Cmd: preprocess
+  insize=6257 outsize=384 ok=1
+Cmd: preprocess
+  insize=628 outsize=231 ok=1
+Cmd: preprocess
+  insize=1719 outsize=372 ok=1
+Cmd: preprocessCompute
+  insize=18709 outsize=18731 ok=1
+Cmd: preprocess
+  insize=3320 outsize=826 ok=1
+Cmd: preprocessCompute
+  insize=5587 outsize=5591 ok=1
+Cmd: preprocess
   insize=7382 outsize=421 ok=1
+Cmd: preprocess
+  insize=2507 outsize=1111 ok=1
 Cmd: preprocessCompute
   insize=3168 outsize=3174 ok=1
+Cmd: preprocessCompute
+  insize=1858 outsize=1864 ok=1
+Cmd: preprocess
+  insize=1665 outsize=236 ok=1
 Cmd: preprocess
   insize=3682 outsize=237 ok=1
 Cmd: preprocess
+  insize=12338 outsize=1048 ok=1
+Cmd: preprocess
+  insize=6462 outsize=1315 ok=1
+Cmd: preprocess
+  insize=1188 outsize=411 ok=1
+Cmd: preprocess
+  insize=3197 outsize=1434 ok=1
+Cmd: preprocess
+  insize=3750 outsize=384 ok=1
+Cmd: preprocessCompute
+  insize=1499 outsize=1505 ok=1
+Cmd: preprocessCompute
+  insize=2114 outsize=2120 ok=1
+Cmd: preprocess
+  insize=2371 outsize=667 ok=1
+Cmd: preprocess
   insize=4922 outsize=733 ok=1
 Cmd: preprocess
-  insize=53622 outsize=1862 ok=1
+  insize=2706 outsize=232 ok=1
 Cmd: preprocess
-  insize=59203 outsize=1536 ok=1
+  insize=2070 outsize=769 ok=1
 Cmd: preprocess
-  insize=59101 outsize=1544 ok=1
-Cmd: preprocess
-  insize=64796 outsize=1967 ok=1
-Cmd: preprocess
-  insize=48352 outsize=1537 ok=1
-Cmd: preprocess
-  insize=44327 outsize=1733 ok=1
-Cmd: preprocess
-  insize=40636 outsize=1645 ok=1
-Cmd: preprocess
-  insize=47439 outsize=1680 ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=14645 outsize=2750 kw=FOG_EXP2 _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _SHADOWS_SOFT pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=14645 outsize=9258 kw=FOG_EXP2 _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _SHADOWS_SOFT pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=11809 outsize=538 kw=BLOOM VIGNETTE COLOR_GRADING_HDR_3D pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=11809 outsize=3714 kw=BLOOM VIGNETTE COLOR_GRADING_HDR_3D pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
-Cmd: compileSnippet
-  api=4 type=0 insize=4008 outsize=542 kw=FXAA_LOW pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
-Cmd: compileSnippet
-  api=4 type=1 insize=4008 outsize=7518 kw=FXAA_LOW pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_RGBM_ENCODING ok=1
->>>>>>> master
+  insize=1409 outsize=310 ok=1
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler

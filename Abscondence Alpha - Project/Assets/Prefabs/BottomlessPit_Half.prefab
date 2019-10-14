@@ -58,7 +58,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7026258233077342073}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.2}
+  m_LocalPosition: {x: 0, y: -1.5, z: -1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1544224866655590972}
@@ -75,8 +75,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.309469, y: 1, z: 0.98087}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.1038013, y: 1, z: 2.6361194}
+  m_Center: {x: -0.1052897, y: 0, z: -0.15641284}
 --- !u!114 &2316699445512836536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallAmount: 2
+  aiFollower: {fileID: 0}
+  playerFallen: 0
 --- !u!1001 &4412672247287007653
 PrefabInstance:
   m_ObjectHideFlags: 0

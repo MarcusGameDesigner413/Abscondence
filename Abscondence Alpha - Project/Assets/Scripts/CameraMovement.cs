@@ -7,6 +7,7 @@ public class CameraMovement : MonoBehaviour
     public GameObject player;
     public Camera mainCam;
 
+
     int everythingMask = -1;
     #region First Person Mode
     public bool firstPersonMode = false;
@@ -54,7 +55,6 @@ public class CameraMovement : MonoBehaviour
 	void Update()
     {
         Cursor.lockState = CursorLockMode.Locked;
-
         if (!firstPersonMode)
         {
             float v = Input.GetAxis("CameraVertical");
@@ -64,9 +64,20 @@ public class CameraMovement : MonoBehaviour
             else
                 player.GetComponent<PlayerController/*Change to whatever is making the player move, preferably script*/>().enabled = true;
 
-            mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)), 
-                                                     player.transform.position.y + yDiscreprency, 
-                                                     player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+            if(player.transform.position.y <= 0)
+            {
+                mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)),
+                                                        yDiscreprency,
+                                                        player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+
+            }
+            else
+            {
+                mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)), 
+                                                        player.transform.position.y + yDiscreprency, 
+                                                        player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+
+            }
 
             mainCam.transform.rotation = Quaternion.Euler(xRot, yRot, zRot);
 

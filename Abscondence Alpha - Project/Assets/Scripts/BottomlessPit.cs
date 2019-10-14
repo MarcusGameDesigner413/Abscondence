@@ -4,31 +4,34 @@ using UnityEngine;
 
 public class BottomlessPit : MonoBehaviour
 {
-    public float fallAmount;
     public AITeleport aiFollower;
     private Vector3 falling;
-    private bool playerFallen = false;
+    private float fallAmount;
     PlayerController player;
+
+    [HideInInspector]
+    public bool playerFallen = false;
+
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        //aiFollower = GetComponent<AITeleport>();
+        fallAmount = player.startingHeight + 5.0f;
     }
 
     void Update()
     {
         if (player.transform.position.y < -fallAmount)
         {
-            Debug.Log("Player dead");
+           // Debug.Log("Player fallen");
             TeleportToAI();
             playerFallen = false;
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        if (other.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             playerFallen = true;
             Debug.Log("Player in pit");
