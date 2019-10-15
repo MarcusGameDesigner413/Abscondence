@@ -6,6 +6,9 @@ public class TeleportPlayer : MonoBehaviour
 {
     public GameObject teleportTarget;
 
+    [HideInInspector]
+    public bool playerTeleported = false;
+
     private void OnTriggerEnter(Collider other)
     {
         Vector3 teleportDestination = teleportTarget.transform.position - other.transform.position;
@@ -13,6 +16,8 @@ public class TeleportPlayer : MonoBehaviour
         if (other.tag == "Player")
         {
             Debug.Log("God has abandoned us");
+
+            playerTeleported = true;
             other.GetComponent<CharacterController>().enabled = false;
             other.GetComponent<CharacterController>().transform.SetPositionAndRotation(teleportTarget.transform.position, other.transform.rotation);
             other.GetComponent<CharacterController>().enabled = true;

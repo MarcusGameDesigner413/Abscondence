@@ -12,6 +12,7 @@ public class Sentry : MonoBehaviour
     Vector3 fifthLastFramePosition;
     Vector3 sixthLastFramePosition;
     Vector3 seventhLastFramePosition;
+    Vector3 raycastPosition;
     Quaternion targetRotation;
     LineRenderer line = null;
     public GameObject player;
@@ -38,6 +39,7 @@ public class Sentry : MonoBehaviour
     void Start()
     {
         line = GetComponent<LineRenderer>();
+        raycastPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
     }
 
     // Update is called once per frame
@@ -48,7 +50,7 @@ public class Sentry : MonoBehaviour
         if (Vector3.Distance(player.transform.position, transform.position) < outOfRangeRadius || playerHasBeenDetected)
         {
             RaycastHit playerCheckHit = new RaycastHit();
-            if (Physics.Linecast(transform.position, player.transform.position, out playerCheckHit))
+            if (Physics.Linecast(raycastPosition, player.transform.position, out playerCheckHit))
             {
                 if (playerCheckHit.collider.tag == "Player")
                 {
@@ -95,7 +97,7 @@ public class Sentry : MonoBehaviour
 
         if (!rotating)
         {
-            Ray ray = new Ray(transform.position, transform.forward);
+            Ray ray = new Ray(raycastPosition, transform.forward);
             RaycastHit hit = new RaycastHit();
 
             Vector3[] linePos = new Vector3[3];
@@ -113,12 +115,10 @@ public class Sentry : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, 9999))
                 {
                     Vector3 dir = transform.forward;
-                    linePos[1].x = hit.point.x;
-                    linePos[1].y = hit.point.y + yOffset;
-                    linePos[1].z = hit.point.z;
-                    turretBeam.SetActive(true);
-                    turretBeam.GetComponent<MeshRenderer>().enabled = false;
-                    turretBeam.transform.position = hit.point;
+                    linePos[1] = hit.point;
+                    //turretBeam.SetActive(true);
+                    //turretBeam.GetComponent<MeshRenderer>().enabled = false;
+                    //turretBeam.transform.position = hit.point;
                     line.SetPositions(linePos);
                     line.positionCount = 2;
                     line.enabled = true;
@@ -127,7 +127,7 @@ public class Sentry : MonoBehaviour
                     if(hit.collider.tag == "Player")
                     {
                         hit.collider.GetComponent<CharacterController>().SimpleMove(transform.forward);
-                        hit.collider.GetComponent<PlayerController>().maxHealth -= 5;
+                        hit.collider.GetComponent<PlayerController>().currentHealth -= 5;
                         Debug.Log("Get Lazored Nerd");
                     }
                 }
