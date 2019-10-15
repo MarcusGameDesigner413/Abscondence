@@ -69,6 +69,9 @@ public class TrooperBehaviour : MonoBehaviour
     //how close the trooper needs to be to hit the enemy
     public int attackRadius = 2;
 
+    //public float accesed by player script when they get damaged by this enemy
+    public int enemyAttackStrength = 1;
+
     //how close the enemy can walk to the player
     public float MeleeRotation = 2;
 
@@ -112,7 +115,7 @@ public class TrooperBehaviour : MonoBehaviour
     //invulerbility time after being hit
     public float invulnerabilityTime = 0.5f;
 
-    //
+    //???
     private float knockBackCounter;
 
     //boolean to see if it just took damage
@@ -121,24 +124,38 @@ public class TrooperBehaviour : MonoBehaviour
     //timer used when ememny was hit by player
     private float wasHitTimer = 0;
 
-    //health lost when hit by the player
-    public float healthLostOnHit = 5;
-
     //the object that the enemy sword is
     public GameObject meleeWeapon;
 
+    //animator tool?
     Animator trooperAnimation;
 
-    //
+    //move backwards when hit?
     private Vector3 enemyMoveDirection;
 
-    //
+    //refer to its own rigidbody
     private Rigidbody enemyRigidbody;
 
+    //bool to trigger invincible code when it just revived
+    private bool justRevived = false;
+
+    //max time it has invincible when it respawns
+    public float respawnInvincibleTime = 2;
+
+    //private iterartion to make it no longer invincible when it respawns
+    private float respawnIteration = 0;
+
+
+    //is the enemy downed? --- DO NOT MODIFY DESIGNERSSS
+    [HideInInspector]
     public bool xIsDownedX = false;
 
-    //is the enemy alive, set to private
+    //is the enemy alive --- DO NOT MODIFY DESIGNERSSS
+    [HideInInspector]
     public bool xIsDeadX = false;
+
+    
+    
 
     // Start is called before the first frame update
     void Start()
@@ -155,6 +172,10 @@ public class TrooperBehaviour : MonoBehaviour
 
         //ensure own rigidbody is correct
         enemyRigidbody = GetComponent<Rigidbody>();
+
+        //false makes it slide like ice but cant go through stuff
+        //true removes knockback
+        //enemyRigidbody.isKinematic = false;
 
         //on startup enemy set to idle by default
         if (wasSpawnedInDoor)
@@ -183,7 +204,7 @@ public class TrooperBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Physics.IgnoreLayerCollision(0, 12, true);
 
         //switch statement, triggers functions based on which state ai is in
         switch ((int)currentState)
@@ -231,6 +252,26 @@ public class TrooperBehaviour : MonoBehaviour
             //the trooper can now be executed
             //downedCollision.gameObject.SetActive(true);
             downedCollision.enabled = true;
+        }
+
+        //peform the revive timer if it just revived
+        if (justRevived)
+        {
+            //update the iteration
+            respawnIteration += 1 * Time.deltaTime;
+
+            //once the iteration is greater than or equal to the respawn time
+            if (respawnIteration >= respawnInvincibleTime)
+            {
+                //you are no lo9nger just revived
+                justRevived = false;
+
+                //you can now be hit
+                hitCollision.enabled = true;
+
+                //reset the iteration
+                respawnIteration = 0;
+            }
         }
         
         if(xIsDeadX)
@@ -564,7 +605,7 @@ public class TrooperBehaviour : MonoBehaviour
 
             //the trooper can now take damage from normal attacks
             //hitCollision.gameObject.SetActive(true);
-            hitCollision.enabled = true;
+            //hitCollision.enabled = true;
 
             //the trooper cannot be executed 
             //downedCollision.gameObject.SetActive(false);
@@ -578,6 +619,10 @@ public class TrooperBehaviour : MonoBehaviour
             gameObject.GetComponent<NavMeshAgent>().isStopped = false;
 
             xIsDownedX = false;
+
+            //respawn invulerability timer starts
+            justRevived = true;
+
             //set to idle
             currentState = (trooperState)0;
         }
@@ -631,10 +676,14 @@ public class TrooperBehaviour : MonoBehaviour
         currentState = (trooperState)0;
     }
 
+    //used to make the enemy rotate towards the player (used when it stand still and attacks)
     void RotateTowards(Vector3 target)
     {
+        //set y as 90 for both to prevent it doing a Michael Jackson and slanting
+        Vector3 targetOnlyY = new Vector3 (target.x, 90, target.z);
+        Vector3 positionOnlyY = new Vector3(transform.position.x, 90, transform.position.z);
 
-        Vector3 direction = (target - transform.position).normalized;
+        Vector3 direction = (targetOnlyY - positionOnlyY).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * MeleeRotation);
     }
@@ -647,15 +696,36 @@ public class TrooperBehaviour : MonoBehaviour
         Vector3 enemyHitDirection = -transform.forward /*other.transform.position - transform.posiion*/;
         enemyHitDirection = enemyHitDirection.normalized;
 
-        if (other.gameObject.tag == "Sword")
+        if (other.gameObject.tag == "Sword" && !xIsDownedX)
         {
+            float healthLostOnHit = 0;
+            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            //if attack1 bolean == true
+            if (player.lightAttackUsed)
+            {
+                //healthLostOnHit = Player.gameObject.GetComponent<PlayerController>().whateverattack1is;
+                healthLostOnHit = player.playerLightDamage;
+            }
+
+            //if attack2 boolean == true
+            if (player.heavyAttackUsed)
+            {
+                //healthLostOnHit = Player.gameObject.GetComponent<PlayerController>().whateverattack1is;
+                healthLostOnHit = player.playerHeavyDamage;
+            }
             wasDamaged = true;
             KnockBack(enemyHitDirection);
             currentHealth -= healthLostOnHit;
             
         }
+
+        if (other.gameObject.tag != "Sword" && enemyRigidbody.isKinematic == false)
+        {
+            enemyRigidbody.isKinematic = true;
+        }
     }
 
+    // a timer that gets called each frame, code only runs if it was damaged tho
     void EnemyTookDamage()
     {
         // If the enemy took damage turn off the box collider
@@ -673,6 +743,7 @@ public class TrooperBehaviour : MonoBehaviour
         {
             EnemyInvulnerabilityOff();
             wasDamaged = false;
+            //GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 
@@ -682,6 +753,7 @@ public class TrooperBehaviour : MonoBehaviour
         //hitCollision.gameObject.SetActive(false);
         hitCollision.enabled = false;
         //Debug.Log("Collider.enabled = " + enemyCollider.enabled);
+        
     }
 
     void EnemyInvulnerabilityOff()
@@ -690,10 +762,12 @@ public class TrooperBehaviour : MonoBehaviour
         hitCollision.enabled = true;
         wasHitTimer = 0;
         //Debug.Log("Collider.enabled = " + enemyCollider.enabled);
+        enemyRigidbody.isKinematic = true;
     }
 
     public void KnockBack(Vector3 direction)
     {
+        enemyRigidbody.isKinematic = false;
         knockBackCounter = knockBackTime;
 
         enemyMoveDirection = direction * knockBackForce;

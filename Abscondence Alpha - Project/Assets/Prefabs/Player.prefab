@@ -114,19 +114,22 @@ MonoBehaviour:
   currentHealth: 6
   maxHealth: 6
   walkSpeed: 7
-  runSpeed: 10
+  playerLightDamage: 1
+  playerHeavyDamage: 2
   turnSmoothTime: 0.1
   speedSmoothTime: 0.1
-  invulnerabilityTime: 0.5
-  knockBackForce: 150
-  knockBackTime: 2
+  invulnerabilityTime: 1
+  knockBackForce: 5
+  knockBackTime: 0.5
   slowDownAmount: 0.2
   gravityModifier: 10
+  storedPowerCell: 0
+  maxPowerCell: 5
   meleeWeapon: {fileID: 2793093458454253424}
   gamePaused: 0
   startingHeight: 0
-  storedPowerCell: 0
-  maxPowerCell: 5
+  lightAttackUsed: 0
+  heavyAttackUsed: 0
 --- !u!136 &6066514487967125071
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -151,7 +154,7 @@ PrefabInstance:
     - target: {fileID: 3767272191060319860, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.307
+      value: -4.24
       objectReference: {fileID: 0}
     - target: {fileID: 3767272191060319860, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
@@ -161,7 +164,7 @@ PrefabInstance:
     - target: {fileID: 3767272191060319860, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.691
+      value: 1.91
       objectReference: {fileID: 0}
     - target: {fileID: 3767272191060319860, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}

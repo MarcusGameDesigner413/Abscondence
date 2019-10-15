@@ -1,4 +1,24 @@
 sceneSetups:
+<<<<<<< HEAD
 - path: Assets/Scenes/Tutorial_001.unity
+=======
+<<<<<<< HEAD
+- path: Assets/Scenes/LD_Scene.unity
+=======
+<<<<<<< HEAD
+- path: Assets/Scenes/Matthew_Tutorial.unity
+=======
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+- path: Assets/Scenes/Tutorial - WH.unity
+=======
+- path: Assets/Scenes/Matthew_Tutorial.unity
+>>>>>>> Stashed changes
+=======
+- path: Assets/Scenes/LD_Scene.unity
+>>>>>>> Stashed changes
+>>>>>>> master
+>>>>>>> master
+>>>>>>> master
   isLoaded: 1
   isActive: 1

@@ -6,15 +6,19 @@ public class PlayerController : MonoBehaviour
     public int currentHealth = 100;
     public int maxHealth = 100;
     public float walkSpeed = 5;
-    public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
+    //public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
+    public int playerLightDamage = 1;
+    public int playerHeavyDamage = 2;
     public float turnSmoothTime = 0.1f;
     public float speedSmoothTime = 0.1f;
     public float invulnerabilityTime = 0.5f;
-    public float knockBackForce;
-    public float knockBackTime;
+    public float knockBackForce = 150f;
+    public float knockBackTime = 0.45f;
     private float knockBackCounter;
     public float slowDownAmount = 0.2f;
     public float gravityModifier = 10.0f;
+    public int storedPowerCell = 0;
+    public int maxPowerCell = 5;
 
     float turnSmoothVelocity;
     float speedSmoothVelocity;
@@ -36,9 +40,13 @@ public class PlayerController : MonoBehaviour
     public bool gamePaused;
     [HideInInspector]
     public float startingHeight;
+    [HideInInspector]
+    public bool lightAttackUsed = false;
+    [HideInInspector]
+    public bool heavyAttackUsed = false;
 
-    public int storedPowerCell = 0;
-    public int maxPowerCell = 5;
+    public bool DeathToMenu = false;
+
 
     void Start()
     {
@@ -53,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Ignore the collisions between the sword and the environment (mostly the enemy cause it would damage him)
-        Physics.IgnoreLayerCollision(0, 9, true);
+        //Physics.IgnoreLayerCollision(0, 9, true);
 
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -76,9 +84,9 @@ public class PlayerController : MonoBehaviour
 
         bool movementDisabled = false;
         // Debug addition to get around faster
-        bool running = Input.GetKey(KeyCode.LeftShift);
+        //bool running = Input.GetKey(KeyCode.LeftShift);
         // Set to walkSpeed in alpha test
-        float targetSpeed = ((running) ? runSpeed : walkSpeed) * inputDir.magnitude;
+        float targetSpeed = (/*(running) ? runSpeed : */walkSpeed) * inputDir.magnitude;
         // Speed up the player overtime when they move
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
 
@@ -87,6 +95,7 @@ public class PlayerController : MonoBehaviour
         if (!movementDisabled && !ifFallen)
             controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
 
+        // Add gravity to the player
         velocity += gravity * Time.deltaTime;
 
         // Subtract the velocity by the slowDownAmount to slow down the knockback
@@ -96,17 +105,17 @@ public class PlayerController : MonoBehaviour
         if (velocity.magnitude < 0.35f)
             velocity = Vector3.zero;
 
-        // Make sure the health doesn't overcap
+        // Logic checks to make sure HealthBar array doesn't go out of bounds
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
+        else if (currentHealth <= 0)
+            currentHealth = 0;
 
-        // Player takes damage upon falling into hole
-        //if (transform.position.y < 0)
-        //{
-        //    transform.position = new Vector3(0, 5, 0);
-        //    currentHealth -= 50;
-        //}
-        ///*else */if (transform.position.y > startingHeight) // Make sure the player stays on the ground
+        // 14 is the magic number so shut up
+        if (maxHealth > 14)
+            maxHealth = 14;
+
+        //if (transform.position.y > startingHeight) // Make sure the player stays on the ground
         //{
         //    var previousX = transform.position.x;
         //    var previousZ = transform.position.z;
@@ -125,20 +134,28 @@ public class PlayerController : MonoBehaviour
         {
             movementDisabled = false;
         }
-
-
+        
         // Check if player took damage
         PlayerTookDamage();
 
         // Check for animation plays
         PlayLightAnimation();
         PlayHeavyAnimation();
+
+       if(currentHealth == 0 && DeathToMenu == true)
+       {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+       }
+
+
     }
 
     public void PlayLightAnimation()
     {
         if (Input.GetMouseButtonDown(0) && !gamePaused)
         {
+            lightAttackUsed = true;
+            heavyAttackUsed = false;
             meleeSwipe.SetTrigger("ActiveLClick");
         }
     }
@@ -147,6 +164,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !gamePaused)
         {
+            heavyAttackUsed = true;
+            lightAttackUsed = false;
             meleeSwipe.SetTrigger("ActiveRClick");
         }
 
@@ -175,19 +194,27 @@ public class PlayerController : MonoBehaviour
         }*/
     }
 
+    // When the enemy hits the player, the player takes damage
     void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Collision");
         Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
         playerHitDirection = playerHitDirection.normalized;
 
-        if (other.gameObject.tag == "Enemy")
+        
+
+        if (other.gameObject.tag == "EnemySword")
         {
+            //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
+            TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
+
             playerWasDamaged = true;
             KnockBack(playerHitDirection);
-            currentHealth -= 10;
+            currentHealth -= enemy.enemyAttackStrength;
         }
     }
 
+    // Function to call when the player takes damage
     void PlayerTookDamage()
     {
         // If the enemy took damage turn off the box collider
