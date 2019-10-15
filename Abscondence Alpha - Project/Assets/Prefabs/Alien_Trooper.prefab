@@ -123,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 7619127156262830194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -28, y: 1.5, z: 27}
-  m_LocalScale: {x: 1.0010749, y: 1.0138563, z: 1.0010749}
+  m_LocalScale: {x: 0.77088535, y: 0.6852697, z: 0.77088535}
   m_Children:
   - {fileID: 1418570974}
   - {fileID: 2947833613209481953}
@@ -244,24 +244,24 @@ MonoBehaviour:
   enemyAI: {fileID: 7619127156262830193}
   wasSpawnedInRiver: 0
   wasSpawnedInDoor: 0
-  idleWalkSpeed: 2
-  suspiciousWalkSpeed: 5
-  alertWalkSpeed: 7
-  currentHealth: 5
-  reviveHealthGain: 5
+  idleWalkSpeed: 1
+  suspiciousWalkSpeed: 2
+  alertWalkSpeed: 6
+  currentHealth: 2
+  reviveHealthGain: 2
   downedHealth: 0
   downedTimeUntilAlive: 5
   maxSuspiciousRadius: 20
   maxAlertRadius: 10
   attackRadius: 3
   enemyAttackStrength: 1
-  MeleeRotation: 60
+  MeleeRotation: 100
   maxIdleTravelDistanceRadius: 10
   idleCanWalkUpDown: 1
   idleCanWalkLeftRight: 1
   minIdleTimerRange: 2
   maxIdleTimerRange: 10
-  knockBackForce: 5
+  knockBackForce: 7
   knockBackTime: 0.5
   invulnerabilityTime: 0.5
   meleeWeapon: {fileID: 1845003649589336424}

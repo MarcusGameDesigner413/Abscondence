@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         startingHeight = transform.position.y;
-        ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
+        //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
         // Move the character relevant to the set current speed
         //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled && !ifFallen)
+        if (!movementDisabled/* && !ifFallen*/)
             controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
 
         // Add gravity to the player
@@ -108,7 +108,8 @@ public class PlayerController : MonoBehaviour
         // Logic checks to make sure HealthBar array doesn't go out of bounds
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
-        else if (currentHealth <= 0)
+
+        if (currentHealth <= 0)
             currentHealth = 0;
 
         // 14 is the magic number so shut up

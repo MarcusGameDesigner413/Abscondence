@@ -127,7 +127,7 @@ public class Sentry : MonoBehaviour
                     if(hit.collider.tag == "Player")
                     {
                         hit.collider.GetComponent<CharacterController>().SimpleMove(transform.forward);
-                        hit.collider.GetComponent<PlayerController>().currentHealth -= 5;
+                        hit.collider.GetComponent<PlayerController>().currentHealth -= 1;
                         Debug.Log("Get Lazored Nerd");
                     }
                 }
