@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 100;
     public float walkSpeed = 5;
     //public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
+    public int playerDamage = 1;
     public float turnSmoothTime = 0.1f;
     public float speedSmoothTime = 0.1f;
     public float invulnerabilityTime = 0.5f;
@@ -38,6 +39,10 @@ public class PlayerController : MonoBehaviour
     public bool gamePaused;
     [HideInInspector]
     public float startingHeight;
+    [HideInInspector]
+    public bool lightAttackUsed = false;
+    [HideInInspector]
+    public bool heavyAttackUsed = false;
 
 
     void Start()
@@ -139,6 +144,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !gamePaused)
         {
+            lightAttackUsed = true;
             meleeSwipe.SetTrigger("ActiveLClick");
         }
     }
@@ -147,6 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !gamePaused)
         {
+            lightAttackUsed = true;
             meleeSwipe.SetTrigger("ActiveRClick");
         }
 
@@ -181,11 +188,13 @@ public class PlayerController : MonoBehaviour
         Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
         playerHitDirection = playerHitDirection.normalized;
 
-        if (other.gameObject.tag == "Enemy")
+        TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
+
+        if (other.gameObject.tag == "EnemySword")
         {
             playerWasDamaged = true;
             KnockBack(playerHitDirection);
-            currentHealth -= 1;
+            currentHealth -= enemy.enemyDamage;
         }
     }
 
