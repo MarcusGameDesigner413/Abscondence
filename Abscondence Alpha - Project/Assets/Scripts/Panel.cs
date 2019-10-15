@@ -7,9 +7,11 @@ public class Panel : MonoBehaviour
     //SOMETHING TO NOTE: 'Panel' tag required on object
 
     //DESIGNER DO NOT MODIFY OR ELSE OBJECT WILL BE DESTROYED ON STARTUP
+    [HideInInspector]
     public bool xActivatedX = false;
 
     //this exists so the code doesnt trigger more than once
+    [HideInInspector]
     private bool wasActivated = false;
 
     //this is the item that will be deleted
