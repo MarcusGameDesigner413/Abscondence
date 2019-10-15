@@ -296,3 +296,7 @@ C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\obj\Debug\Assem
 C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\obj\Debug\Assembly-CSharp.dll
 C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\obj\Debug\Assembly-CSharp.pdb
+C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\Temp\bin\Debug\Unity.ProGrids.dll
+C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\Temp\bin\Debug\Unity.ProGrids.Editor.dll
+C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\Temp\bin\Debug\Unity.ProGrids.pdb
+C:\Users\s172172\Desktop\Abscondence\Abscondence Alpha - Project\Temp\bin\Debug\Unity.ProGrids.Editor.pdb

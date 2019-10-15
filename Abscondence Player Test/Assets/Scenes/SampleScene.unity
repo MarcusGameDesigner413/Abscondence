@@ -2643,7 +2643,7 @@ PrefabInstance:
     - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
         type: 3}
       propertyPath: knockBackTime
-      value: 24.96
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
         type: 3}
