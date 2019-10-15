@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 100;
     public float walkSpeed = 5;
     //public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
-    public int playerDamage = 1;
+    public int playerLightDamage = 1;
+    public int playerHeavyDamage = 2;
     public float turnSmoothTime = 0.1f;
     public float speedSmoothTime = 0.1f;
     public float invulnerabilityTime = 0.5f;
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool heavyAttackUsed = false;
 
+    public bool DeathToMenu = false;
+
 
     void Start()
     {
@@ -58,7 +61,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Ignore the collisions between the sword and the environment (mostly the enemy cause it would damage him)
-        Physics.IgnoreLayerCollision(0, 9, true);
+        //Physics.IgnoreLayerCollision(0, 9, true);
 
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -138,6 +141,13 @@ public class PlayerController : MonoBehaviour
         // Check for animation plays
         PlayLightAnimation();
         PlayHeavyAnimation();
+
+       if(currentHealth == 0 && DeathToMenu == true)
+       {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+       }
+
+
     }
 
     public void PlayLightAnimation()
@@ -145,6 +155,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !gamePaused)
         {
             lightAttackUsed = true;
+            heavyAttackUsed = false;
             meleeSwipe.SetTrigger("ActiveLClick");
         }
     }
@@ -153,7 +164,8 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && !gamePaused)
         {
-            lightAttackUsed = true;
+            heavyAttackUsed = true;
+            lightAttackUsed = false;
             meleeSwipe.SetTrigger("ActiveRClick");
         }
 
@@ -185,16 +197,20 @@ public class PlayerController : MonoBehaviour
     // When the enemy hits the player, the player takes damage
     void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Collision");
         Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
         playerHitDirection = playerHitDirection.normalized;
 
-        TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
+        
 
         if (other.gameObject.tag == "EnemySword")
         {
+            //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
+            TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
+
             playerWasDamaged = true;
             KnockBack(playerHitDirection);
-            currentHealth -= enemy.enemyDamage;
+            currentHealth -= enemy.enemyAttackStrength;
         }
     }
 

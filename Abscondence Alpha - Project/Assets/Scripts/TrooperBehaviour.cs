@@ -70,7 +70,7 @@ public class TrooperBehaviour : MonoBehaviour
     public int attackRadius = 2;
 
     //public float accesed by player script when they get damaged by this enemy
-    public int enemyDamage = 1;
+    public int enemyAttackStrength = 1;
 
     //how close the enemy can walk to the player
     public float MeleeRotation = 2;
@@ -204,7 +204,7 @@ public class TrooperBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Physics.IgnoreLayerCollision(0, 12, true);
 
         //switch statement, triggers functions based on which state ai is in
         switch ((int)currentState)
@@ -698,14 +698,21 @@ public class TrooperBehaviour : MonoBehaviour
 
         if (other.gameObject.tag == "Sword" && !xIsDownedX)
         {
-            float healthLostOnHit = 5;
-
+            float healthLostOnHit = 0;
+            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             //if attack1 bolean == true
-            //healthLostOnHit = Player.gameObject.GetComponent<PlayerController>().whateverattack1is;
+            if (player.lightAttackUsed)
+            {
+                //healthLostOnHit = Player.gameObject.GetComponent<PlayerController>().whateverattack1is;
+                healthLostOnHit = player.playerLightDamage;
+            }
 
             //if attack2 boolean == true
-            //healthLostOnHit = Player.gameObject.GetComponent<PlayerController>().whateverattack2is;
-
+            if (player.heavyAttackUsed)
+            {
+                //healthLostOnHit = Player.gameObject.GetComponent<PlayerController>().whateverattack1is;
+                healthLostOnHit = player.playerHeavyDamage;
+            }
             wasDamaged = true;
             KnockBack(enemyHitDirection);
             currentHealth -= healthLostOnHit;
