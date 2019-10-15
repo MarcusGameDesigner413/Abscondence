@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="Assets\Default Folders\TutorialInfo\Scripts\Editor\ReadmeEditor.cs" />
     <Reference Include="Unity.ProGrids">
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
@@ -109,6 +111,7 @@
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
 =======
+>>>>>>> master
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
 =======
       <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
@@ -167,7 +170,6 @@
       <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
 >>>>>>> Stashed changes
     </Reference>
->>>>>>> Stashed changes
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -402,6 +404,9 @@
     <Reference Include="UnityEditor.iOS.Extensions">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
@@ -412,6 +417,8 @@
       <HintPath>C:/Program Files (x86)/Microsoft Visual Studio Tools for Unity/15.0/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -432,6 +439,7 @@
 <<<<<<< Updated upstream
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
 =======
+>>>>>>> master
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
@@ -445,10 +453,13 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+<<<<<<< HEAD
+=======
 >>>>>>> Stashed changes
 =======
       <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
 >>>>>>> Stashed changes
+>>>>>>> master
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

@@ -3378,7 +3378,7 @@ PrefabInstance:
     - target: {fileID: 200722232579310262, guid: aa8d92a529935a94188b160a4ec020b8,
         type: 3}
       propertyPath: canSpawnOnDeath
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 200722232579310262, guid: aa8d92a529935a94188b160a4ec020b8,
         type: 3}
@@ -3679,6 +3679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 1674714207}
+  playerTeleported: 0
 --- !u!65 &841264470
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5410,12 +5411,12 @@ PrefabInstance:
     - target: {fileID: 200722232579310262, guid: aa8d92a529935a94188b160a4ec020b8,
         type: 3}
       propertyPath: currentHealth
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 200722232579310262, guid: aa8d92a529935a94188b160a4ec020b8,
         type: 3}
       propertyPath: reviveHealthGain
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 200722232579310262, guid: aa8d92a529935a94188b160a4ec020b8,
         type: 3}
@@ -8247,6 +8248,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
+        type: 3}
+      propertyPath: knockBackForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
+        type: 3}
+      propertyPath: knockBackTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
+        type: 3}
+      propertyPath: invulnerabilityTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3818065860334428818, guid: e2d416f6531b6d04aa37ba70d5e96345,
+        type: 3}
+      propertyPath: DeathToMenu
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e2d416f6531b6d04aa37ba70d5e96345, type: 3}
 --- !u!1001 &2049376076
@@ -9038,7 +9059,7 @@ PrefabInstance:
     - target: {fileID: 189055619288883978, guid: c6422a8c1f942c3448370284e2b71efa,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 2359
+      value: 6455
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6422a8c1f942c3448370284e2b71efa, type: 3}
@@ -9411,6 +9432,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1.1012719
       objectReference: {fileID: 0}
+    - target: {fileID: 1714929942490017796, guid: c25c72134cb9c8848a054efe9dcfe977,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1173543130}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c25c72134cb9c8848a054efe9dcfe977, type: 3}
 --- !u!1001 &4376739881513337847
@@ -10164,6 +10190,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 718384604, guid: aa8d92a529935a94188b160a4ec020b8, type: 3}
+      propertyPath: m_Constraints
+      value: 126
       objectReference: {fileID: 0}
     - target: {fileID: 200722232579310262, guid: aa8d92a529935a94188b160a4ec020b8,
         type: 3}

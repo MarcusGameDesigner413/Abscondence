@@ -100,6 +100,8 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.ProGrids">
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
@@ -147,6 +149,7 @@
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
 =======
+>>>>>>> master
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
 =======
       <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
@@ -201,7 +204,6 @@
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
->>>>>>> Stashed changes
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
     </Reference>
@@ -404,6 +406,8 @@
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
+<<<<<<< HEAD
+=======
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
@@ -418,6 +422,7 @@
 <<<<<<< Updated upstream
       <HintPath>C:/Users/s172172/Desktop/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
 =======
+>>>>>>> master
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
@@ -425,10 +430,13 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/s191175/Desktop/cloned repo/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+<<<<<<< HEAD
+=======
 >>>>>>> Stashed changes
 =======
       <HintPath>E:/Final Project Year one/Abscondence/Abscondence Alpha - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
 >>>>>>> Stashed changes
+>>>>>>> master
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
