@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Tutorial - WH.unity
-=======
-- path: Assets/Scenes/Tutorial_001 - Copy.unity
->>>>>>> master
+- path: Assets/Scenes/Tutorial_001.unity
   isLoaded: 1
   isActive: 1

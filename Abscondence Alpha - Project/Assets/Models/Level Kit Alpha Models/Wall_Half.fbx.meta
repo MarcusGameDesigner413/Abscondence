@@ -6,6 +6,8 @@ ModelImporter:
     100000: //RootNode
     400000: //RootNode
     2100000: lambert1
+    2100002: Metal
+    2100004: Metal_Dark
     2300000: //RootNode
     3300000: //RootNode
     4300000: Wall_Half
