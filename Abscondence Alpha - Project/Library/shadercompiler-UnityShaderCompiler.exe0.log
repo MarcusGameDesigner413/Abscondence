@@ -1,6 +1,122 @@
 Base path: C:/Program Files/Unity 2018.3.8f1/Editor/Data
 Cmd: initializeCompiler
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+=======
+Cmd: preprocess
+  insize=4896 outsize=2395 ok=1
+Cmd: preprocess
+  insize=2355 outsize=497 ok=1
+Cmd: preprocess
+  insize=3328 outsize=2000 ok=1
+Cmd: preprocess
+  insize=3974 outsize=411 ok=1
+Cmd: preprocess
+  insize=3608 outsize=1262 ok=1
+Cmd: preprocess
+  insize=3652 outsize=1674 ok=1
+Cmd: preprocess
+  insize=5184 outsize=1875 ok=1
+Cmd: preprocess
+  insize=3065 outsize=1094 ok=1
+Cmd: preprocess
+  insize=3606 outsize=1310 ok=1
+Cmd: preprocess
+  insize=1431 outsize=281 ok=1
+Cmd: preprocess
+  insize=978 outsize=231 ok=1
+Cmd: preprocess
+  insize=6970 outsize=1724 ok=1
+Cmd: preprocess
+  insize=10352 outsize=3956 ok=1
+Cmd: preprocess
+  insize=5490 outsize=2934 ok=1
+Cmd: preprocess
+  insize=6739 outsize=3232 ok=1
+Cmd: preprocess
+  insize=3569 outsize=2622 ok=1
+Cmd: preprocess
+  insize=6922 outsize=3299 ok=1
+Cmd: preprocess
+  insize=7831 outsize=3771 ok=1
+Cmd: preprocess
+  insize=7319 outsize=2448 ok=1
+Cmd: preprocess
+  insize=5505 outsize=2651 ok=1
+Cmd: preprocess
+  insize=7960 outsize=2720 ok=1
+Cmd: preprocess
+  insize=1532 outsize=340 ok=1
+Cmd: preprocess
+  insize=2420 outsize=1129 ok=1
+Cmd: preprocess
+  insize=690 outsize=344 ok=1
+Cmd: preprocess
+  insize=10343 outsize=3945 ok=1
+Cmd: preprocess
+  insize=3040 outsize=1075 ok=1
+Cmd: preprocess
+  insize=6714 outsize=963 ok=1
+Cmd: preprocess
+  insize=4407 outsize=3641 ok=1
+Cmd: preprocess
+  insize=7327 outsize=2458 ok=1
+Cmd: preprocess
+  insize=53622 outsize=1862 ok=1
+Cmd: preprocess
+  insize=50246 outsize=2486 ok=1
+Cmd: preprocess
+  insize=59203 outsize=1536 ok=1
+Cmd: preprocess
+  insize=59101 outsize=1544 ok=1
+Cmd: preprocess
+  insize=64824 outsize=1970 ok=1
+Cmd: preprocess
+  insize=51298 outsize=2510 ok=1
+Cmd: preprocess
+  insize=56659 outsize=2255 ok=1
+Cmd: preprocess
+  insize=48352 outsize=1537 ok=1
+Cmd: preprocess
+  insize=54043 outsize=2554 ok=1
+Cmd: preprocess
+  insize=57203 outsize=1853 ok=1
+Cmd: preprocess
+  insize=44327 outsize=1733 ok=1
+Cmd: preprocess
+  insize=40636 outsize=1645 ok=1
+Cmd: preprocess
+  insize=47439 outsize=1680 ok=1
+>>>>>>> Stashed changes
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+Cmd: initializeCompiler
+<<<<<<< Updated upstream
 =======
 Cmd: initializeCompiler
 Cmd: initializeCompiler
@@ -10,25 +126,7 @@ Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
-Cmd: initializeCompiler
+>>>>>>> Stashed changes
 Cmd: initializeCompiler
 Cmd: initializeCompiler
 Cmd: initializeCompiler
