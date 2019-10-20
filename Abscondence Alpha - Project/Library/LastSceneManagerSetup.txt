@@ -1,8 +1,4 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Tutorial_001.unity
-=======
-- path: Assets/Scenes/LD_Scene.unity
->>>>>>> master
+- path: Assets/Scenes/(Beta) Tutorial_002.unity
   isLoaded: 1
   isActive: 1

@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1847,21 +1847,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1807654078}
-    - target: {fileID: 53808962726881584, guid: 9e4f5827e52da2142b031f8359acec1a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
     - target: {fileID: 3175501077450566432, guid: 9e4f5827e52da2142b031f8359acec1a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1807654078}
-    - target: {fileID: 3175501077450566432, guid: 9e4f5827e52da2142b031f8359acec1a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Quit
-      objectReference: {fileID: 0}
     - target: {fileID: 53808962299480201, guid: 9e4f5827e52da2142b031f8359acec1a,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -2580,16 +2570,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 318272620}
     m_Modifications:
-    - target: {fileID: 8194310861257786859, guid: 8b6615d2831aa4447a34719ec4be4224,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8487702903805728356, guid: 8b6615d2831aa4447a34719ec4be4224,
-        type: 3}
-      propertyPath: m_Name
-      value: Table
-      objectReference: {fileID: 0}
     - target: {fileID: 8487702903805728352, guid: 8b6615d2831aa4447a34719ec4be4224,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2643,6 +2623,16 @@ PrefabInstance:
     - target: {fileID: 8487702903805728352, guid: 8b6615d2831aa4447a34719ec4be4224,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487702903805728356, guid: 8b6615d2831aa4447a34719ec4be4224,
+        type: 3}
+      propertyPath: m_Name
+      value: Table
+      objectReference: {fileID: 0}
+    - target: {fileID: 8194310861257786859, guid: 8b6615d2831aa4447a34719ec4be4224,
+        type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
