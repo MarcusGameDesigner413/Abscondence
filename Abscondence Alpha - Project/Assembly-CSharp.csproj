@@ -70,9 +70,11 @@
     <Compile Include="Assets\Scripts\HealthBarSystem.cs" />
     <Compile Include="Assets\Scripts\HealthPickup.cs" />
     <Compile Include="Assets\Scripts\KillGame.cs" />
+    <Compile Include="Assets\Scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MeleeAnimation.cs" />
     <Compile Include="Assets\Scripts\MiniMapFollow.cs" />
+    <Compile Include="Assets\Scripts\MiniMapZoom.cs" />
     <Compile Include="Assets\Scripts\MoveLeft.cs" />
     <Compile Include="Assets\Scripts\MoveRight.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />

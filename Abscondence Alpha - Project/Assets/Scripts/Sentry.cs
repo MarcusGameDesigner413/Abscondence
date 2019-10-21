@@ -11,6 +11,8 @@ public class Sentry : MonoBehaviour
     Vector3 fourthLastFramePosition;
     Vector3 fifthLastFramePosition;
     Vector3 sixthLastFramePosition;
+    Vector3 ninthLastFramePosition;
+    Vector3 eighthLastFramePosition;
     Vector3 seventhLastFramePosition;
     Vector3 raycastPosition;
     Quaternion targetRotation;
@@ -63,7 +65,7 @@ public class Sentry : MonoBehaviour
                     }
                     else if (playerHasBeenDetected)
                     {
-                        relativePosition = seventhLastFramePosition - transform.position;
+                        relativePosition = ninthLastFramePosition - transform.position;
                         targetRotation = Quaternion.LookRotation(relativePosition);
                     }
                     playerHasBeenDetected = true;
@@ -86,6 +88,8 @@ public class Sentry : MonoBehaviour
                 playerHasBeenDetected = false;
             }
 
+            ninthLastFramePosition = eighthLastFramePosition;
+            eighthLastFramePosition = seventhLastFramePosition;
             seventhLastFramePosition = sixthLastFramePosition;
             sixthLastFramePosition = fifthLastFramePosition;
             fifthLastFramePosition = fourthLastFramePosition;
@@ -93,6 +97,7 @@ public class Sentry : MonoBehaviour
             thirdLastFramePosition = secondLastFramePosition;
             secondLastFramePosition = lastFramePosition;
             lastFramePosition = player.transform.position;
+
         }
 
         if (!rotating)
@@ -122,7 +127,6 @@ public class Sentry : MonoBehaviour
                     line.SetPositions(linePos);
                     line.positionCount = 2;
                     line.enabled = true;
-                    shootingTimer += Time.deltaTime;
 
                     if(hit.collider.tag == "Player")
                     {
@@ -137,7 +141,16 @@ public class Sentry : MonoBehaviour
                     rotating = true;
                     rotationTime = 0.0f;
                 }
+                shootingTimer += Time.deltaTime;
             }
         }
     }
+    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, inRangeRadius);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, outOfRangeRadius);
+    }
+
 }

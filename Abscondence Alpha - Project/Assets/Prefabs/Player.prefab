@@ -113,14 +113,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 4
   maxHealth: 14
-  walkSpeed: 7
+  walkSpeed: 8
   playerLightDamage: 1
   playerHeavyDamage: 0
   turnSmoothTime: 0.1
   speedSmoothTime: 0.1
   invulnerabilityTime: 1
   knockBackForce: 7
-  knockBackTime: 0.5
+  knockBackTime: 1
   slowDownAmount: 0.2
   gravityModifier: 10
   storedPowerCell: 0
@@ -152,6 +152,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8037795497373905146}
     m_Modifications:
+    - target: {fileID: 376613655657543165, guid: 98fe513fdf93c764284433896a34d504,
+        type: 3}
+      propertyPath: m_Name
+      value: MeleeWeapon
+      objectReference: {fileID: 0}
     - target: {fileID: 3767272191060319860, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -207,22 +212,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 376613655657543165, guid: 98fe513fdf93c764284433896a34d504,
+    - target: {fileID: 1576677701460822385, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
       propertyPath: m_Name
-      value: MeleeWeapon
+      value: CrossSection
       objectReference: {fileID: 0}
-    - target: {fileID: 2467882560637107160, guid: 98fe513fdf93c764284433896a34d504,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 415a9606365ede24781d34271c8be24c, type: 2}
     - target: {fileID: 3552712942282209571, guid: 98fe513fdf93c764284433896a34d504,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3354697675290602852, guid: 98fe513fdf93c764284433896a34d504,
         type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -232,6 +227,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3354697675290602852, guid: 98fe513fdf93c764284433896a34d504,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2467882560637107160, guid: 98fe513fdf93c764284433896a34d504,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 415a9606365ede24781d34271c8be24c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98fe513fdf93c764284433896a34d504, type: 3}
 --- !u!1 &2793093458454253424 stripped

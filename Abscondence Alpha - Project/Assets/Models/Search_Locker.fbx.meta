@@ -10,6 +10,8 @@ ModelImporter:
     400002: //RootNode
     400004: Search_Locker_Door
     2100000: lambert1
+    2100002: Light_metal
+    2100004: dark_metal
     2300000: Search_Locker
     2300002: Search_Locker_Door
     3300000: Search_Locker
