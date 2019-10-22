@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 8554049497166564082}
   - component: {fileID: 8554049497165563954}
   - component: {fileID: 5632062512839489692}
+  - component: {fileID: 56633829}
+  - component: {fileID: 56633828}
   m_Layer: 0
   m_Name: Door_Panel_Keycard
-  m_TagString: Untagged
+  m_TagString: CardPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -89,8 +91,36 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8554049497163568882}
   m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4370804, y: 2.4144716, z: 2.698272}
+  m_Center: {x: -0.0000056028366, y: 0.5, z: 0.4999994}
+--- !u!65 &56633829
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554049497163568882}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.4370804, y: 1.4144714, z: 0.69827086}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &56633828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8554049497163568882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b13b92004b346439c8d2c0e5fc9a6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xActivatedX: 0
+  oldDoor: {fileID: 0}
+  SecondsToDestroy: 1

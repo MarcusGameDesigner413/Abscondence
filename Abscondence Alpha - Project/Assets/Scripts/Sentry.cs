@@ -11,9 +11,10 @@ public class Sentry : MonoBehaviour
     Vector3 fourthLastFramePosition;
     Vector3 fifthLastFramePosition;
     Vector3 sixthLastFramePosition;
-    Vector3 ninthLastFramePosition;
-    Vector3 eighthLastFramePosition;
     Vector3 seventhLastFramePosition;
+    Vector3 eighthLastFramePosition;
+    Vector3 ninthLastFramePosition;
+    Vector3 tenthLastFramePosition;
     Vector3 raycastPosition;
     Quaternion targetRotation;
     LineRenderer line = null;
@@ -65,7 +66,7 @@ public class Sentry : MonoBehaviour
                     }
                     else if (playerHasBeenDetected)
                     {
-                        relativePosition = ninthLastFramePosition - transform.position;
+                        relativePosition = tenthLastFramePosition - transform.position;
                         targetRotation = Quaternion.LookRotation(relativePosition);
                     }
                     playerHasBeenDetected = true;
@@ -88,6 +89,7 @@ public class Sentry : MonoBehaviour
                 playerHasBeenDetected = false;
             }
 
+            tenthLastFramePosition = ninthLastFramePosition;
             ninthLastFramePosition = eighthLastFramePosition;
             eighthLastFramePosition = seventhLastFramePosition;
             seventhLastFramePosition = sixthLastFramePosition;

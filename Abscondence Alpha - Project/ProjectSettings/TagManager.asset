@@ -13,6 +13,8 @@ TagManager:
   - Jammer
   - EnemySword
   - Enemy
+  - CardPanel
+  - Card
   layers:
   - Default
   - TransparentFX

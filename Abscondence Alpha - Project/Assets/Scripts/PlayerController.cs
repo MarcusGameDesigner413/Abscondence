@@ -20,6 +20,13 @@ public class PlayerController : MonoBehaviour
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
 
+    [HideInInspector]
+    public bool hasKey = false;
+    [HideInInspector]
+    public bool hasUniqueKey = false;
+    [HideInInspector]
+    public int keyType = 0;
+
     float turnSmoothVelocity;
     float speedSmoothVelocity;
     float currentSpeed;
@@ -55,7 +62,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         startingHeight = transform.position.y;
-        //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
+        ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
@@ -92,7 +99,7 @@ public class PlayerController : MonoBehaviour
 
         // Move the character relevant to the set current speed
         //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled/* && !ifFallen*/)
+        if (!movementDisabled && !ifFallen)
             controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
 
         // Add gravity to the player
@@ -108,8 +115,7 @@ public class PlayerController : MonoBehaviour
         // Logic checks to make sure HealthBar array doesn't go out of bounds
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
-
-        if (currentHealth <= 0)
+        else if (currentHealth <= 0)
             currentHealth = 0;
 
         // 14 is the magic number so shut up
@@ -208,10 +214,13 @@ public class PlayerController : MonoBehaviour
         {
             //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
             TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
-
-            playerWasDamaged = true;
-            KnockBack(playerHitDirection);
-            currentHealth -= enemy.enemyAttackStrength;
+            if(enemy.xIsDownedX == false)
+            {
+                playerWasDamaged = true;
+                KnockBack(playerHitDirection);
+                currentHealth -= enemy.enemyAttackStrength;
+            }
+            
         }
     }
 
@@ -336,6 +345,53 @@ public class PlayerController : MonoBehaviour
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
+        }
+
+        if (collision.gameObject.tag == "Card" && Input.GetKeyDown(KeyCode.E))
+        {
+            if(collision.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
+            {
+                hasUniqueKey = true;
+            }
+            else
+            {
+                keyType = collision.gameObject.GetComponent<KeyCard>().CurrentLevel;
+                //update the score
+                hasKey = true;
+            }
+
+            //delete the card
+            Destroy(collision.gameObject);
+            
+        }
+
+        if (collision.gameObject.tag == "CardPanel" && Input.GetKeyDown(KeyCode.E))
+        {
+            //if the panel requires the master and the player has the master AND has not been activated 
+            if(collision.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
+                && !collision.gameObject.GetComponent<CardPanel>().xActivatedX)
+            {
+                collision.gameObject.GetComponent<CardPanel>().xActivatedX = true;
+            }
+          
+
+            //if the player has the key, the panel has not been activated before AND does not need the master
+            if (hasKey == true && !collision.gameObject.GetComponent<CardPanel>().xActivatedX 
+                && !collision.gameObject.GetComponent<CardPanel>().requiresMaster) 
+            {
+                //play sound effect of door opening
+
+                //destroy the door
+                collision.gameObject.GetComponent<CardPanel>().xActivatedX = true;
+            }
+
+            //the "else" that goes after as it is denied
+            if (!collision.gameObject.GetComponent<CardPanel>().xActivatedX)
+            {
+                //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
+            }
+
+           
         }
     }
 }
