@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private Vector3 gravity;
     private BottomlessPit ifFallen;
+    private Vector2 input;
+    private Vector3 relativePosition;
 
     [HideInInspector]
     public bool gamePaused;
@@ -44,8 +46,24 @@ public class PlayerController : MonoBehaviour
     public bool lightAttackUsed = false;
     [HideInInspector]
     public bool heavyAttackUsed = false;
+    [HideInInspector]
+    public Vector3 draggableBlockVelocity;
 
     public bool DeathToMenu = false;
+
+
+
+    GameObject box;
+
+
+    enum DraggingState
+    {
+        NONE,
+        VERTICAL,
+        HORIZONTAL,
+    };
+
+    DraggingState currentState;
 
 
     void Start()
@@ -55,6 +73,7 @@ public class PlayerController : MonoBehaviour
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         startingHeight = transform.position.y;
+        currentState = DraggingState.NONE;
         //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
@@ -65,22 +84,13 @@ public class PlayerController : MonoBehaviour
 
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (currentState == DraggingState.VERTICAL)
+            input.x = 0;
+        else if (currentState == DraggingState.HORIZONTAL)
+            input.y = 0;
+
         // Normalize the input
         Vector2 inputDir = input.normalized;
-
-        if (inputDir != Vector2.zero)
-        {
-            /* ***THIS CODE LOCKS THE PLAYER ROTATION WHEN ATTACKING ANIMATION IS PLAYING***
-            if (!(meleeSwipe.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) && !meleeSwipe.IsInTransition(0))
-            {*/
-
-            // Set the target rotation to be equal to the direction that the player is facing
-            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
-            // Change the rotation to the player to be equal to that direction with smoothing
-            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-
-            //}
-        }
 
         bool movementDisabled = false;
         // Debug addition to get around faster
@@ -90,10 +100,35 @@ public class PlayerController : MonoBehaviour
         // Speed up the player overtime when they move
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
 
-        // Move the character relevant to the set current speed
-        //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled/* && !ifFallen*/)
-            controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
+        if (inputDir != Vector2.zero)
+        {
+            /* ***THIS CODE LOCKS THE PLAYER ROTATION WHEN ATTACKING ANIMATION IS PLAYING***
+            if (!(meleeSwipe.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) && !meleeSwipe.IsInTransition(0))
+            {*/
+            if (currentState == DraggingState.NONE)
+            {
+                // Set the target rotation to be equal to the direction that the player is facing
+                float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
+                // Change the rotation to the player to be equal to that direction with smoothing
+                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+
+                // Move the character relevant to the set current speed
+                //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
+                if (!movementDisabled/* && !ifFallen*/)
+                    controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
+            }
+            else
+            {
+                Vector3 dir = new Vector3(inputDir.x, 0, inputDir.y);
+
+                if (!movementDisabled/* && !ifFallen*/)
+                    controller.Move(((dir * currentSpeed) + velocity) * Time.deltaTime);
+
+            }
+            //}
+        }
+
+
 
         // Add gravity to the player
         velocity += gravity * Time.deltaTime;
@@ -116,14 +151,6 @@ public class PlayerController : MonoBehaviour
         if (maxHealth > 14)
             maxHealth = 14;
 
-        //if (transform.position.y > startingHeight) // Make sure the player stays on the ground
-        //{
-        //    var previousX = transform.position.x;
-        //    var previousZ = transform.position.z;
-
-        //    transform.position = new Vector3(previousX, startingHeight, previousZ);
-        //}
-
         // Only use the timer if the counter has been activated
         if (knockBackCounter > 0)
         {
@@ -135,7 +162,7 @@ public class PlayerController : MonoBehaviour
         {
             movementDisabled = false;
         }
-        
+
         // Check if player took damage
         PlayerTookDamage();
 
@@ -143,12 +170,48 @@ public class PlayerController : MonoBehaviour
         PlayLightAnimation();
         PlayHeavyAnimation();
 
-       if(currentHealth == 0 && DeathToMenu == true)
-       {
+        if (currentHealth == 0 && DeathToMenu == true)
+        {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
-       }
+        }
 
+        //Box dragging
+        if (Input.GetButtonUp("Interact"))
+        {
+            currentState = DraggingState.NONE;
+            //Set velocity to zero
+            
+            //set box to null
+            box = null;
+        }
+        Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0.0f), transform.position + new Vector3(0.5f, 5.0f, 0.0f), Color.red);
 
+    }
+
+    private void FixedUpdate()
+    {
+        switch (currentState)
+        {
+            case DraggingState.VERTICAL:
+                Vector3 targetPosition = controller.transform.position + relativePosition;
+                targetPosition.y = box.transform.position.y;
+
+                Vector3 velocity = (targetPosition - box.transform.position) / Time.fixedDeltaTime;
+
+                box.GetComponent<Rigidbody>().AddForce(velocity * 40);
+                //box.GetComponent<Rigidbody>().velocity = velocity;
+
+                break;
+
+            case DraggingState.HORIZONTAL:
+                targetPosition = controller.transform.position + relativePosition;
+                targetPosition.y = box.transform.position.y;
+
+                velocity = (targetPosition - box.transform.position) / Time.fixedDeltaTime;
+
+                box.GetComponent<Rigidbody>().AddForce(velocity * 40);
+                break;
+        }
     }
 
     public void PlayLightAnimation()
@@ -202,7 +265,7 @@ public class PlayerController : MonoBehaviour
         Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
         playerHitDirection = playerHitDirection.normalized;
 
-        
+
 
         if (other.gameObject.tag == "EnemySword")
         {
@@ -256,21 +319,74 @@ public class PlayerController : MonoBehaviour
         velocity += playerMoveDirection;
     }
 
-    //updated with on trigger stay
-    void OnTriggerStay(Collider collision)
+    void OnTriggerEnter(Collider other)
     {
-        //execution of enemy
-        if (collision.gameObject.tag == "Enemy")
+        //if (other.name == "TopCollider" || other.name == "BottomCollider")
+        //{
+        //    //Vector3 relativePosition = other.transform.position - transform.position;
+        //    //Vector3 targetPosition = transform.position + relativePosition;
+        //    //targetPosition.y = other.transform.position.y;
+        //    ////other.transform.Translate(relativePosition - transform.position);
+        //    ////other.transform.position = transform.position + relativePosition.normalized;
+        //    //other.transform.position += (targetPosition - other.transform.position) * Time.deltaTime;
+
+        //    currentState = DraggingState.VERTICAL;
+        //}
+        //else if (other.name == "LeftCollider" || other.name == "RightCollider")
+        //{
+        //    currentState = DraggingState.HORIZONTAL;
+        //}
+        //else
+        //{
+        //    currentState = DraggingState.NONE;
+        //}
+    }
+
+    //updated with on trigger stay
+    void OnTriggerStay(Collider other)
+    {
+        if (currentState == DraggingState.NONE)
         {
-            bool enemyDeadCheck = collision.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
-            if (collision.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.E) && enemyDeadCheck == true)
+            if (other.name == "TopCollider" && Input.GetButton("Interact") || other.name == "BottomCollider" && Input.GetButton("Interact"))
             {
-                collision.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
+                box = other.transform.parent.gameObject;
+                relativePosition = box.transform.position - transform.position;
+                Debug.Log("booya");
+                if (relativePosition.magnitude < 2.0f)
+                {
+                    relativePosition.Normalize();
+                    relativePosition *= 2.0f;
+                }
+
+                currentState = DraggingState.VERTICAL;
+            }
+            else if (other.name == "LeftCollider" && Input.GetButton("Interact") || other.name == "RightCollider" && Input.GetButton("Interact"))
+            {
+                box = other.transform.parent.gameObject;
+                relativePosition = box.transform.position - transform.position;
+                Debug.Log("booya");
+                if (relativePosition.magnitude < 2.0f)
+                {
+                    relativePosition.Normalize();
+                    relativePosition *= 2.0f;
+                }
+
+                currentState = DraggingState.HORIZONTAL;
+            }
+        }
+
+        //execution of enemy
+        if (other.gameObject.tag == "Enemy")
+        {
+            bool enemyDeadCheck = other.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
+            if (other.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.E) && enemyDeadCheck == true)
+            {
+                other.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
 
         // Powercell pickup
-        if (collision.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
         {
             if (storedPowerCell >= maxPowerCell)
             {
@@ -282,16 +398,16 @@ public class PlayerController : MonoBehaviour
                 storedPowerCell++;
 
                 //delete the power cell
-                Destroy(collision.gameObject);
+                Destroy(other.gameObject);
             }
         }
 
         // Door open -- this requires the panel object to have the tag 'Panel'
-        if (collision.gameObject.tag == "Panel" && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.tag == "Panel" && Input.GetKeyDown(KeyCode.E))
         {
 
             //if the player has 1 or more power cells and the panel has not been activated before
-            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
+            if (storedPowerCell >= 1 && !other.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
             {
                 //open the door
                 storedPowerCell--;
@@ -299,7 +415,7 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of door opening
 
                 //destroy the door
-                collision.gameObject.GetComponent<Panel>().xActivatedX = true;
+                other.gameObject.GetComponent<Panel>().xActivatedX = true;
             }
             else
             {
@@ -308,14 +424,14 @@ public class PlayerController : MonoBehaviour
         }
 
         //health interact
-        if (collision.gameObject.tag == "Health" && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.tag == "Health" && Input.GetKeyDown(KeyCode.E))
         {
             //if the player has less than max health
             if (currentHealth < maxHealth)
             {
 
                 //sets up the amount to heal
-                int healthGained = collision.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
+                int healthGained = other.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
 
                 //heal the player
                 currentHealth = currentHealth + healthGained;
@@ -330,7 +446,7 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of healing
 
                 //destroy the door
-                Destroy(collision.gameObject);
+                Destroy(other.gameObject);
             }
             else
             {
