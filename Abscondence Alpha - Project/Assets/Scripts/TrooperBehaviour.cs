@@ -803,6 +803,16 @@ public class TrooperBehaviour : MonoBehaviour
         trooperAnimation.SetTrigger("GetUpFromDownedAnimation");
 
     }
+    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
+    }
+
 }
 
 

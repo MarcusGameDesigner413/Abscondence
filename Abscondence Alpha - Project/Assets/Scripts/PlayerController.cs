@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier = 10.0f;
     public int storedPowerCell = 0;
     public int maxPowerCell = 5;
+    public int storedDetPack = 0;
+    public int maxDetPack = 5;
+    public int storedMedvial = 0;
+    public int maxMedvial = 5;
+
 
     [HideInInspector]
     public bool hasKey = false;
@@ -159,7 +164,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayLightAnimation()
     {
-        if (Input.GetMouseButtonDown(0) && !gamePaused)
+        if (Input.GetButtonDown("LightAttack") && !gamePaused)
         {
             lightAttackUsed = true;
             heavyAttackUsed = false;
@@ -169,7 +174,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayHeavyAnimation()
     {
-        if (Input.GetMouseButtonDown(1) && !gamePaused)
+        if (Input.GetButtonDown("SpinAttack") && !gamePaused)
         {
             heavyAttackUsed = true;
             lightAttackUsed = false;
@@ -214,13 +219,10 @@ public class PlayerController : MonoBehaviour
         {
             //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
             TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
-            if(enemy.xIsDownedX == false)
-            {
-                playerWasDamaged = true;
-                KnockBack(playerHitDirection);
-                currentHealth -= enemy.enemyAttackStrength;
-            }
-            
+
+            playerWasDamaged = true;
+            KnockBack(playerHitDirection);
+            currentHealth -= enemy.enemyAttackStrength;
         }
     }
 
@@ -272,14 +274,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             bool enemyDeadCheck = collision.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
-            if (collision.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.E) && enemyDeadCheck == true)
+            if (collision.gameObject.tag == "Enemy" && Input.GetButtonDown("Interact") && enemyDeadCheck == true)
             {
                 collision.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
 
         // Powercell pickup
-        if (collision.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
+        if (collision.gameObject.tag == "PowerCell" && Input.GetButtonDown("Interact"))
         {
             if (storedPowerCell >= maxPowerCell)
             {
@@ -296,7 +298,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Door open -- this requires the panel object to have the tag 'Panel'
-        if (collision.gameObject.tag == "Panel" && Input.GetKeyDown(KeyCode.E))
+        if (collision.gameObject.tag == "Panel" && Input.GetButtonDown("Interact"))
         {
 
             //if the player has 1 or more power cells and the panel has not been activated before
@@ -317,7 +319,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //health interact
-        if (collision.gameObject.tag == "Health" && Input.GetKeyDown(KeyCode.E))
+        if (collision.gameObject.tag == "Health" && Input.GetButtonDown("Interact"))
         {
             //if the player has less than max health
             if (currentHealth < maxHealth)
@@ -346,10 +348,9 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
         }
-
-        if (collision.gameObject.tag == "Card" && Input.GetKeyDown(KeyCode.E))
+        if (collision.gameObject.tag == "Card" && Input.GetButtonDown("Interact"))
         {
-            if(collision.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
+            if (collision.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
             {
                 hasUniqueKey = true;
             }
@@ -362,22 +363,22 @@ public class PlayerController : MonoBehaviour
 
             //delete the card
             Destroy(collision.gameObject);
-            
+
         }
 
-        if (collision.gameObject.tag == "CardPanel" && Input.GetKeyDown(KeyCode.E))
+        if (collision.gameObject.tag == "CardPanel" && Input.GetButtonDown("Interact"))
         {
             //if the panel requires the master and the player has the master AND has not been activated 
-            if(collision.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
+            if (collision.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
                 && !collision.gameObject.GetComponent<CardPanel>().xActivatedX)
             {
                 collision.gameObject.GetComponent<CardPanel>().xActivatedX = true;
             }
-          
+
 
             //if the player has the key, the panel has not been activated before AND does not need the master
-            if (hasKey == true && !collision.gameObject.GetComponent<CardPanel>().xActivatedX 
-                && !collision.gameObject.GetComponent<CardPanel>().requiresMaster) 
+            if (hasKey == true && !collision.gameObject.GetComponent<CardPanel>().xActivatedX
+                && !collision.gameObject.GetComponent<CardPanel>().requiresMaster)
             {
                 //play sound effect of door opening
 
@@ -391,7 +392,36 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
 
-           
+
+        }
+
+        // Powercell pickup
+        if (collision.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
+        {
+            if (storedDetPack >= maxDetPack)
+            {
+                //play sound of --NO--, DO NOT ADD to SCORE
+            }
+            else
+            {
+                //update the score
+                storedDetPack++;
+
+                //delete the power cell
+                Destroy(collision.gameObject);
+            }
+        }
+
+        //rad jammer gonna block yo screen unless you destroy it with a detpack
+        if (collision.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
+        {
+            //got more than 1 detpack, good, now make it go boom
+            if (storedDetPack >= 1 && collision.gameObject.GetComponent<Jammer>().isJamming)
+            {
+                collision.gameObject.GetComponent<Jammer>().isJamming = false;
+
+                storedDetPack--;
+            }
         }
     }
 }

@@ -70,9 +70,12 @@
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\HealthBarSystem.cs" />
     <Compile Include="Assets\Scripts\HealthPickup.cs" />
+    <Compile Include="Assets\Scripts\InventorySystem.cs" />
+    <Compile Include="Assets\Scripts\Jammer.cs" />
     <Compile Include="Assets\Scripts\KeyCard.cs" />
     <Compile Include="Assets\Scripts\KeyCardSystem.cs" />
     <Compile Include="Assets\Scripts\KillGame.cs" />
+    <Compile Include="Assets\Scripts\Ladder.cs" />
     <Compile Include="Assets\Scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MeleeAnimation.cs" />

@@ -15,6 +15,7 @@ TagManager:
   - Enemy
   - CardPanel
   - Card
+  - DetPack
   layers:
   - Default
   - TransparentFX
