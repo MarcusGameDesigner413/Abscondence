@@ -66,11 +66,20 @@
     <Compile Include="Assets\Scripts\Attacking.cs" />
     <Compile Include="Assets\Scripts\BottomlessPit.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\Draggable_Block.cs" />
+=======
+    <Compile Include="Assets\Scripts\CardPanel.cs" />
+>>>>>>> master
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\HealthBarSystem.cs" />
     <Compile Include="Assets\Scripts\HealthPickup.cs" />
+    <Compile Include="Assets\Scripts\InventorySystem.cs" />
+    <Compile Include="Assets\Scripts\Jammer.cs" />
+    <Compile Include="Assets\Scripts\KeyCard.cs" />
+    <Compile Include="Assets\Scripts\KeyCardSystem.cs" />
     <Compile Include="Assets\Scripts\KillGame.cs" />
+    <Compile Include="Assets\Scripts\Ladder.cs" />
     <Compile Include="Assets\Scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\MeleeAnimation.cs" />
@@ -85,7 +94,9 @@
     <Compile Include="Assets\Scripts\PlayerMovementGreybox.cs" />
     <Compile Include="Assets\Scripts\Sentry.cs" />
     <Compile Include="Assets\Scripts\TeleportPlayer.cs" />
+    <Compile Include="Assets\Scripts\TeleportRemoveCard.cs" />
     <Compile Include="Assets\Scripts\TrooperBehaviour.cs" />
+    <Compile Include="Assets\Scripts\VentScript.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

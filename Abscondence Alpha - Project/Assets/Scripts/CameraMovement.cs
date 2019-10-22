@@ -59,24 +59,46 @@ public class CameraMovement : MonoBehaviour
         {
             float v = Input.GetAxis("CameraVertical");
             float h = Input.GetAxis("CameraHorizontal");
-            if (h != 0 || v != 0)
-                player.GetComponent<PlayerController/*Change to whatever is making the player move, preferably script*/>().enabled = false;
-            else
-                player.GetComponent<PlayerController/*Change to whatever is making the player move, preferably script*/>().enabled = true;
-
-            if(player.transform.position.y <= 0)
+            if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.JoystickButton9))
             {
-                mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)),
-                                                        yDiscreprency,
-                                                        player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+                if (h != 0 || v != 0)
+                    player.GetComponent<PlayerController/*Change to whatever is making the player move, preferably script*/>().enabled = false;
+                else
+                    player.GetComponent<PlayerController/*Change to whatever is making the player move, preferably script*/>().enabled = true;
 
+                if (player.transform.position.y <= 0)
+                {
+                    mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)),
+                                                            yDiscreprency,
+                                                            player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+
+                }
+                else
+                {
+                    mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)),
+                                                            player.transform.position.y + yDiscreprency,
+                                                            player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+
+                }
             }
             else
             {
-                mainCam.transform.position = new Vector3(player.transform.position.x + (xDiscreprency + (h * maxCameraMovement)), 
-                                                        player.transform.position.y + yDiscreprency, 
-                                                        player.transform.position.z + (zDiscreprency + (v * maxCameraMovement)));
+                player.GetComponent<PlayerController/*Change to whatever is making the player move, preferably script*/>().enabled = true;
 
+                if (player.transform.position.y <= 0)
+                {
+                    mainCam.transform.position = new Vector3(player.transform.position.x + xDiscreprency,
+                                                            yDiscreprency,
+                                                            player.transform.position.z + zDiscreprency);
+
+                }
+                else
+                {
+                    mainCam.transform.position = new Vector3(player.transform.position.x + xDiscreprency,
+                                                            player.transform.position.y + yDiscreprency,
+                                                            player.transform.position.z + zDiscreprency);
+
+                }
             }
 
             mainCam.transform.rotation = Quaternion.Euler(xRot, yRot, zRot);

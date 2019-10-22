@@ -11,9 +11,10 @@ public class Sentry : MonoBehaviour
     Vector3 fourthLastFramePosition;
     Vector3 fifthLastFramePosition;
     Vector3 sixthLastFramePosition;
-    Vector3 ninthLastFramePosition;
-    Vector3 eighthLastFramePosition;
     Vector3 seventhLastFramePosition;
+    Vector3 eiththLastFramePosition;
+    Vector3 ninthLastFramePosition;
+    Vector3 tenthLastFramePosition;
     Vector3 raycastPosition;
     Quaternion targetRotation;
     LineRenderer line = null;
@@ -23,25 +24,43 @@ public class Sentry : MonoBehaviour
     public float inRangeRadius;
     public float cooldown;
     public float rotationSpeed;
-    public float rotationTime = 0;
-    public float lerpTimeRotated = 0;
+    float rotationTime = 0;
+    float lerpTimeRotated = 0;
     public float maxRotationTime;
     public float maxBeamDistance;
     public float yOffset;
-    public float shootingTimer;
+    float shootingTimer;
     public float maxShootingTime;
     public float knockBackForce = 10;
+    public float damageRestTime;
+    float damageRestTimer;
+    public int sentryDamage;
     [Range(1,2)]
     public int variant;
-    public bool rotating = true;
-    public bool shooting = false;
-    public bool playerHasBeenDetected = false;
+    bool rotating = true;
+    bool shooting = false;
+    bool playerHasBeenDetected = false;
+    public float sentryHealth;
+    public ParticleSystem[] particles;
 
     // Start is called before the first frame update
     void Start()
     {
         line = GetComponent<LineRenderer>();
         raycastPosition = new Vector3(transform.position.x, transform.position.y + yOffset, transform.position.z);
+        if(variant == 2)
+        {
+            transform.Find("Shield").gameObject.SetActive(true);
+            sentryHealth = 999;
+            transform.GetComponent<BoxCollider>().enabled = false;
+        }
+
+        for (int i = 0; i < particles.Length; i++)
+        {
+            //if (!(i > 0))
+            particles[i].Clear();
+            particles[i].Stop();
+        }
     }
 
     // Update is called once per frame
@@ -49,6 +68,7 @@ public class Sentry : MonoBehaviour
     {
         turretBeam.SetActive(false);
         line.enabled = false;
+        damageRestTimer -= Time.deltaTime;
         if (Vector3.Distance(player.transform.position, transform.position) < outOfRangeRadius || playerHasBeenDetected)
         {
             RaycastHit playerCheckHit = new RaycastHit();
@@ -65,7 +85,7 @@ public class Sentry : MonoBehaviour
                     }
                     else if (playerHasBeenDetected)
                     {
-                        relativePosition = ninthLastFramePosition - transform.position;
+                        relativePosition = tenthLastFramePosition - transform.position;
                         targetRotation = Quaternion.LookRotation(relativePosition);
                     }
                     playerHasBeenDetected = true;
@@ -88,8 +108,9 @@ public class Sentry : MonoBehaviour
                 playerHasBeenDetected = false;
             }
 
-            ninthLastFramePosition = eighthLastFramePosition;
-            eighthLastFramePosition = seventhLastFramePosition;
+            tenthLastFramePosition = ninthLastFramePosition;
+            ninthLastFramePosition = eiththLastFramePosition;
+            eiththLastFramePosition = seventhLastFramePosition;
             seventhLastFramePosition = sixthLastFramePosition;
             sixthLastFramePosition = fifthLastFramePosition;
             fifthLastFramePosition = fourthLastFramePosition;
@@ -97,7 +118,6 @@ public class Sentry : MonoBehaviour
             thirdLastFramePosition = secondLastFramePosition;
             secondLastFramePosition = lastFramePosition;
             lastFramePosition = player.transform.position;
-
         }
 
         if (!rotating)
@@ -127,11 +147,18 @@ public class Sentry : MonoBehaviour
                     line.SetPositions(linePos);
                     line.positionCount = 2;
                     line.enabled = true;
+                    shootingTimer += Time.deltaTime;
 
                     if(hit.collider.tag == "Player")
                     {
-                        hit.collider.GetComponent<CharacterController>().SimpleMove(transform.forward);
-                        hit.collider.GetComponent<PlayerController>().currentHealth -= 1;
+                        hit.collider.GetComponent<CharacterController>().SimpleMove(transform.forward * knockBackForce);
+
+                        if(damageRestTimer <= 0)
+                        {
+                            hit.collider.GetComponent<PlayerController>().currentHealth -= sentryDamage;
+                            damageRestTimer = damageRestTime;
+                        }
+
                         Debug.Log("Get Lazored Nerd");
                     }
                 }
@@ -141,16 +168,45 @@ public class Sentry : MonoBehaviour
                     rotating = true;
                     rotationTime = 0.0f;
                 }
-                shootingTimer += Time.deltaTime;
             }
         }
+        if(sentryHealth <= 0)
+        {
+            //turn on cold particles
+            for (int i = 0; i < particles.Length; i++)
+            {
+                //if (!(i > 0))
+                particles[i].Play();
+                //DeathParticles[i].Stop(true);
+            }
+            gameObject.SetActive(false);
+        }
     }
+
     private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, inRangeRadius);
         Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, inRangeRadius);
+        Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, outOfRangeRadius);
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.tag == "Sword" && sentryHealth != 0)
+        {
+            float healthLostOnHit = 0;
+            PlayerController playerController = player.GetComponent<PlayerController>();
+
+            if(playerController.lightAttackUsed)
+            {
+                healthLostOnHit = playerController.playerLightDamage;
+            }
+            else if(playerController.heavyAttackUsed)
+            {
+                healthLostOnHit = playerController.playerHeavyDamage;
+            }
+            sentryHealth -= healthLostOnHit;
+        }
+    }
 }
