@@ -119,7 +119,8 @@ public class TrooperBehaviour : MonoBehaviour
     private float knockBackCounter;
 
     //boolean to see if it just took damage
-    private bool wasDamaged = false;
+    [HideInInspector]
+    public bool wasDamaged = false;
 
     //timer used when ememny was hit by player
     private float wasHitTimer = 0;
@@ -156,7 +157,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     
     
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -719,11 +720,14 @@ public class TrooperBehaviour : MonoBehaviour
             
         }
 
-        if (other.gameObject.tag != "Sword" && enemyRigidbody.isKinematic == false)
-        {
-            enemyRigidbody.isKinematic = true;
-        }
+        //if (other.gameObject.tag != "Sword" /*&& enemyRigidbody.isKinematic == false*/)
+        //{
+        //    enemyRigidbody.velocity = Vector3.zero;
+        //}
+        
     }
+
+   
 
     // a timer that gets called each frame, code only runs if it was damaged tho
     void EnemyTookDamage()
@@ -732,10 +736,16 @@ public class TrooperBehaviour : MonoBehaviour
         if (wasDamaged)
         {
             wasHitTimer += Time.deltaTime;
-            EnemyInvulnerabilityOn();
             // Testing the enemy to fall off the map (Requires physics I think)
-            //GetComponent<NavMeshAgent>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+
+            EnemyInvulnerabilityOn();
+            
         }
+        //else
+        //{
+        //    enemyRigidbody.velocity = Vector3.zero;
+        //}
        
 
         // And turn it back on after half a second (or change to be after the spin attack is finished)
@@ -743,7 +753,7 @@ public class TrooperBehaviour : MonoBehaviour
         {
             EnemyInvulnerabilityOff();
             wasDamaged = false;
-            //GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 
@@ -753,7 +763,8 @@ public class TrooperBehaviour : MonoBehaviour
         //hitCollision.gameObject.SetActive(false);
         hitCollision.enabled = false;
         //Debug.Log("Collider.enabled = " + enemyCollider.enabled);
-        
+        //enemyRigidbody.isKinematic = false;
+
     }
 
     void EnemyInvulnerabilityOff()
@@ -763,16 +774,40 @@ public class TrooperBehaviour : MonoBehaviour
         wasHitTimer = 0;
         //Debug.Log("Collider.enabled = " + enemyCollider.enabled);
         enemyRigidbody.isKinematic = true;
+
+        //refreeze position and rotation
+        //enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void KnockBack(Vector3 direction)
     {
         enemyRigidbody.isKinematic = false;
+
+        //unfreeze position and rotation
+       // enemyRigidbody.constraints = RigidbodyConstraints.None;
+
         knockBackCounter = knockBackTime;
 
         enemyMoveDirection = direction * knockBackForce;
 
+        //transform.Translate(enemyMoveDirection);
         enemyRigidbody.AddForce(enemyMoveDirection, ForceMode.Impulse);
+    }
+
+    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
+    {
+        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
+        Gizmos.color = Color.cyan;
+
+        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
+        Gizmos.color = Color.blue;
+
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position, maxIdleTravelDistanceRadius);
+        Gizmos.color = Color.magenta;
+
     }
 
 
@@ -803,16 +838,6 @@ public class TrooperBehaviour : MonoBehaviour
         trooperAnimation.SetTrigger("GetUpFromDownedAnimation");
 
     }
-    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
-    }
-
 }
 
 

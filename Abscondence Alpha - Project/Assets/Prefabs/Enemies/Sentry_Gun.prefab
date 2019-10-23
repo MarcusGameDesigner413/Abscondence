@@ -4874,16 +4874,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   turretBeam: {fileID: 6072495921419294823}
-  outOfRangeRadius: 10
-  inRangeRadius: 1
+  outOfRangeRadius: 15
+  inRangeRadius: 5
   cooldown: 0
   rotationSpeed: 10
   maxRotationTime: 30
   maxBeamDistance: 100
   yOffset: 0
-  maxShootingTime: 5
+  maxShootingTime: 3.5
   knockBackForce: 3
-  damageRestTime: 3
+  damageRestTime: 1
   sentryDamage: 1
   variant: 1
   sentryHealth: 2

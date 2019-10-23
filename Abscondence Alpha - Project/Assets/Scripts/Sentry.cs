@@ -12,9 +12,6 @@ public class Sentry : MonoBehaviour
     Vector3 fifthLastFramePosition;
     Vector3 sixthLastFramePosition;
     Vector3 seventhLastFramePosition;
-    Vector3 eiththLastFramePosition;
-    Vector3 ninthLastFramePosition;
-    Vector3 tenthLastFramePosition;
     Vector3 raycastPosition;
     Quaternion targetRotation;
     LineRenderer line = null;
@@ -85,7 +82,7 @@ public class Sentry : MonoBehaviour
                     }
                     else if (playerHasBeenDetected)
                     {
-                        relativePosition = tenthLastFramePosition - transform.position;
+                        relativePosition = seventhLastFramePosition - transform.position;
                         targetRotation = Quaternion.LookRotation(relativePosition);
                     }
                     playerHasBeenDetected = true;
@@ -108,9 +105,6 @@ public class Sentry : MonoBehaviour
                 playerHasBeenDetected = false;
             }
 
-            tenthLastFramePosition = ninthLastFramePosition;
-            ninthLastFramePosition = eiththLastFramePosition;
-            eiththLastFramePosition = seventhLastFramePosition;
             seventhLastFramePosition = sixthLastFramePosition;
             sixthLastFramePosition = fifthLastFramePosition;
             fifthLastFramePosition = fourthLastFramePosition;
@@ -161,6 +155,18 @@ public class Sentry : MonoBehaviour
 
                         Debug.Log("Get Lazored Nerd");
                     }
+
+                    if (hit.collider.tag == "Enemy")
+                    {
+                        //do enemy knockback
+                        hit.collider.GetComponent<TrooperBehaviour>().wasDamaged = true;
+                        hit.collider.GetComponent<TrooperBehaviour>().KnockBack(transform.forward.normalized);
+
+                        hit.collider.GetComponent<TrooperBehaviour>().currentHealth -= sentryDamage;
+                        Debug.Log("Get Lazored Lizard Boy");
+                    }
+
+
                 }
                 if (shootingTimer > maxShootingTime)
                 {
