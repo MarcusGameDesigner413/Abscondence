@@ -16,6 +16,7 @@ TagManager:
   - CardPanel
   - Card
   - DetPack
+  - Block
   layers:
   - Default
   - TransparentFX

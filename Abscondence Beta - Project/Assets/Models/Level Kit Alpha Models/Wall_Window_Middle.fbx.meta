@@ -4,14 +4,43 @@ ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: polySurface10
+    100004: polySurface24
+    100006: polySurface24 1
+    100008: polySurface25
+    100010: polySurface26
+    100012: polySurface27
+    100014: polySurface28
+    100016: transform17
+    100018: transform18
+    100020: transform19
+    100022: transform20
+    100024: transform21
+    100026: transform22
     400000: //RootNode
+    400002: polySurface10
+    400004: polySurface24
+    400006: polySurface24 1
+    400008: polySurface25
+    400010: polySurface26
+    400012: polySurface27
+    400014: polySurface28
+    400016: transform17
+    400018: transform18
+    400020: transform19
+    400022: transform20
+    400024: transform21
+    400026: transform22
     2100000: Window_Placeholder
     2100002: Metal_Light
     2100004: Metal
     2100006: Metal_Dark
     2300000: //RootNode
+    2300002: polySurface28
     3300000: //RootNode
+    3300002: polySurface28
     4300000: polySurface10
+    4300002: polySurface28
   externalObjects: {}
   materials:
     importMaterials: 1

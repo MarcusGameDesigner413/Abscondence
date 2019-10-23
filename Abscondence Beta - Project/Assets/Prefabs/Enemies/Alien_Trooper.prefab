@@ -389,7 +389,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606251943419694431}
-  m_LocalRotation: {x: -0, y: -0.70710576, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -19, y: 1.26, z: -81.76}
   m_LocalScale: {x: 1.2, y: 1.4, z: 1.2}
   m_Children:
@@ -455,6 +455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0b4d6ab168fd20499cd9049903959aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
   canSpawnOnDeath: 0
   deathItem: {fileID: 506462721908908539, guid: 490c2994d4ffdb94aa3003fa711ebf77,
     type: 3}
@@ -463,26 +464,31 @@ MonoBehaviour:
   wasSpawnedInDoor: 0
   idleWalkSpeed: 1
   suspiciousWalkSpeed: 2
-  alertWalkSpeed: 6
+  alertWalkSpeed: 7
   currentHealth: 2
   reviveHealthGain: 2
   downedHealth: 0
   downedTimeUntilAlive: 5
-  maxSuspiciousRadius: 20
-  maxAlertRadius: 10
+  maxSuspiciousRadius: 15
+  maxAlertRadius: 8
   attackRadius: 3
   enemyAttackStrength: 1
   MeleeRotation: 100
   maxIdleTravelDistanceRadius: 10
-  idleCanWalkUpDown: 1
-  idleCanWalkLeftRight: 1
+  idleCanWalkUpDown: 0
+  idleCanWalkLeftRight: 0
   minIdleTimerRange: 2
-  maxIdleTimerRange: 10
+  maxIdleTimerRange: 11
   knockBackForce: 7
   knockBackTime: 0.5
   invulnerabilityTime: 0.5
+  wasDamaged: 0
   meleeWeapon: {fileID: 606251942886255863}
   respawnInvincibleTime: 2
+  canSeePlayer: 0
+  justSawPlayer: 0
+  seePlayerTimer: 5
+  seePlayerIterator: 0
   xIsDownedX: 0
   xIsDeadX: 0
 --- !u!136 &606251943419694420

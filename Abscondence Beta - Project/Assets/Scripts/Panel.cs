@@ -16,7 +16,9 @@ public class Panel : MonoBehaviour
 
     //this is the item that will be deleted
     public GameObject oldDoor;
-    
+
+    //powercell visual to appear
+    public GameObject newPowerCell;
 
     public float SecondsToDestroy = 1;
     
@@ -24,7 +26,7 @@ public class Panel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        newPowerCell.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,6 +41,9 @@ public class Panel : MonoBehaviour
 
             //play the animation during time
             oldDoor.gameObject.GetComponent<Animator>().SetTrigger("TriggerFade");
+
+            //make visual powercell exist
+            newPowerCell.SetActive(true);
 
             //this gets set to true so this code DOES NOT COMPILE AGAIN
             wasActivated = true;

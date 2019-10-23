@@ -9,6 +9,10 @@ ModelImporter:
     2100002: Metal
     2100004: Metal_Dark
     2100006: Purple_Light
+    2100008: Metal5
+    2100010: Metal_Dark5
+    2100012: lambert2
+    2100014: Purple_Light1
     2300000: //RootNode
     3300000: //RootNode
     4300000: Wall_Beam_Triangle

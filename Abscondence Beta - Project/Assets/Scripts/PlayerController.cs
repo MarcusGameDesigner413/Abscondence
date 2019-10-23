@@ -23,7 +23,28 @@ public class PlayerController : MonoBehaviour
     public int maxDetPack = 5;
     public int storedMedvial = 0;
     public int maxMedvial = 5;
+    public GameObject meleeWeapon;
+    public bool DeathToMenu = false;
 
+    float turnSmoothVelocity;
+    float speedSmoothVelocity;
+    float currentSpeed;
+
+    Animator meleeSwipe;
+    GameObject box;
+
+    private CharacterController controller;
+    private CapsuleCollider playerCollider;
+    private AITeleport aiFollower;
+    private Vector3 playerMoveDirection;
+    private bool playerWasDamaged;
+    private float timer = 0;
+    private float fallAmount;
+    private Vector3 velocity;
+    private Vector3 gravity;
+    private BottomlessPit ifFallen;
+    private Vector2 input;
+    private Vector3 relativePosition;
 
     [HideInInspector]
     public bool hasKey = false;
@@ -31,23 +52,6 @@ public class PlayerController : MonoBehaviour
     public bool hasUniqueKey = false;
     [HideInInspector]
     public int keyType = 0;
-
-    float turnSmoothVelocity;
-    float speedSmoothVelocity;
-    float currentSpeed;
-
-    public GameObject meleeWeapon;
-    Animator meleeSwipe;
-
-    private CharacterController controller;
-    private CapsuleCollider playerCollider;
-    private Vector3 playerMoveDirection;
-    private bool playerWasDamaged;
-    private float timer = 0;
-    private Vector3 velocity;
-    private Vector3 gravity;
-    private BottomlessPit ifFallen;
-
     [HideInInspector]
     public bool gamePaused;
     [HideInInspector]
@@ -56,9 +60,17 @@ public class PlayerController : MonoBehaviour
     public bool lightAttackUsed = false;
     [HideInInspector]
     public bool heavyAttackUsed = false;
+    [HideInInspector]
+    public Vector3 draggableBlockVelocity;
 
-    public bool DeathToMenu = false;
+    enum DraggingState
+    {
+        NONE,
+        VERTICAL,
+        HORIZONTAL,
+    };
 
+    DraggingState currentState;
 
     void Start()
     {
@@ -66,8 +78,11 @@ public class PlayerController : MonoBehaviour
         meleeSwipe = meleeWeapon.GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
+        aiFollower = GameObject.Find("AIFollow").GetComponent<AITeleport>();
         startingHeight = transform.position.y;
-        ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
+        fallAmount = startingHeight + 5.0f;
+        currentState = DraggingState.NONE;
+        //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
@@ -77,22 +92,13 @@ public class PlayerController : MonoBehaviour
 
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (currentState == DraggingState.VERTICAL)
+            input.x = 0;
+        else if (currentState == DraggingState.HORIZONTAL)
+            input.y = 0;
+
         // Normalize the input
         Vector2 inputDir = input.normalized;
-
-        if (inputDir != Vector2.zero)
-        {
-            /* ***THIS CODE LOCKS THE PLAYER ROTATION WHEN ATTACKING ANIMATION IS PLAYING***
-            if (!(meleeSwipe.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) && !meleeSwipe.IsInTransition(0))
-            {*/
-
-            // Set the target rotation to be equal to the direction that the player is facing
-            float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
-            // Change the rotation to the player to be equal to that direction with smoothing
-            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
-
-            //}
-        }
 
         bool movementDisabled = false;
         // Debug addition to get around faster
@@ -102,10 +108,35 @@ public class PlayerController : MonoBehaviour
         // Speed up the player overtime when they move
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
 
-        // Move the character relevant to the set current speed
-        //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
-        if (!movementDisabled && !ifFallen)
-            controller.Move(((transform.forward * currentSpeed) + velocity) * Time.deltaTime);
+        if (inputDir != Vector2.zero)
+        {
+            /* ***THIS CODE LOCKS THE PLAYER ROTATION WHEN ATTACKING ANIMATION IS PLAYING***
+            if (!(meleeSwipe.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) && !meleeSwipe.IsInTransition(0))
+            {*/
+            if (currentState == DraggingState.NONE)
+            {
+                // Set the target rotation to be equal to the direction that the player is facing
+                float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
+                // Change the rotation to the player to be equal to that direction with smoothing
+                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+
+                // Move the character relevant to the set current speed
+                //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
+                if (!movementDisabled/* && !ifFallen*/)
+                    controller.Move((transform.forward * currentSpeed) * Time.deltaTime);
+            }
+            else
+            {
+                Vector3 dir = new Vector3(inputDir.x, 0, inputDir.y);
+
+                if (!movementDisabled/* && !ifFallen*/)
+                    controller.Move((dir * currentSpeed) * Time.deltaTime);
+
+            }
+            //}
+        }
+
+        controller.Move(velocity * Time.deltaTime);
 
         // Add gravity to the player
         velocity += gravity * Time.deltaTime;
@@ -127,14 +158,6 @@ public class PlayerController : MonoBehaviour
         if (maxHealth > 14)
             maxHealth = 14;
 
-        //if (transform.position.y > startingHeight) // Make sure the player stays on the ground
-        //{
-        //    var previousX = transform.position.x;
-        //    var previousZ = transform.position.z;
-
-        //    transform.position = new Vector3(previousX, startingHeight, previousZ);
-        //}
-
         // Only use the timer if the counter has been activated
         if (knockBackCounter > 0)
         {
@@ -146,7 +169,16 @@ public class PlayerController : MonoBehaviour
         {
             movementDisabled = false;
         }
-        
+
+        // If the player falls below a certain Y level, it will teleport to the AIFollower and take damage
+        if (transform.position.y < -fallAmount)
+        {
+            Debug.Log("Player fallen off map");
+            TeleportToAI();
+            currentHealth -= 2; // Player takes damage upon falling into hole
+            //playerFallen = false;
+        }
+
         // Check if player took damage
         PlayerTookDamage();
 
@@ -154,17 +186,52 @@ public class PlayerController : MonoBehaviour
         PlayLightAnimation();
         PlayHeavyAnimation();
 
-       if(currentHealth == 0 && DeathToMenu == true)
-       {
+        if (currentHealth == 0 && DeathToMenu == true)
+        {
             UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
-       }
+        }
 
+        //Box dragging
+        if (Input.GetButtonUp("Interact"))
+        {
+            currentState = DraggingState.NONE;
+            //Set velocity to zero
+            
+            //set box to null
+            box = null;
+        }
+        //Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0.0f), transform.position + new Vector3(0.5f, 5.0f, 0.0f), Color.red);
 
+    }
+
+    private void FixedUpdate()
+    {
+        switch (currentState)
+        {
+            case DraggingState.VERTICAL:
+                Vector3 targetPosition = controller.transform.position + relativePosition;
+                targetPosition.y = box.transform.position.y;
+
+                Vector3 velocity = (targetPosition - box.transform.position) / Time.fixedDeltaTime;
+
+                box.GetComponent<Rigidbody>().AddForce(velocity * 40);
+                //box.GetComponent<Rigidbody>().velocity = velocity;
+                break;
+
+            case DraggingState.HORIZONTAL:
+                targetPosition = controller.transform.position + relativePosition;
+                targetPosition.y = box.transform.position.y;
+
+                velocity = (targetPosition - box.transform.position) / Time.fixedDeltaTime;
+
+                box.GetComponent<Rigidbody>().AddForce(velocity * 40);
+                break;
+        }
     }
 
     public void PlayLightAnimation()
     {
-        if (Input.GetButtonDown("LightAttack") && !gamePaused)
+        if (Input.GetMouseButtonDown(0) && !gamePaused)
         {
             lightAttackUsed = true;
             heavyAttackUsed = false;
@@ -174,7 +241,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayHeavyAnimation()
     {
-        if (Input.GetButtonDown("SpinAttack") && !gamePaused)
+        if (Input.GetMouseButtonDown(1) && !gamePaused)
         {
             heavyAttackUsed = true;
             lightAttackUsed = false;
@@ -213,16 +280,19 @@ public class PlayerController : MonoBehaviour
         Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
         playerHitDirection = playerHitDirection.normalized;
 
-        
+
 
         if (other.gameObject.tag == "EnemySword")
         {
             //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
             TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
-
-            playerWasDamaged = true;
-            KnockBack(playerHitDirection);
-            currentHealth -= enemy.enemyAttackStrength;
+            if(enemy.xIsDownedX == false)
+            {
+                playerWasDamaged = true;
+                KnockBack(playerHitDirection);
+                currentHealth -= enemy.enemyAttackStrength;
+            }
+            
         }
     }
 
@@ -268,20 +338,49 @@ public class PlayerController : MonoBehaviour
     }
 
     //updated with on trigger stay
-    void OnTriggerStay(Collider collision)
+    void OnTriggerStay(Collider other)
     {
-        //execution of enemy
-        if (collision.gameObject.tag == "Enemy")
+        // Block Dragging
+        if (currentState == DraggingState.NONE)
         {
-            bool enemyDeadCheck = collision.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
-            if (collision.gameObject.tag == "Enemy" && Input.GetButtonDown("Interact") && enemyDeadCheck == true)
+            if (other.name == "TopCollider" && Input.GetButton("Interact") || other.name == "BottomCollider" && Input.GetButton("Interact"))
             {
-                collision.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
+                box = other.transform.parent.gameObject;
+                relativePosition = box.transform.position - transform.position;
+                if (relativePosition.magnitude < 2.0f)
+                {
+                    relativePosition.Normalize();
+                    relativePosition *= 2.0f;
+                }
+
+                currentState = DraggingState.VERTICAL;
+            }
+            else if (other.name == "LeftCollider" && Input.GetButton("Interact") || other.name == "RightCollider" && Input.GetButton("Interact"))
+            {
+                box = other.transform.parent.gameObject;
+                relativePosition = box.transform.position - transform.position;
+                if (relativePosition.magnitude < 2.0f)
+                {
+                    relativePosition.Normalize();
+                    relativePosition *= 2.0f;
+                }
+
+                currentState = DraggingState.HORIZONTAL;
+            }
+        }
+
+        //execution of enemy
+        if (other.gameObject.tag == "Enemy")
+        {
+            bool enemyDeadCheck = other.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
+            if (other.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.E) && enemyDeadCheck == true)
+            {
+                other.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
 
         // Powercell pickup
-        if (collision.gameObject.tag == "PowerCell" && Input.GetButtonDown("Interact"))
+        if (other.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
         {
             if (storedPowerCell >= maxPowerCell)
             {
@@ -293,16 +392,16 @@ public class PlayerController : MonoBehaviour
                 storedPowerCell++;
 
                 //delete the power cell
-                Destroy(collision.gameObject);
+                Destroy(other.gameObject);
             }
         }
 
         // Door open -- this requires the panel object to have the tag 'Panel'
-        if (collision.gameObject.tag == "Panel" && Input.GetButtonDown("Interact"))
+        if (other.gameObject.tag == "Panel" && Input.GetButtonDown("Interact"))
         {
 
             //if the player has 1 or more power cells and the panel has not been activated before
-            if (storedPowerCell >= 1 && !collision.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
+            if (storedPowerCell >= 1 && !other.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
             {
                 //open the door
                 storedPowerCell--;
@@ -310,7 +409,7 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of door opening
 
                 //destroy the door
-                collision.gameObject.GetComponent<Panel>().xActivatedX = true;
+                other.gameObject.GetComponent<Panel>().xActivatedX = true;
             }
             else
             {
@@ -319,14 +418,14 @@ public class PlayerController : MonoBehaviour
         }
 
         //health interact
-        if (collision.gameObject.tag == "Health" && Input.GetButtonDown("Interact"))
+        if (other.gameObject.tag == "Health" && Input.GetButtonDown("Interact"))
         {
             //if the player has less than max health
             if (currentHealth < maxHealth)
             {
 
                 //sets up the amount to heal
-                int healthGained = collision.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
+                int healthGained = other.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
 
                 //heal the player
                 currentHealth = currentHealth + healthGained;
@@ -341,87 +440,93 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of healing
 
                 //destroy the door
-                Destroy(collision.gameObject);
+                Destroy(other.gameObject);
             }
             else
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
         }
-        if (collision.gameObject.tag == "Card" && Input.GetButtonDown("Interact"))
+
+        if (other.gameObject.tag == "Card" && Input.GetButtonDown("Interact"))
         {
-            if (collision.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
+            if(other.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
             {
                 hasUniqueKey = true;
             }
             else
             {
-                keyType = collision.gameObject.GetComponent<KeyCard>().CurrentLevel;
+                keyType = other.gameObject.GetComponent<KeyCard>().CurrentLevel;
                 //update the score
                 hasKey = true;
             }
 
             //delete the card
-            Destroy(collision.gameObject);
-
+            Destroy(other.gameObject);
+            
         }
 
-        if (collision.gameObject.tag == "CardPanel" && Input.GetButtonDown("Interact"))
+        if (other.gameObject.tag == "CardPanel" && Input.GetButtonDown("Interact"))
         {
             //if the panel requires the master and the player has the master AND has not been activated 
-            if (collision.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
-                && !collision.gameObject.GetComponent<CardPanel>().xActivatedX)
+            if(other.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
+                && !other.gameObject.GetComponent<CardPanel>().xActivatedX)
             {
-                collision.gameObject.GetComponent<CardPanel>().xActivatedX = true;
+                other.gameObject.GetComponent<CardPanel>().xActivatedX = true;
             }
-
+          
 
             //if the player has the key, the panel has not been activated before AND does not need the master
-            if (hasKey == true && !collision.gameObject.GetComponent<CardPanel>().xActivatedX
-                && !collision.gameObject.GetComponent<CardPanel>().requiresMaster)
+            if (hasKey == true && !other.gameObject.GetComponent<CardPanel>().xActivatedX 
+                && !other.gameObject.GetComponent<CardPanel>().requiresMaster) 
             {
                 //play sound effect of door opening
 
                 //destroy the door
-                collision.gameObject.GetComponent<CardPanel>().xActivatedX = true;
+                other.gameObject.GetComponent<CardPanel>().xActivatedX = true;
             }
 
             //the "else" that goes after as it is denied
-            if (!collision.gameObject.GetComponent<CardPanel>().xActivatedX)
+            if (!other.gameObject.GetComponent<CardPanel>().xActivatedX)
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
 
-
-        }
-
-        // Powercell pickup
-        if (collision.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
-        {
-            if (storedDetPack >= maxDetPack)
+            // Powercell pickup
+            if (other.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
             {
-                //play sound of --NO--, DO NOT ADD to SCORE
+                if (storedDetPack >= maxDetPack)
+                {
+                    //play sound of --NO--, DO NOT ADD to SCORE
+                }
+                else
+                {
+                    //update the score
+                    storedDetPack++;
+
+                    //delete the power cell
+                    Destroy(other.gameObject);
+                }
             }
-            else
+
+            //rad jammer gonna block yo screen unless you destroy it with a detpack
+            if (other.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
             {
-                //update the score
-                storedDetPack++;
+                //got more than 1 detpack, good, now make it go boom
+                if (storedDetPack >= 1 && other.gameObject.GetComponent<Jammer>().isJamming)
+                {
+                    other.gameObject.GetComponent<Jammer>().isJamming = false;
 
-                //delete the power cell
-                Destroy(collision.gameObject);
-            }
-        }
-
-        //rad jammer gonna block yo screen unless you destroy it with a detpack
-        if (collision.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
-        {
-            //got more than 1 detpack, good, now make it go boom
-            if (storedDetPack >= 1 && collision.gameObject.GetComponent<Jammer>().isJamming)
-            {
-                collision.gameObject.GetComponent<Jammer>().isJamming = false;
-
-                storedDetPack--;
+                    storedDetPack--;
+                }
             }
         }
+    }
+
+    public void TeleportToAI()
+    {
+        controller.enabled = false;
+        controller.transform.SetPositionAndRotation(aiFollower.transform.position, aiFollower.transform.rotation);
+        controller.enabled = true;
     }
 }
