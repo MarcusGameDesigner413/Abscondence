@@ -13,9 +13,11 @@ TagManager:
   - Jammer
   - EnemySword
   - Enemy
+<<<<<<< HEAD
+  - Block
+=======
   - CardPanel
   - Card
-  - DetPack
   layers:
   - Default
   - TransparentFX

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class AITeleport : MonoBehaviour
 {
-    public float maxTetherDistance;
+    public float maxTetherDistance = 8.0f;
     private NavMeshAgent aiFollower;
     private PlayerController player;
     private TeleportPlayer teleport;
