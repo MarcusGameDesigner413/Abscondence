@@ -1919,13 +1919,11 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 764099932571694426, guid: 9e4f5827e52da2142b031f8359acec1a,
-        type: 3}
+    - target: {fileID: 1194294529, guid: 9e4f5827e52da2142b031f8359acec1a, type: 3}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 764099932571694426, guid: 9e4f5827e52da2142b031f8359acec1a,
-        type: 3}
+    - target: {fileID: 1194294529, guid: 9e4f5827e52da2142b031f8359acec1a, type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
