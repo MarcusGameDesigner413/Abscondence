@@ -9501,6 +9501,7 @@ GameObject:
   - component: {fileID: 4829594280816058977}
   - component: {fileID: 4829594280816058978}
   - component: {fileID: 4829594280816058979}
+  - component: {fileID: 2136722002}
   m_Layer: 0
   m_Name: Cold_Generator
   m_TagString: Jammer
@@ -9587,13 +9588,23 @@ MonoBehaviour:
   backgroundJamRadius: 20
   secondsToDestroy: 3
   isJamming: 1
+  isGonnaBlow: 0
   StaticJam: {fileID: 0}
   BackgroundJam: {fileID: 0}
   DetPack: {fileID: 4829594280514772913}
   ColdParticles:
   - {fileID: 4829594279611325263}
+  boomParticles:
+  - {fileID: 4829594279834178654}
   DeathParticles:
   - {fileID: 4829594279834178654}
+  PostProcessingEffect: {fileID: 8860932030902912026}
+  explosionTime: 3
+  isExploding: 0
+  hasExploded: 0
+  explosionRadius: {fileID: 2136722002}
+  explosionDamageAmount: 1
+  knockBackForce: 20
 --- !u!65 &4829594280816058978
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9618,8 +9629,21 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 0.75}
-  m_Center: {x: 0, y: 0, z: -0.875}
+  m_Size: {x: 1, y: 0.16666667, z: 0.75}
+  m_Center: {x: 0, y: -0.4166667, z: -0.875}
+--- !u!135 &2136722002
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4829594280816058980}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8860932030902912026
 GameObject:
   m_ObjectHideFlags: 0
@@ -9631,6 +9655,7 @@ GameObject:
   - component: {fileID: 2640630410404345016}
   - component: {fileID: 2570184129961810210}
   - component: {fileID: 1839568407}
+  - component: {fileID: 4850001106446322856}
   m_Layer: 8
   m_Name: PP_Frost_Volume
   m_TagString: Untagged
@@ -9670,6 +9695,19 @@ MonoBehaviour:
   weight: 1
   priority: 0
 --- !u!135 &1839568407
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8860932030902912026}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 9
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &4850001106446322856
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

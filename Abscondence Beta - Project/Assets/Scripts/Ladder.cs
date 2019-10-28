@@ -6,21 +6,22 @@ using UnityEngine.AI;
 public class Ladder : MonoBehaviour
 {
     public GameObject teleportTarget;
+    public GameObject player;
 
     [HideInInspector]
     public bool playerTeleported = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         Vector3 teleportDestination = teleportTarget.transform.position - other.transform.position;
-        if (other.tag == "Player")
+        if (other.tag == "Player" && Input.GetButtonDown("Interact"))
         {
             playerTeleported = true;
             other.GetComponent<CharacterController>().enabled = false;
             other.GetComponent<CharacterController>().transform.SetPositionAndRotation(teleportTarget.transform.position, other.transform.rotation);
             other.GetComponent<CharacterController>().enabled = true;
         }
-        else if (other.tag == "Enemy")
+        else if (other.tag == "Enemy" && (other.transform.position.y < (player.gameObject.transform.position.y - 1) || other.transform.position.y > (player.gameObject.transform.position.y + 1)))
         {
             var enemyAi = other.gameObject.GetComponent<NavMeshAgent>();
             // Disable everything agent related

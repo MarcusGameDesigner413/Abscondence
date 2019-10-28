@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class TrooperBehaviour : MonoBehaviour
 {
+    public Material invulnerable;
+    public Material vulnerable;
+    PlayerController player;
+
 
     public enum trooperState
     {
@@ -18,8 +22,7 @@ public class TrooperBehaviour : MonoBehaviour
     }
 
     //the state the trooper is currently in
-    //[HideInInspector]
-    public trooperState currentState;
+    private trooperState currentState;
 
     //the hitbox used when the enemy takes damage
     private BoxCollider hitCollision;
@@ -77,7 +80,7 @@ public class TrooperBehaviour : MonoBehaviour
     public float MeleeRotation = 2;
 
     //addition of suspicious and alert radius
-    //private int combinedAlertRadius;
+    private int combinedAlertRadius;
 
     //distance before the agent returns to its spawn position (idle only)
     public float maxIdleTravelDistanceRadius = 10;
@@ -120,7 +123,6 @@ public class TrooperBehaviour : MonoBehaviour
     private float knockBackCounter;
 
     //boolean to see if it just took damage
-    [HideInInspector]
     public bool wasDamaged = false;
 
     //timer used when ememny was hit by player
@@ -147,17 +149,6 @@ public class TrooperBehaviour : MonoBehaviour
     //private iterartion to make it no longer invincible when it respawns
     private float respawnIteration = 0;
 
-    [HideInInspector]
-    public bool canSeePlayer = false;
-
-    [HideInInspector]
-    public bool justSawPlayer = false;
-
-    //seconds after losing the player it still moves at previous speed
-    public float seePlayerTimer = 5;
-
-    [HideInInspector]
-    public float seePlayerIterator = 0;
 
     //is the enemy downed? --- DO NOT MODIFY DESIGNERSSS
     [HideInInspector]
@@ -169,7 +160,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     
     
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -206,12 +197,14 @@ public class TrooperBehaviour : MonoBehaviour
         
 
         //add the alert and suspicious radius
-        //combinedAlertRadius = maxSuspiciousRadius + maxAlertRadius;
+        combinedAlertRadius = maxSuspiciousRadius + maxAlertRadius;
 
         //store start position
         idleCentrePosition = this.transform.position;
 
         lastKnownPlayerPosition = this.transform.position;
+
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -219,43 +212,7 @@ public class TrooperBehaviour : MonoBehaviour
     {
         Physics.IgnoreLayerCollision(0, 12, true);
 
-        //speed code --------------------------------------------------------------------------------------------------------------
-        //if you just saw the player but do not currently see them, start timer 
-        if (justSawPlayer && !canSeePlayer)
-        {
-            seePlayerIterator += 1 * Time.deltaTime;
-
-            if (seePlayerIterator >= seePlayerTimer)
-            {
-                justSawPlayer = false;
-            }
-        }
-        else
-        {
-            //reset the timer
-            seePlayerIterator = 0;
-        }
-
-        //if the player cannot see you or has not seen you
-        if (!justSawPlayer && !canSeePlayer)
-        {
-            enemyAI.speed = idleWalkSpeed;
-        }
-
-        //if the trooper saw the player AND it is ALERT
-        if (currentState == (trooperState)2 && justSawPlayer)
-        {
-            enemyAI.speed = alertWalkSpeed;
-        }
-
-        //if the trooper just saw the player
-        if (justSawPlayer && currentState != (trooperState)2)
-        {
-            enemyAI.speed = suspiciousWalkSpeed;
-        }
-
-
-        //switch statement, triggers functions based on which state ai is in -----------------------------------------------------------------------------------
+        //switch statement, triggers functions based on which state ai is in
         switch ((int)currentState)
         {
             case 0: //idle
@@ -328,22 +285,18 @@ public class TrooperBehaviour : MonoBehaviour
             currentState = (trooperState)4;
         }
 
-        
-
-        
-
     }
 
     //in this state the ai walks around randomly in a set area
     void UpdateIdle()
     {
 
-        ////if the ai state is the idle state
-        //if (currentState == (trooperState)0)
-        //{
-        //   //setup the navmesh agent speed
-        //    enemyAI.speed = idleWalkSpeed;
-        //}
+        //if the ai state is the idle state
+        if (currentState == (trooperState)0)
+        {
+           //setup the navmesh agent speed
+            enemyAI.speed = idleWalkSpeed;
+        }
        
 
         //choose random direction, 1 = left, 2 = right, 3 = forward, 4 = backward
@@ -506,7 +459,7 @@ public class TrooperBehaviour : MonoBehaviour
 
         float distance = Vector3.Distance(playerPos, transform.position);
         //if inside the radius
-        if (distance <= maxSuspiciousRadius)
+        if (distance <= combinedAlertRadius)
         {
             //change the state to suspicious
             currentState = (trooperState)1;
@@ -517,11 +470,11 @@ public class TrooperBehaviour : MonoBehaviour
     void UpdateSuspicious()
     {
         //if the ai state is the suspicious state
-        //if (currentState == (trooperState)1)
-        //{
-        //    //change ai speed
-        //    enemyAI.speed = suspiciousWalkSpeed;
-        //}
+        if (currentState == (trooperState)1)
+        {
+            //change ai speed
+            enemyAI.speed = suspiciousWalkSpeed;
+        }
         
         //get the player position
         Vector3 playerPos = GameObject.Find("Player").GetComponent<Transform>().position;
@@ -550,10 +503,6 @@ public class TrooperBehaviour : MonoBehaviour
                 //reset idle returning and justsetdirection
                 idleReturning = false;
                 //justSetDirection = false;
-
-                //cannot see the player
-                canSeePlayer = false;
-
                 //do idle movement
                 UpdateIdle();
             }
@@ -565,12 +514,6 @@ public class TrooperBehaviour : MonoBehaviour
 
                 //update idle centre position
                 idleCentrePosition = lastKnownPlayerPosition;
-
-                //you can see the player
-                canSeePlayer = true;
-
-                //you just saw the player
-                justSawPlayer = true;
 
                 //travel to the player
                 enemyAI.SetDestination(lastKnownPlayerPosition);
@@ -588,7 +531,7 @@ public class TrooperBehaviour : MonoBehaviour
         
         
         //if outside the combined radius
-        if (distance >= maxSuspiciousRadius)
+        if (distance >= combinedAlertRadius)
         {
             //reset idle returning and justsetdirection
             idleReturning = false;
@@ -612,7 +555,7 @@ public class TrooperBehaviour : MonoBehaviour
         //if (currentState == (trooperState)2)
         //{
             //change ai speed
-            //enemyAI.speed = alertWalkSpeed;
+            enemyAI.speed = alertWalkSpeed;
         //}
 
         UpdateSuspicious();
@@ -716,25 +659,15 @@ public class TrooperBehaviour : MonoBehaviour
             //play falling scream audio???
         }
         
-        //you are invisible if you were spawned in a door or a river to save memory (thanks finn and will)
-        if(wasSpawnedInDoor || wasSpawnedInRiver)
-        {
-            gameObject.SetActive(false);
-        }
-        else
-        {
-            //trooper is gone from game world
-            Destroy(gameObject);
-        }
-        
+
+        //trooper is gone from game world
+        Destroy(gameObject);
 
     }
 
     void UpdateRiverSpawn()
     {
         //play swim animation
-
-
 
         //play jump animation
 
@@ -772,7 +705,6 @@ public class TrooperBehaviour : MonoBehaviour
         if (other.gameObject.tag == "Sword" && !xIsDownedX)
         {
             float healthLostOnHit = 0;
-            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             //if attack1 bolean == true
             if (player.lightAttackUsed)
             {
@@ -792,14 +724,11 @@ public class TrooperBehaviour : MonoBehaviour
             
         }
 
-        //if (other.gameObject.tag != "Sword" /*&& enemyRigidbody.isKinematic == false*/)
-        //{
-        //    enemyRigidbody.velocity = Vector3.zero;
-        //}
-        
+        if (other.gameObject.tag != "Sword" && enemyRigidbody.isKinematic == false)
+        {
+            enemyRigidbody.isKinematic = true;
+        }
     }
-
-   
 
     // a timer that gets called each frame, code only runs if it was damaged tho
     void EnemyTookDamage()
@@ -808,16 +737,12 @@ public class TrooperBehaviour : MonoBehaviour
         if (wasDamaged)
         {
             wasHitTimer += Time.deltaTime;
-            // Testing the enemy to fall off the map (Requires physics I think)
-            GetComponent<NavMeshAgent>().enabled = false;
-
             EnemyInvulnerabilityOn();
-            
+            if(player.lightAttackUsed)
+                GetComponent<MeshRenderer>().material = invulnerable;
+            // Testing the enemy to fall off the map (Requires physics I think)
+            //GetComponent<NavMeshAgent>().enabled = false;
         }
-        //else
-        //{
-        //    enemyRigidbody.velocity = Vector3.zero;
-        //}
        
 
         // And turn it back on after half a second (or change to be after the spin attack is finished)
@@ -825,7 +750,8 @@ public class TrooperBehaviour : MonoBehaviour
         {
             EnemyInvulnerabilityOff();
             wasDamaged = false;
-            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<MeshRenderer>().material = vulnerable;
+            //GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 
@@ -835,8 +761,7 @@ public class TrooperBehaviour : MonoBehaviour
         //hitCollision.gameObject.SetActive(false);
         hitCollision.enabled = false;
         //Debug.Log("Collider.enabled = " + enemyCollider.enabled);
-        //enemyRigidbody.isKinematic = false;
-
+        
     }
 
     void EnemyInvulnerabilityOff()
@@ -846,117 +771,44 @@ public class TrooperBehaviour : MonoBehaviour
         wasHitTimer = 0;
         //Debug.Log("Collider.enabled = " + enemyCollider.enabled);
         enemyRigidbody.isKinematic = true;
-
-        //refreeze position and rotation
-        //enemyRigidbody.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     public void KnockBack(Vector3 direction)
     {
         enemyRigidbody.isKinematic = false;
-
-        //unfreeze position and rotation
-       // enemyRigidbody.constraints = RigidbodyConstraints.None;
-
         knockBackCounter = knockBackTime;
 
         enemyMoveDirection = direction * knockBackForce;
 
-        //transform.Translate(enemyMoveDirection);
         enemyRigidbody.AddForce(enemyMoveDirection, ForceMode.Impulse);
     }
 
-    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
-
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, maxIdleTravelDistanceRadius);
-        
-
-    }
-
-    //animation code below ----------------------------------------------------------------------
 
     public void PlayAttackAnimation()
     {
-        //should play Alien_Heavy_Attack 
+        
        trooperAnimation.SetTrigger("AttackAnimation");
         
     }
 
     public void PlayDownedAnimation()
     {
-        //should play Enemy_Downed
+
         trooperAnimation.SetTrigger("DownedAnimation");
 
     }
 
     public void PlayisDownedAnimation()
     {
-        //should play Enemy_DownedCycle
+
         trooperAnimation.SetTrigger("isDownedAnimation");
 
     }
 
     public void PlayGetUpFromDownedAnimation()
     {
-        //should play Enemy_StandUp
+
         trooperAnimation.SetTrigger("GetUpFromDownedAnimation");
-
-    }
-
-    public void PlayWalkCycleAnimation()
-    {
-        //should play Alien_WalkCycle
-        trooperAnimation.SetTrigger("WalkAnimation");
-    }
-
-    public void EnemyIdleAnimation()
-    {
-        //should play Enemy_Idle
-        trooperAnimation.SetTrigger("IdleAnimation");
-    }
-
-    public void EnemyLeapAnimation()
-    {
-        //should play Enemy_Leap
-        trooperAnimation.SetTrigger("LeapAnimation");
-
-    }
-
-    public void EnemySwimAnimation()
-    {
-        //should play Enemy_Swim
-        trooperAnimation.SetTrigger("SwimAnimation");
-
-    }
-
-    public void EnemySuspiciousAnimation()
-    {
-        //should play Enemy_Suspicious
-        trooperAnimation.SetTrigger("SuspiciousAnimation");
-
-    }
-
-    public void EnemyDeathAnimation()
-    {
-        //should play Enemy_Death
-        trooperAnimation.SetTrigger("DeathAnimation");
-
-    }
-
-    public void EnemyLostPlayerAnimation()
-    {
-        //should play Enemy_LostPlayer
-        trooperAnimation.SetTrigger("LostAniamtion");
 
     }
 }

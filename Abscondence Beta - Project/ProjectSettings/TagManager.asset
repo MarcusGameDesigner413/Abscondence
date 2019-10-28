@@ -17,6 +17,8 @@ TagManager:
   - Card
   - DetPack
   - Block
+  - WallDestroy
+  - HealthStation
   layers:
   - Default
   - TransparentFX

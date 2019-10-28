@@ -28,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3441646208812099084}
-  m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 3, y: 0.01, z: -79.5}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.500001, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -94,6 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delay: 2.5
   roomPressurePlates:
+  - {fileID: 3441646208812099084}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -112,8 +113,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.6, z: 3.5000002}
-  m_Center: {x: 0, y: -0.0000010013581, z: -1.7500001}
+  m_Size: {x: 0.6, y: 0.6, z: 0.500001}
+  m_Center: {x: 0, y: -0.0000010013576, z: -0.2500001}
 --- !u!82 &7164873081044593079
 AudioSource:
   m_ObjectHideFlags: 0

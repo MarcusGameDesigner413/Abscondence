@@ -64,6 +64,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public Vector3 draggableBlockVelocity;
 
+    private float healthVialTimer;
+    private bool healthPickedUp;
+
     enum DraggingState
     {
         NONE,
@@ -202,8 +205,15 @@ public class PlayerController : MonoBehaviour
             //set box to null
             box = null;
         }
+
+        if(Input.GetButtonDown("Medvial") && storedMedvial > 0 && currentHealth != maxHealth)
+        {
+            currentHealth++;
+            storedMedvial--;
+        }
         //Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0.0f), transform.position + new Vector3(0.5f, 5.0f, 0.0f), Color.red);
 
+        healthVialTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -233,7 +243,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayLightAnimation()
     {
-        if (Input.GetMouseButtonDown(0) && !gamePaused)
+        if (Input.GetButtonDown("LightAttack") && !gamePaused)
         {
             lightAttackUsed = true;
             heavyAttackUsed = false;
@@ -243,7 +253,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayHeavyAnimation()
     {
-        if (Input.GetMouseButtonDown(1) && !gamePaused)
+        if (Input.GetButtonDown("SpinAttack") && !gamePaused)
         {
             heavyAttackUsed = true;
             lightAttackUsed = false;
@@ -375,14 +385,14 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             bool enemyDeadCheck = other.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
-            if (other.gameObject.tag == "Enemy" && Input.GetKeyDown(KeyCode.E) && enemyDeadCheck == true)
+            if (other.gameObject.tag == "Enemy" && Input.GetButtonDown("Interact") && enemyDeadCheck == true)
             {
                 other.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
 
         // Powercell pickup
-        if (other.gameObject.tag == "PowerCell" && Input.GetKeyDown(KeyCode.E))
+        if (other.gameObject.tag == "PowerCell" && Input.GetButtonDown("Interact"))
         {
             if (storedPowerCell >= maxPowerCell)
             {
@@ -471,16 +481,16 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "CardPanel" && Input.GetButtonDown("Interact"))
         {
             //if the panel requires the master and the player has the master AND has not been activated 
-            if(other.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
+            if (other.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
                 && !other.gameObject.GetComponent<CardPanel>().xActivatedX)
             {
                 other.gameObject.GetComponent<CardPanel>().xActivatedX = true;
             }
-          
+
 
             //if the player has the key, the panel has not been activated before AND does not need the master
-            if (hasKey == true && !other.gameObject.GetComponent<CardPanel>().xActivatedX 
-                && !other.gameObject.GetComponent<CardPanel>().requiresMaster) 
+            if (hasKey == true && !other.gameObject.GetComponent<CardPanel>().xActivatedX
+                && !other.gameObject.GetComponent<CardPanel>().requiresMaster)
             {
                 //play sound effect of door opening
 
@@ -493,34 +503,75 @@ public class PlayerController : MonoBehaviour
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
+        }
 
             // Detpack pickup
-            if (other.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
+        if (other.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
+        {
+            if (storedDetPack >= maxDetPack)
             {
-                if (storedDetPack >= maxDetPack)
-                {
-                    //play sound of --NO--, DO NOT ADD to SCORE
-                }
-                else
-                {
-                    //update the score
-                    storedDetPack++;
-
-                    //delete the power cell
-                    Destroy(other.gameObject);
-                }
+                //play sound of --NO--, DO NOT ADD to SCORE
             }
-
-            //rad jammer gonna block yo screen unless you destroy it with a detpack
-            if (other.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
+            else
             {
-                //got more than 1 detpack, good, now make it go boom
-                if (storedDetPack >= 1 && other.gameObject.GetComponent<Jammer>().isJamming)
-                {
-                    other.gameObject.GetComponent<Jammer>().isJamming = false;
+                //update the score
+                storedDetPack++;
 
-                    storedDetPack--;
+                //delete the power cell
+                Destroy(other.gameObject);
+            }
+        }
+
+        // Health Station
+        if (other.gameObject.tag == "HealthStation" && Input.GetButtonDown("Interact") || healthPickedUp)
+        {
+            if (storedMedvial >= maxMedvial || (!other.GetComponent<HealthStation>().activeState && !healthPickedUp))
+            {
+                //play sound of --NO--, DO NOT ADD to SCORE
+            }
+            else
+            {
+                //update the score
+                if (!healthPickedUp)
+                {
+                    healthPickedUp = true;
+                    healthVialTimer = 1.5f;
                 }
+
+                if (healthVialTimer <= 0)
+                {
+                    storedMedvial += Random.Range(other.GetComponent<HealthStation>().minMedvialOutput, other.GetComponent<HealthStation>().maxMedvialOutput);
+                    healthPickedUp = false;
+                    Debug.Log("Help");
+                    if (storedMedvial > maxMedvial)
+                        storedMedvial = maxMedvial;
+                }
+                other.GetComponent<Animator>().SetTrigger("Activated");
+                other.GetComponent<HealthStation>().activeState = false;
+                //play animation of healthstation deactivating
+            }
+        }
+
+        //rad jammer gonna block yo screen unless you destroy it with a detpack
+        if (other.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
+        {
+            //got more than 1 detpack, good, now make it go boom
+            if (storedDetPack >= 1 && other.gameObject.GetComponent<Jammer>().isJamming)
+            {
+                other.gameObject.GetComponent<Jammer>().isJamming = false;
+
+                storedDetPack--;
+            }
+        }
+
+        if (other.gameObject.tag == "WallDestroy" && Input.GetButtonDown("Interact"))
+        {
+            //got more than 1 detpack, good, now make it go boom
+            if (storedDetPack >= 1 && !other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow)
+            {
+                other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow = true;
+
+                storedDetPack--;
             }
         }
     }
