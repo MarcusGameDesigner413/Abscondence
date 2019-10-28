@@ -516,6 +516,7 @@ public class PlayerController : MonoBehaviour
             {
                 //update the score
                 storedDetPack++;
+<<<<<<< HEAD
 
                 //delete the power cell
                 Destroy(other.gameObject);
@@ -570,6 +571,21 @@ public class PlayerController : MonoBehaviour
             if (storedDetPack >= 1 && !other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow)
             {
                 other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow = true;
+=======
+
+                //delete the power cell
+                Destroy(other.gameObject);
+            }
+        }
+
+        //rad jammer gonna block yo screen unless you destroy it with a detpack
+        if (other.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
+        {
+            //got more than 1 detpack, good, now make it go boom
+            if (storedDetPack >= 1 && other.gameObject.GetComponent<Jammer>().isJamming)
+            {
+                other.gameObject.GetComponent<Jammer>().isJamming = false;
+>>>>>>> master
 
                 storedDetPack--;
             }
