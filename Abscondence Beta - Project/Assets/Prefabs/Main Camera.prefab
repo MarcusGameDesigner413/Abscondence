@@ -66,7 +66,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 311
+    m_Bits: 6455
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -111,25 +111,25 @@ MonoBehaviour:
   yRot: 0
   zRot: 0
   xZoom1: 0
-  yZoom1: 12
-  zZoom1: -3
+  yZoom1: 16
+  zZoom1: -4
   xRot1: 75
   yRot1: 0
   zRot1: 0
   xZoom2: 0
-  yZoom2: 0
-  zZoom2: 0
-  xRot2: 0
+  yZoom2: 10
+  zZoom2: -2.5
+  xRot2: 75
   yRot2: 0
   zRot2: 0
   xZoom3: 0
-  yZoom3: 0
-  zZoom3: 0
-  xRot3: 0
+  yZoom3: 20
+  zZoom3: -5
+  xRot3: 75
   yRot3: 0
   zRot3: 0
   maxCameraMovement: 6
-  cameraMode: 1
+  cameraMode: 2
 --- !u!114 &189055619288884022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   isGlobal: 1
   blendDistance: 0
   weight: 1
-  priority: 0
+  priority: 50
 --- !u!114 &336622906
 MonoBehaviour:
   m_ObjectHideFlags: 0

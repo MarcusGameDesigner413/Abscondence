@@ -31,12 +31,15 @@ ModelImporter:
     2100002: Metal_Light
     2100004: Metal_Dark
     2100006: Window_Placeholder
+    2100008: Metal8
+    2100010: Metal_Dark8
     2300000: //RootNode
     2300002: polySurface23
     3300000: //RootNode
     3300002: polySurface23
     4300000: polySurface11
     4300002: polySurface23
+    4300004: Wall_Window_Corner
   externalObjects: {}
   materials:
     importMaterials: 1

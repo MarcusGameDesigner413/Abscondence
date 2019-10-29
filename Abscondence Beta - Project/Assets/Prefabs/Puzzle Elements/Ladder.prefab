@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportTarget: {fileID: 0}
+  player: {fileID: 0}
   playerTeleported: 0
 --- !u!65 &2051664086
 BoxCollider:
@@ -119,8 +120,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7000046, y: 1, z: 1.9999856}
-  m_Center: {x: -0.0000005364418, y: 0, z: 1.5000072}
+  m_Size: {x: 1.2000046, y: 0.2, z: 3.249986}
+  m_Center: {x: -0.00000083446497, y: -0.4, z: 2.1250076}
 --- !u!1 &9083301977965965565
 GameObject:
   m_ObjectHideFlags: 0

@@ -94,6 +94,8 @@
     <Compile Include="Assets\Scripts\PlayerMovementGreybox.cs" />
     <Compile Include="Assets\Scripts\PressurePlate.cs" />
     <Compile Include="Assets\Scripts\Sentry.cs" />
+    <Compile Include="Assets\Scripts\SpawnDoor.cs" />
+    <Compile Include="Assets\Scripts\SpawnDoorTrigger.cs" />
     <Compile Include="Assets\Scripts\TeleportPlayer.cs" />
     <Compile Include="Assets\Scripts\TeleportRemoveCard.cs" />
     <Compile Include="Assets\Scripts\TrooperBehaviour.cs" />
