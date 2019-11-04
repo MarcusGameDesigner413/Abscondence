@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\MoveDown.cs" />
     <Compile Include="Assets\Scripts\MoveLeft.cs" />
     <Compile Include="Assets\Scripts\MoveRight.cs" />
+    <Compile Include="Assets\Scripts\ObjectLooting.cs" />
     <Compile Include="Assets\Scripts\OperationKonami.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />

@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     public int currentHealth = 100;
     public int maxHealth = 100;
+    public int highestHealth = 14;
+    public int healthUpgradeIncrease = 2;
     public float walkSpeed = 5;
     //public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
     public int playerLightDamage = 1;
@@ -19,10 +21,16 @@ public class PlayerController : MonoBehaviour
     public float gravityModifier = 10.0f;
     public int storedPowerCell = 0;
     public int maxPowerCell = 3;
+    public int highestPowerCell = 6;
+    public int powerCellUpgradeIncrease = 1;
     public int storedDetPack = 0;
     public int maxDetPack = 4;
+    public int highestDetPack = 8;
+    public int detPackUpgradeIncrease = 1;
     public int storedMedvial = 0;
     public int maxMedvial = 6;
+    public int highestMedvial = 12;
+    public int medvialUpgradeIncrease = 1;
     public GameObject meleeWeapon;
     public string MainMenuName;
     public bool DeathToMenu = false;
@@ -562,6 +570,46 @@ public class PlayerController : MonoBehaviour
 
                 storedDetPack--;
             }
+        }
+
+        if(other.gameObject.tag == "Locker" && Input.GetButtonDown("Interact"))
+        {
+            if(other.gameObject.GetComponent<ObjectLooting>().healthUpgrade)
+            {
+                if (maxHealth < highestHealth)
+                    maxHealth += healthUpgradeIncrease;
+            }
+            if (other.gameObject.GetComponent<ObjectLooting>().medvialUpgrade)
+            {
+                if (maxMedvial < highestMedvial)
+                    maxMedvial += medvialUpgradeIncrease;
+            }
+            if (other.gameObject.GetComponent<ObjectLooting>().powerCellUpgrade)
+            {
+                if (maxPowerCell < highestPowerCell)
+                    maxPowerCell += powerCellUpgradeIncrease;
+            }
+            if (other.gameObject.GetComponent<ObjectLooting>().detpackUpgrade)
+            {
+                if (maxDetPack < highestDetPack)
+                    maxDetPack += detPackUpgradeIncrease;
+            }
+            if (other.gameObject.GetComponent<ObjectLooting>().medvialPickUp)
+            {
+                if (storedMedvial < maxMedvial)
+                    storedMedvial += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minMedvials, other.gameObject.GetComponent<ObjectLooting>().maxMedvials);
+            }
+            if (other.gameObject.GetComponent<ObjectLooting>().powerCellPickUp)
+            {
+                if (storedPowerCell < maxPowerCell)
+                    storedPowerCell += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minPowerCell, other.gameObject.GetComponent<ObjectLooting>().maxPowerCell);
+            }
+            if (other.gameObject.GetComponent<ObjectLooting>().detpackPickUp)
+            {
+                if (storedDetPack < maxDetPack)
+                    storedDetPack += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minDetpack, other.gameObject.GetComponent<ObjectLooting>().maxDetpack);
+            }
+
         }
 
         if (other.gameObject.tag == "WallDestroy" && Input.GetButtonDown("Interact"))

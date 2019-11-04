@@ -15,6 +15,7 @@ public class VentScript : MonoBehaviour
     public Camera gameCamera;
     public Camera miniMapCamera;
     public GameObject player;
+    public GameObject playerTexture;
     public Vector3 teleportOffset;
     public GameObject[] ventPoints;
 
@@ -35,7 +36,7 @@ public class VentScript : MonoBehaviour
                 player.GetComponent<CharacterController>().enabled = false;
                 player.GetComponent<CharacterController>().transform.SetPositionAndRotation(targetVent.transform.position + teleportOffset, player.transform.rotation);
                 player.GetComponent<CharacterController>().enabled = true;
-                player.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                playerTexture.gameObject.GetComponent<MeshRenderer>().enabled = true;
                 player.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameCamera.gameObject.GetComponent<CameraMovement>().enabled = true;
                 miniMapCamera.gameObject.GetComponent<MiniMapFollow>().enabled = true;
@@ -97,7 +98,7 @@ public class VentScript : MonoBehaviour
                     cameraOffset = gameCamera.transform.position - ventPoints[index].transform.position;
                     miniMapCameraOffset = miniMapCamera.transform.position - ventPoints[index].transform.position;
                    // miniMapCameraOffset.y = miniMapCamera.transform.position.y;
-                    player.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    playerTexture.gameObject.GetComponent<MeshRenderer>().enabled = false;
                     player.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameCamera.gameObject.GetComponent<CameraMovement>().enabled = false;
                     miniMapCamera.gameObject.GetComponent<MiniMapFollow>().enabled = false;
