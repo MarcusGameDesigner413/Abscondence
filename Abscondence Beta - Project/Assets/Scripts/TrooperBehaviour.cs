@@ -149,6 +149,16 @@ public class TrooperBehaviour : MonoBehaviour
     //private iterartion to make it no longer invincible when it respawns
     private float respawnIteration = 0;
 
+    [HideInInspector]
+    public bool canSeePlayer = false;
+
+    [HideInInspector]
+    public bool justSawPlayer = false;
+
+    //seconds after losing the player it still moves at previous speed
+    public float seePlayerTimer = 5;
+    [HideInInspector]
+    public float seePlayerIterator = 0;
 
     //is the enemy downed? --- DO NOT MODIFY DESIGNERSSS
     [HideInInspector]
@@ -158,8 +168,43 @@ public class TrooperBehaviour : MonoBehaviour
     [HideInInspector]
     public bool xIsDeadX = false;
 
-    
-    
+
+    ////-------------------Audio Sources
+
+    //public float idleSoundTimer = 10;
+    //private float idleSoundIterator = 0;
+
+    ////blade itself swing (shwoooosh)
+    //public AudioSource heavyAttackSound;
+
+    ////grunts made by trooper when attacking
+    //public AudioSource[] trooperAttackGrunt;
+
+    ////ouch i got hit by a human
+    //public AudioSource trooperRecievedDamage;
+
+    ////scream as they get downed
+    //public AudioSource trooperJustDowned;
+
+    ////scream as they die
+    //public AudioSource trooperNormalDeath;
+
+    ////long scream that goes away from mic if they fall off edge
+    //public AudioSource trooperPitDeath;
+
+    ////huh? as they see player (lines 620-623)
+    //public AudioSource trooperJustSuspicious;
+
+    ////grrr as they chase the player
+    //public AudioSource trooperJustAlert;
+
+    //// angry confuzzled noise when they lose the player
+    //public AudioSource trooperJustLostPlayer;
+
+    ////multiple grunts by trooper when they are in idle (lines 376-399)
+    //public AudioSource[] trooperIdleGrunts;
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -211,6 +256,42 @@ public class TrooperBehaviour : MonoBehaviour
     void Update()
     {
         Physics.IgnoreLayerCollision(0, 12, true);
+
+        //speed code --------------------------------------------------------------------------------------------------------------
+        //if you just saw the player but do not currently see them, start timer 
+        if (justSawPlayer && !canSeePlayer)
+        {
+            seePlayerIterator += 1 * Time.deltaTime;
+
+            if (seePlayerIterator >= seePlayerTimer)
+            {
+                justSawPlayer = false;
+            }
+        }
+        else
+        {
+            //reset the timer
+            seePlayerIterator = 0;
+        }
+
+        //if the player cannot see you or has not seen you
+        if (!justSawPlayer && !canSeePlayer)
+        {
+            enemyAI.speed = idleWalkSpeed;
+        }
+
+        //if the trooper saw the player AND it is ALERT
+        if (currentState == (trooperState)2 && justSawPlayer)
+        {
+            enemyAI.speed = alertWalkSpeed;
+        }
+
+        //if the trooper just saw the player
+        if (justSawPlayer && currentState != (trooperState)2)
+        {
+            enemyAI.speed = suspiciousWalkSpeed;
+        }
+
 
         //switch statement, triggers functions based on which state ai is in
         switch ((int)currentState)
@@ -291,13 +372,31 @@ public class TrooperBehaviour : MonoBehaviour
     void UpdateIdle()
     {
 
-        //if the ai state is the idle state
-        if (currentState == (trooperState)0)
-        {
-           //setup the navmesh agent speed
-            enemyAI.speed = idleWalkSpeed;
-        }
-       
+        //if the ai state is the idle state or it cant see the player
+        //if (currentState == (trooperState)0 || !canSeePlayer)
+        //{
+
+        //    //idle iteration sound loop
+        //    idleSoundIterator += 1 * Time.deltaTime;
+
+        //    //once iterated through, play random sound and reset iterator
+        //    if(idleSoundIterator >= idleSoundTimer)
+        //    {
+        //        float idleGruntLength = trooperIdleGrunts.Length;
+        //        float playedSound = Random.Range(0, idleGruntLength);
+
+        //        int playedSoundInt = (int)playedSound;
+
+        //        trooperIdleGrunts[playedSoundInt].Play();
+
+        //        idleSoundIterator = 0;
+        //    }
+        //}
+        //else
+        //{
+        //    idleSoundIterator = 0;
+        //}
+
 
         //choose random direction, 1 = left, 2 = right, 3 = forward, 4 = backward
         if (!justSetDirection)
@@ -469,12 +568,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     void UpdateSuspicious()
     {
-        //if the ai state is the suspicious state
-        if (currentState == (trooperState)1)
-        {
-            //change ai speed
-            enemyAI.speed = suspiciousWalkSpeed;
-        }
+       
         
         //get the player position
         Vector3 playerPos = GameObject.Find("Player").GetComponent<Transform>().position;
@@ -503,6 +597,10 @@ public class TrooperBehaviour : MonoBehaviour
                 //reset idle returning and justsetdirection
                 idleReturning = false;
                 //justSetDirection = false;
+
+                //play lost player sound
+                //trooperJustLostPlayer.Play();
+
                 //do idle movement
                 UpdateIdle();
             }
@@ -514,6 +612,18 @@ public class TrooperBehaviour : MonoBehaviour
 
                 //update idle centre position
                 idleCentrePosition = lastKnownPlayerPosition;
+
+                //you can see the player
+                canSeePlayer = true;
+
+                ////if you did not just see the player, play sound
+                //if(!justSawPlayer)
+                //{
+                //    trooperJustSuspicious.Play();
+                //}
+
+                //you just saw the player
+                justSawPlayer = true;
 
                 //travel to the player
                 enemyAI.SetDestination(lastKnownPlayerPosition);
@@ -551,12 +661,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     void UpdateAlert()
     {
-        //change speed if now alert
-        //if (currentState == (trooperState)2)
-        //{
-            //change ai speed
-            enemyAI.speed = alertWalkSpeed;
-        //}
+        
 
         UpdateSuspicious();
 
