@@ -32,31 +32,12 @@ public class BottomlessPit : MonoBehaviour
     }
 
     // Check if the player has fallen in the pit
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
-        
-
         if (other.gameObject.tag == "Player")
         {
             playerFallen = true;
             Debug.Log("Player in pit");
-        }
-
-        //if you are an enemy
-        if(other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<TrooperBehaviour>().deathByPit)
-        {
-
-            Debug.Log("THIS IS SPARTA!");
-
-            //setting values to trigger the pit death
-            other.gameObject.GetComponent<TrooperBehaviour>().deathByPit = true;
-            other.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
-
-            //set the trooper position to the position of the bottomless pit
-            other.transform.position = transform.position;
-                
-           
-            
         }
     }
 

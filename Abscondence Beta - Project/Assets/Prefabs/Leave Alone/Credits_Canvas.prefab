@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 120
+  m_Text: Timer
 --- !u!1 &143549997158020873
 GameObject:
   m_ObjectHideFlags: 0
@@ -7431,7 +7431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelThing: {fileID: 5384308886606396044}
-  travelDistance: 1
+  travelDistance: 2
   moveSpeed: 1.5
 --- !u!1 &5384308886617761440
 GameObject:

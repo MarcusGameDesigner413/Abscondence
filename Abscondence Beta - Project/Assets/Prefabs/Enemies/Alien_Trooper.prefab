@@ -130,7 +130,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606251942934458021}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -414,7 +414,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606251943419694431}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -487,10 +487,6 @@ MonoBehaviour:
   wasDamaged: 0
   meleeWeapon: {fileID: 606251942886255863}
   respawnInvincibleTime: 2
-  canSeePlayer: 0
-  justSawPlayer: 0
-  seePlayerTimer: 5
-  seePlayerIterator: 0
   xIsDownedX: 0
   xIsDeadX: 0
 --- !u!136 &606251943419694420
@@ -711,22 +707,6 @@ PrefabInstance:
     - target: {fileID: 400002, guid: 978a79ce54fe24645afa775467729c12, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 978a79ce54fe24645afa775467729c12, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 400004, guid: 978a79ce54fe24645afa775467729c12, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400006, guid: 978a79ce54fe24645afa775467729c12, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400006, guid: 978a79ce54fe24645afa775467729c12, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 978a79ce54fe24645afa775467729c12, type: 3}
