@@ -19,7 +19,7 @@ GameObject:
   m_TagString: CardPanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1078544133513764038
 Transform:
@@ -107,8 +107,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.4370804, y: 0.51447153, z: 2.6982727}
-  m_Center: {x: 0.0000019073486, y: -0.4499998, z: 1}
+  m_Size: {x: 2.4370804, y: 2.4144716, z: 2.6982727}
+  m_Center: {x: 0.000001847744, y: 0.5, z: 1}
 --- !u!114 &1078544133931537739
 MonoBehaviour:
   m_ObjectHideFlags: 0

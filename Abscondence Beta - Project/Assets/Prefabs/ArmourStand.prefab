@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4905016026953624544}
   - component: {fileID: 4905016026954623264}
   - component: {fileID: 4905016027482571687}
-  - component: {fileID: 1041263134689955788}
   m_Layer: 0
   m_Name: ArmourStand
   m_TagString: Untagged
@@ -90,18 +89,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.89754957, y: 2.6738868, z: 0.2975458}
-  m_Center: {x: -0.0000018179419, y: 1.3369434, z: 0.0000024437902}
---- !u!65 &1041263134689955788
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4905016026952431584}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.4975468, y: 0.27388966, z: 1.4975468}
-  m_Center: {x: 0.0000038146977, y: 0.13694176, z: -0.000003814697}
+  m_Size: {x: 1.4975468, y: 2.673887, z: 1.4975468}
+  m_Center: {x: 0, y: 1.3369435, z: 0}
