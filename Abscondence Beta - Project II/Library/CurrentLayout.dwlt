@@ -114,7 +114,7 @@ MonoBehaviour:
   m_MinSize: {x: 681, y: 498}
   m_MaxSize: {x: 14004, y: 14048}
   vertical: 0
-  controlID: 82
+  controlID: 81
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 498}
   m_MaxSize: {x: 10002, y: 14048}
   vertical: 1
-  controlID: 83
+  controlID: 82
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 224}
   m_MaxSize: {x: 8004, y: 4024}
   vertical: 0
-  controlID: 84
+  controlID: 83
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -390,21 +390,21 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 3027ffffd6fbfffffc3e00005a450000d05c0000
+      m_ExpandedIDs: b265ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: Weak_Wall_Sealed
-        m_OriginalName: Weak_Wall_Sealed
+        m_Name: 
+        m_OriginalName: 
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: -187500
+        m_UserData: 0
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 0
+        m_OriginalEventType: 11
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 8}
       m_SearchString: 
@@ -467,15 +467,15 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 1
+      m_Target: 0
       speed: 2
-      m_Value: 1
+      m_Value: 0
     zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.50000334, y: -0.1297406, z: 0.07604956, w: 0.852866}
+    m_Target: {x: 0.5000034, y: -0.12974061, z: 0.076049566, w: 0.85286605}
     speed: 2
     m_Value: {x: 0.5000034, y: -0.12974061, z: 0.076049566, w: 0.85286605}
   m_Size:
@@ -798,21 +798,21 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Default Folders
   m_ViewMode: 1
   m_StartGridSize: 75
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Default Folders
   m_LastFoldersGridSize: 75
-  m_LastProjectPath: C:\Users\s172973\Desktop\Abscondence\Abscondence\Abscondence
+  m_LastProjectPath: E:\Final Project Year one\Abscondence - Project\Abscondence\Abscondence
     Beta - Project II
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 355}
-    m_SelectedIDs: 74300000
-    m_LastClickedID: 12404
-    m_ExpandedIDs: 00000000ae2c0000ce2d0000442e0000aa2e00003c2f0000ae2f00007430000000320000fe33000030360000423600007437000076370000ba380000bc730000be73000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 5a700000
+    m_LastClickedID: 28762
+    m_ExpandedIDs: 00000000124a0000967000001e7100003c7300003c740000d6740000687500009aac00009cac000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -840,7 +840,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ae2c0000ce2d0000442e0000aa2e00003c2f0000ae2f00007430000000320000fe33000030360000423600007437000076370000ba380000bc730000be730000
+    m_ExpandedIDs: 00000000124a00005a70000096700000c07000001e71000044710000aa710000827200003c730000307400003c740000d6740000d8740000687500009aac00009cac0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -867,7 +867,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_PosLeft: {x: 0, y: 0}
   m_PosRight: {x: 0, y: 0}
   m_Scope: 1
-  m_SplitterFlex: 0
+  m_SplitterFlex: 0.2
 --- !u!114 &25
 MonoBehaviour:
   m_ObjectHideFlags: 52

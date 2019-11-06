@@ -58,7 +58,8 @@ public class TrooperBehaviour : MonoBehaviour
     public int downedHealth = 1;
 
     //check to see if the enemy dies by a bottomless pit
-    private bool deathByPit = false;
+    [HideInInspector]
+    public bool deathByPit = false;
 
     //time until downed is over
     public int downedTimeUntilAlive = 5; //time (in seconds) trooper has until it gets back up
@@ -80,7 +81,7 @@ public class TrooperBehaviour : MonoBehaviour
     public float MeleeRotation = 2;
 
     //addition of suspicious and alert radius
-    private int combinedAlertRadius;
+    //private int combinedAlertRadius;
 
     //distance before the agent returns to its spawn position (idle only)
     public float maxIdleTravelDistanceRadius = 10;
@@ -157,6 +158,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     //seconds after losing the player it still moves at previous speed
     public float seePlayerTimer = 5;
+
     [HideInInspector]
     public float seePlayerIterator = 0;
 
@@ -168,6 +170,11 @@ public class TrooperBehaviour : MonoBehaviour
     [HideInInspector]
     public bool xIsDeadX = false;
 
+    public float FallDeathTimer = 5;
+    private float FallDeathIterator = 0;
+    private bool fellToDeath = false;
+
+    public float FallSpeed = 5;
 
     ////-------------------Audio Sources
 
@@ -242,7 +249,7 @@ public class TrooperBehaviour : MonoBehaviour
         
 
         //add the alert and suspicious radius
-        combinedAlertRadius = maxSuspiciousRadius + maxAlertRadius;
+        //combinedAlertRadius = maxSuspiciousRadius + maxAlertRadius;
 
         //store start position
         idleCentrePosition = this.transform.position;
@@ -252,24 +259,15 @@ public class TrooperBehaviour : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
-    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, minIdleTimerRange);
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, maxIdleTimerRange);
-    }
-
     // Update is called once per frame
     void Update()
     {
         Physics.IgnoreLayerCollision(0, 12, true);
+
+        if (xIsDeadX)
+        {
+            currentState = (trooperState)4;
+        }
 
         //speed code --------------------------------------------------------------------------------------------------------------
         //if you just saw the player but do not currently see them, start timer 
@@ -375,10 +373,7 @@ public class TrooperBehaviour : MonoBehaviour
             }
         }
         
-        if(xIsDeadX)
-        {
-            currentState = (trooperState)4;
-        }
+        
 
     }
 
@@ -572,7 +567,7 @@ public class TrooperBehaviour : MonoBehaviour
 
         float distance = Vector3.Distance(playerPos, transform.position);
         //if inside the radius
-        if (distance <= combinedAlertRadius)
+        if (distance <= maxSuspiciousRadius)
         {
             //change the state to suspicious
             currentState = (trooperState)1;
@@ -655,7 +650,7 @@ public class TrooperBehaviour : MonoBehaviour
         
         
         //if outside the combined radius
-        if (distance >= combinedAlertRadius)
+        if (distance >= maxSuspiciousRadius)
         {
             //reset idle returning and justsetdirection
             idleReturning = false;
@@ -715,7 +710,13 @@ public class TrooperBehaviour : MonoBehaviour
 
         //set destination to itself so it doesnt move
         //enemyAI.SetDestination(transform.position);
-        gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+
+        //if the navmesh agent is on it should be stopped
+        if (gameObject.GetComponent<NavMeshAgent>().enabled)
+        {
+            gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+        }
+        
 
         transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
 
@@ -726,7 +727,7 @@ public class TrooperBehaviour : MonoBehaviour
             currentHealth = reviveHealthGain;
 
             //play getup animation
-            PlayGetUpFromDownedAnimation();
+            //PlayGetUpFromDownedAnimation();
 
             //the trooper can now take damage from normal attacks
             //hitCollision.gameObject.SetActive(true);
@@ -758,10 +759,10 @@ public class TrooperBehaviour : MonoBehaviour
 
     void UpdateDead()
     {
-        
+        GetComponent<NavMeshAgent>().enabled = false;
 
         //if cause of death is not a pit
-        if(!deathByPit)
+        if (!deathByPit)
         {
             //play death animation
 
@@ -771,19 +772,51 @@ public class TrooperBehaviour : MonoBehaviour
                 //spawn death object on self
                 Instantiate(deathItem, transform.position, transform.rotation);
             }
-         
+            fellToDeath = true;
         }
-        else
+        else //since you died to a pit
         {
-            //play falling scream audio???
+            FallDeathIterator += 1 * Time.deltaTime;
+
+            
+                Vector3 down = new Vector3(0, -FallSpeed, 0);
+                //downwards knockback
+                KnockBack(down);
+            
+
+            if (FallDeathIterator >= FallDeathTimer)
+            {
+                //play falling scream audio???
+
+                fellToDeath = true;
+            }
+
+            
+            
+        }
+
+        //actually allowed to die?
+        if(fellToDeath)
+        {
+            //you are invisible if you were spawned in a door or a river to save memory (thanks finn and will)
+            if (wasSpawnedInDoor || wasSpawnedInRiver)
+            {
+                FallDeathIterator = 0;
+                deathByPit = false;
+                gameObject.SetActive(false);
+                
+            }
+            else
+            {
+                //trooper is gone from game world
+                Destroy(gameObject);
+            }
         }
         
 
-        //trooper is gone from game world
-        Destroy(gameObject);
-
     }
 
+    //outdated
     void UpdateRiverSpawn()
     {
         //play swim animation
@@ -793,6 +826,7 @@ public class TrooperBehaviour : MonoBehaviour
 
         currentState = (trooperState)0;
     }
+
 
     void UpdateDoorSpawn()
     {
@@ -860,7 +894,7 @@ public class TrooperBehaviour : MonoBehaviour
             if(player.lightAttackUsed)
                 GetComponent<MeshRenderer>().material = invulnerable;
             // Testing the enemy to fall off the map (Requires physics I think)
-            //GetComponent<NavMeshAgent>().enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
         }
        
 
@@ -870,7 +904,7 @@ public class TrooperBehaviour : MonoBehaviour
             EnemyInvulnerabilityOff();
             wasDamaged = false;
             GetComponent<MeshRenderer>().material = vulnerable;
-            //GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<NavMeshAgent>().enabled = true;
         }
     }
 
@@ -902,34 +936,99 @@ public class TrooperBehaviour : MonoBehaviour
         enemyRigidbody.AddForce(enemyMoveDirection, ForceMode.Impulse);
     }
 
+    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, maxIdleTravelDistanceRadius);
+
+
+    }
+
 
     public void PlayAttackAnimation()
     {
-        
+        //attack the player swing, should have colliderson sword turned on and off during animation
        trooperAnimation.SetTrigger("AttackAnimation");
         
     }
 
-    public void PlayDownedAnimation()
-    {
-
-        trooperAnimation.SetTrigger("DownedAnimation");
-
-    }
-
     public void PlayisDownedAnimation()
     {
-
+        //enemy falling over
         trooperAnimation.SetTrigger("isDownedAnimation");
 
     }
 
-    public void PlayGetUpFromDownedAnimation()
+    public void PlayWalkCycleAnimation()
     {
+        //should play Alien_WalkCycle
+        trooperAnimation.SetTrigger("WalkAnimation");
+    }
 
-        trooperAnimation.SetTrigger("GetUpFromDownedAnimation");
+    public void EnemyIdleAnimation()
+    {
+        //should play Enemy_Idle
+        trooperAnimation.SetTrigger("IdleAnimation");
+    }
+
+
+    public void EnemySuspiciousAnimation()
+    {
+        //should play Enemy_Suspicious
+        trooperAnimation.SetTrigger("SuspiciousAnimation");
 
     }
+
+    public void EnemyExecutionAnimation()
+    {
+        //should play Enemy_Death
+        trooperAnimation.SetTrigger("ExecutionAnimation");
+
+    }
+
+    //public void EnemyLostPlayerAnimation()
+    //{
+    //    //should play Enemy_LostPlayer
+    //    trooperAnimation.SetTrigger("LostAniamtion");
+
+    //}
+
+    //public void PlayDownedAnimation()
+    //{
+
+    //    trooperAnimation.SetTrigger("DownedAnimation");
+
+    //}
+
+    //public void EnemyLeapAnimation()
+    //{
+    //    //should play Enemy_Leap
+    //    trooperAnimation.SetTrigger("LeapAnimation");
+
+    //}
+
+    //public void EnemySwimAnimation()
+    //{
+    //    //should play Enemy_Swim
+    //    trooperAnimation.SetTrigger("SwimAnimation");
+
+    //}
+
+    //public void PlayGetUpFromDownedAnimation()
+    //{
+
+    //    trooperAnimation.SetTrigger("GetUpFromDownedAnimation");
+
+    //}
 }
 
 
