@@ -105,14 +105,14 @@ MonoBehaviour:
   firstPersonHSpeed: 270
   firstPersonVSpeed: 270
   xDiscreprency: 0
-  yDiscreprency: 15
-  zDiscreprency: -3.9
+  yDiscreprency: 16
+  zDiscreprency: -3
   xRot: 75
   yRot: 0
   zRot: 0
   xZoom1: 0
-  yZoom1: 15
-  zZoom1: -3.9
+  yZoom1: 16
+  zZoom1: -4
   xRot1: 75
   yRot1: 0
   zRot1: 0
@@ -124,7 +124,7 @@ MonoBehaviour:
   zRot2: 0
   xZoom3: 0
   yZoom3: 20
-  zZoom3: -5.2
+  zZoom3: -5
   xRot3: 75
   yRot3: 0
   zRot3: 0
