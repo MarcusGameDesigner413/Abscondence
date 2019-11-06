@@ -388,9 +388,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 98300000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: b2f9ffff
+      m_ExpandedIDs: 04faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -798,20 +798,21 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Default Folders
+    - Assets
   m_ViewMode: 1
   m_StartGridSize: 75
   m_LastFolders:
-  - Assets/Default Folders
+  - Assets
   m_LastFoldersGridSize: 75
-  m_LastProjectPath: E:\Abscondence Beta - Project
+  m_LastProjectPath: C:\Users\s172973\Desktop\Abscondence\Abscondence\Abscondence
+    Beta - Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 2c2e0000
-    m_LastClickedID: 11820
-    m_ExpandedIDs: 000000000c2d00002c2e0000a22e0000082f00009a2f00000c300000d23000005e3200005a340000883600009a360000ca370000cc37000010390000f6730000f873000000ca9a3b
+    m_SelectedIDs: e42c0000
+    m_LastClickedID: 11492
+    m_ExpandedIDs: 00000000e42c0000442e0000b82e00001e2f0000ac2f00001e300000e4300000703200006e3400009e360000ae360000de370000e037000024390000207400002274000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -839,7 +840,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000000c2d00002c2e0000a22e0000082f00009a2f00000c300000d23000005e3200005a340000883600009a360000ca370000cc37000010390000f6730000f8730000
+    m_ExpandedIDs: 00000000e42c0000442e0000b82e00001e2f0000ac2f00001e300000e4300000703200006e3400009e360000ae360000de370000e0370000243900002074000022740000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -866,7 +867,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
