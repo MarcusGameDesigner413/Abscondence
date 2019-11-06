@@ -15,7 +15,7 @@ public class CardPanel : MonoBehaviour
     private bool wasActivated = false;
 
     //this is the item that will be deleted
-    public GameObject oldDoor;
+    public GameObject[] oldDoor = new GameObject[1];
 
     public bool requiresMaster = false;
 
@@ -35,16 +35,16 @@ public class CardPanel : MonoBehaviour
         if (xActivatedX && !wasActivated)
         {
 
-            //destroy the old door after the amount of time
-            Destroy(oldDoor, SecondsToDestroy);
-
-            //play the animation during time
-            oldDoor.gameObject.GetComponent<Animator>().SetTrigger("TriggerFade");
-
+            for (int i = 0; i < oldDoor.Length; i++)
+            {
+                //destroy the old door after the amount of time
+                Destroy(oldDoor[i], SecondsToDestroy);
+            
+                //play the animation during time
+                oldDoor[i].gameObject.GetComponent<Animator>().SetTrigger("TriggerFade");
+            }
             //this gets set to true so this code DOES NOT COMPILE AGAIN
             wasActivated = true;
-
-
         }
     }
 }

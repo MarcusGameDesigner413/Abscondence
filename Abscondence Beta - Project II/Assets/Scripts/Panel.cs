@@ -15,7 +15,7 @@ public class Panel : MonoBehaviour
     private bool wasActivated = false;
 
     //this is the item that will be deleted
-    public GameObject oldDoor;
+    public GameObject[] oldDoor = new GameObject[1];
 
     //powercell visual to appear
     public GameObject newPowerCell;
@@ -35,13 +35,16 @@ public class Panel : MonoBehaviour
         //if the panel has been activated only on the first time
         if(xActivatedX && !wasActivated)
         {
+
+            for (int i = 0; i < oldDoor.Length; i++)
+            {
+                //destroy the old door after the amount of time
+                Destroy(oldDoor[i], SecondsToDestroy);
+
+                //play the animation during time
+                oldDoor[i].gameObject.GetComponent<Animator>().SetTrigger("TriggerFade");
+            }
             
-            //destroy the old door after the amount of time
-            Destroy(oldDoor, SecondsToDestroy);
-
-            //play the animation during time
-            oldDoor.gameObject.GetComponent<Animator>().SetTrigger("TriggerFade");
-
             //make visual powercell exist
             newPowerCell.SetActive(true);
 

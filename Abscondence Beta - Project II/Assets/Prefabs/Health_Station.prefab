@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3203881349741234056}
   - component: {fileID: 940496412}
   - component: {fileID: 940496413}
-  - component: {fileID: 1106460439}
   m_Layer: 0
   m_Name: Health_Station
   m_TagString: HealthStation
@@ -123,24 +122,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeState: 1
-  maxMedvialOutput: 3
+  maxMedvialOutput: 4
   minMedvialOutput: 6
---- !u!95 &1106460439
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5950894232329517466}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0

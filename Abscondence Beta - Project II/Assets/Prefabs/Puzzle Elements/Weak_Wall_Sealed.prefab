@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2132845494879523904}
   - component: {fileID: 2132845494878557824}
   - component: {fileID: 2132845494880456416}
-  - component: {fileID: 8654655225061899273}
   m_Layer: 0
   m_Name: Weak_Wall_Sealed
   m_TagString: Untagged
@@ -93,19 +92,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 5, z: 0.46000028}
   m_Center: {x: 0, y: 2.5, z: -2.2999997}
---- !u!208 &8654655225061899273
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2132845494880553024}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 2.5, y: 2.5, z: 0.23}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 2.5, z: -2.3000002}
-  m_TimeToStationary: 0.5

@@ -4885,6 +4885,7 @@ MonoBehaviour:
   knockBackForce: 2
   damageRestTime: 1
   sentryDamage: 1
+  sentryDamageToTrooper: 0
   variant: 1
   sentryHealth: 2
   particles:

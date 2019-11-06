@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public int currentHealth = 100;
-    public int maxHealth = 100;
+    public int currentHealth = 6;
+    public int maxHealth = 14;
     public int highestHealth = 14;
     public int healthUpgradeIncrease = 2;
     public float walkSpeed = 5;
@@ -31,8 +31,10 @@ public class PlayerController : MonoBehaviour
     public int maxMedvial = 6;
     public int highestMedvial = 12;
     public int medvialUpgradeIncrease = 1;
+    public float medvialScavengeMaxHoldTime = 2.0f;
+    public float medvialPressTime = 0.35f;
     public GameObject meleeWeapon;
-    public string MainMenuName;
+    public string MainMenuName = "Main Menu";
     public bool DeathToMenu = false;
 
     float turnSmoothVelocity;
@@ -51,9 +53,13 @@ public class PlayerController : MonoBehaviour
     private float fallAmount;
     private Vector3 velocity;
     private Vector3 gravity;
-    private BottomlessPit ifFallen;
+    //private BottomlessPit ifFallen; - Alpha stuff
     private Vector2 input;
     private Vector3 relativePosition;
+    //private float healthVialTimer;
+    private bool healthPickedUp;
+    public float keyHoldTime = 0f;
+    private bool medvialPressed = false;
 
     [HideInInspector]
     public bool hasKey = false;
@@ -70,18 +76,14 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool heavyAttackUsed = false;
     [HideInInspector]
-    public Vector3 draggableBlockVelocity;
-
-    private float healthVialTimer;
-    private bool healthPickedUp;
+    public float medkitScavengeTimer;
 
     enum DraggingState
     {
         NONE,
         VERTICAL,
-        HORIZONTAL,
+        HORIZONTAL
     };
-
     DraggingState currentState;
 
     void Start()
@@ -94,6 +96,7 @@ public class PlayerController : MonoBehaviour
         startingHeight = transform.position.y;
         fallAmount = startingHeight + 5.0f;
         currentState = DraggingState.NONE;
+        medkitScavengeTimer = medvialScavengeMaxHoldTime;
         //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
@@ -191,6 +194,26 @@ public class PlayerController : MonoBehaviour
             //playerFallen = false;
         }
 
+        if (currentHealth == 0 && DeathToMenu == true)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenuName);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene("Main_Menu");
+        }
+
+        if (Input.GetButtonDown("Medvial") && storedMedvial > 0 && currentHealth != maxHealth)
+        {
+            currentHealth++;
+            storedMedvial--;
+        }
+
+        if (Input.GetButtonDown("Interact")) // Check for key press
+            keyHoldTime = 0;
+        if (Input.GetButton("Interact")) // or key hold
+            keyHoldTime += Time.deltaTime;
+
+        if (keyHoldTime < medvialPressTime)
+            medvialPressed = true;
+
         // Check if player took damage
         PlayerTookDamage();
 
@@ -198,30 +221,8 @@ public class PlayerController : MonoBehaviour
         PlayLightAnimation();
         PlayHeavyAnimation();
 
-        if (currentHealth == 0 && DeathToMenu == true)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenuName);
-            //UnityEngine.SceneManagement.SceneManager.LoadScene("Main_Menu");
-        }
-
-        //Box dragging
-        if (Input.GetButtonUp("Interact"))
-        {
-            currentState = DraggingState.NONE;
-            //Set velocity to zero
-            
-            //set box to null
-            box = null;
-        }
-
-        if(Input.GetButtonDown("Medvial") && storedMedvial > 0 && currentHealth != maxHealth)
-        {
-            currentHealth++;
-            storedMedvial--;
-        }
-        //Debug.DrawLine(transform.position + new Vector3(-0.5f, 5.0f, 0.0f), transform.position + new Vector3(0.5f, 5.0f, 0.0f), Color.red);
-
-        healthVialTimer -= Time.deltaTime;
+        // Interact key clearing
+        InteractKeyClear();
     }
 
     private void FixedUpdate()
@@ -306,13 +307,13 @@ public class PlayerController : MonoBehaviour
         {
             //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
             TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
-            if(enemy.xIsDownedX == false)
+            if (enemy.xIsDownedX == false)
             {
                 playerWasDamaged = true;
                 KnockBack(playerHitDirection);
                 currentHealth -= enemy.enemyAttackStrength;
             }
-            
+
         }
     }
 
@@ -357,6 +358,26 @@ public class PlayerController : MonoBehaviour
         velocity += playerMoveDirection;
     }
 
+    public void TeleportToAI()
+    {
+        controller.enabled = false;
+        controller.transform.SetPositionAndRotation(aiFollower.transform.position, aiFollower.transform.rotation);
+        controller.enabled = true;
+    }
+
+    // Reset all variables upon release of the interact key
+    void InteractKeyClear()
+    {
+        if (Input.GetButtonUp("Interact"))
+        {
+            medkitScavengeTimer = 2f;
+            medvialPressed = false;
+            keyHoldTime = 0;
+            currentState = DraggingState.NONE;
+            box = null;
+        }
+    }
+
     //updated with on trigger stay
     void OnTriggerStay(Collider other)
     {
@@ -390,17 +411,17 @@ public class PlayerController : MonoBehaviour
         }
 
         //execution of enemy
-        if (other.gameObject.tag == "Enemy")
+        if (other.tag == "Enemy")
         {
-            bool enemyDeadCheck = other.gameObject.GetComponent<TrooperBehaviour>().xIsDownedX;
-            if (other.gameObject.tag == "Enemy" && Input.GetButtonDown("Interact") && enemyDeadCheck == true)
+            bool enemyDeadCheck = other.GetComponent<TrooperBehaviour>().xIsDownedX;
+            if (other.tag == "Enemy" && Input.GetButtonDown("Interact") && enemyDeadCheck == true)
             {
-                other.gameObject.GetComponent<TrooperBehaviour>().xIsDeadX = true;
+                other.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
 
         // Powercell pickup
-        if (other.gameObject.tag == "PowerCell" && Input.GetButtonDown("Interact"))
+        if (other.tag == "PowerCell" && Input.GetButtonDown("Interact"))
         {
             if (storedPowerCell >= maxPowerCell)
             {
@@ -417,11 +438,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // Door open -- this requires the panel object to have the tag 'Panel'
-        if (other.gameObject.tag == "Panel" && Input.GetButtonDown("Interact"))
+        if (other.tag == "Panel" && Input.GetButtonDown("Interact"))
         {
 
             //if the player has 1 or more power cells and the panel has not been activated before
-            if (storedPowerCell >= 1 && !other.gameObject.GetComponent<Panel>().xActivatedX) // panel activatd = false
+            if (storedPowerCell >= 1 && !other.GetComponent<Panel>().xActivatedX) // panel activatd = false
             {
                 //open the door
                 storedPowerCell--;
@@ -429,7 +450,7 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of door opening
 
                 //destroy the door
-                other.gameObject.GetComponent<Panel>().xActivatedX = true;
+                other.GetComponent<Panel>().xActivatedX = true;
             }
             else
             {
@@ -437,15 +458,66 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //health interact
-        if (other.gameObject.tag == "Health" && Input.GetButtonDown("Interact"))
+        // Medkit scavenge
+        if (other.tag == "Health" && Input.GetButton("Interact"))
+        {
+            Debug.Log("Key down was triggered");
+
+            medkitScavengeTimer -= Time.deltaTime;
+            medvialPressed = true;
+
+            int medvialAmount = 0;
+            int healthAmount = other.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
+
+            // Give amount of medvials depending on health pickup
+            switch (healthAmount)
+            {
+                case 2:
+                    medvialAmount = 1;
+                    break;
+                case 6:
+                    medvialAmount = 2;
+                    break;
+                case 10:
+                    medvialAmount = 3;
+                    break;
+                default:
+                    break;
+            }
+
+            if (storedMedvial >= maxMedvial)
+            {
+                //play sound of --NO--, DO NOT ADD to SCORE
+            }
+            else
+            {
+                // Update the score
+                if (medkitScavengeTimer <= 0)
+                {
+
+                    storedMedvial += medvialAmount;
+                    healthPickedUp = true;
+                    if (storedMedvial > maxMedvial)
+                        storedMedvial = maxMedvial;
+                    Destroy(other.gameObject);
+                }
+
+                if (healthPickedUp)
+                {
+                    healthPickedUp = false;
+                    medkitScavengeTimer = medvialScavengeMaxHoldTime;
+                }
+            }
+        }
+
+        // Health interact
+        if (other.tag == "Health" && Input.GetButtonUp("Interact") && medvialPressed)
         {
             //if the player has less than max health
             if (currentHealth < maxHealth)
             {
-
                 //sets up the amount to heal
-                int healthGained = other.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
+                int healthGained = other.GetComponent<HealthPickup>().healthRestoreAmount;
 
                 //heal the player
                 currentHealth = currentHealth + healthGained;
@@ -468,52 +540,82 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (other.gameObject.tag == "Card" && Input.GetButtonDown("Interact"))
+        // Health Station
+        if (other.gameObject.tag == "HealthStation" && Input.GetButtonDown("Interact") /*|| healthPickedUp*/)
         {
-            if(other.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
+            if (storedMedvial >= maxMedvial || (!other.GetComponent<HealthStation>().activeState && !healthPickedUp))
+            {
+                //play sound of --NO--, DO NOT ADD to SCORE
+            }
+            else
+            {
+                //update the score
+                //if (!healthPickedUp)
+                //{
+                //    healthPickedUp = true;
+                //    healthVialTimer = 1.5f;
+                //}
+
+                //if (healthVialTimer <= 0)
+                //{
+                    storedMedvial += Random.Range(other.GetComponent<HealthStation>().minMedvialOutput, other.GetComponent<HealthStation>().maxMedvialOutput);
+                    healthPickedUp = false;
+                    Debug.Log("Help");
+                    if (storedMedvial > maxMedvial)
+                        storedMedvial = maxMedvial;
+                //}
+                //other.GetComponent<Animator>().SetTrigger("Play");
+                other.GetComponent<HealthStation>().activeState = false;
+                //play animation of healthstation deactivating
+                //healthVialTimer -= Time.deltaTime;
+            }
+        }
+
+        if (other.tag == "Card" && Input.GetButtonDown("Interact"))
+        {
+            if (other.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
             {
                 hasUniqueKey = true;
             }
             else
             {
-                keyType = other.gameObject.GetComponent<KeyCard>().CurrentLevel;
+                keyType = other.GetComponent<KeyCard>().CurrentLevel;
                 //update the score
                 hasKey = true;
             }
 
             //delete the card
             Destroy(other.gameObject);
-            
         }
 
-        if (other.gameObject.tag == "CardPanel" && Input.GetButtonDown("Interact"))
+
+        if (other.tag == "CardPanel" && Input.GetButtonDown("Interact"))
         {
             //if the panel requires the master and the player has the master AND has not been activated 
-            if (other.gameObject.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
-                && !other.gameObject.GetComponent<CardPanel>().xActivatedX)
+            if (other.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
+                && !other.GetComponent<CardPanel>().xActivatedX)
             {
-                other.gameObject.GetComponent<CardPanel>().xActivatedX = true;
+                other.GetComponent<CardPanel>().xActivatedX = true;
             }
 
-
             //if the player has the key, the panel has not been activated before AND does not need the master
-            if (hasKey == true && !other.gameObject.GetComponent<CardPanel>().xActivatedX
-                && !other.gameObject.GetComponent<CardPanel>().requiresMaster)
+            if (hasKey == true && !other.GetComponent<CardPanel>().xActivatedX
+                && !other.GetComponent<CardPanel>().requiresMaster)
             {
                 //play sound effect of door opening
 
                 //destroy the door
-                other.gameObject.GetComponent<CardPanel>().xActivatedX = true;
+                other.GetComponent<CardPanel>().xActivatedX = true;
             }
 
             //the "else" that goes after as it is denied
-            if (!other.gameObject.GetComponent<CardPanel>().xActivatedX)
+            if (!other.GetComponent<CardPanel>().xActivatedX)
             {
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
         }
 
-            // Detpack pickup
+        // Detpack pickup
         if (other.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
         {
             if (storedDetPack >= maxDetPack)
@@ -530,61 +632,33 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Health Station
-        if (other.gameObject.tag == "HealthStation" && Input.GetButtonDown("Interact") || healthPickedUp)
-        {
-            if (storedMedvial >= maxMedvial || (!other.GetComponent<HealthStation>().activeState && !healthPickedUp))
-            {
-                //play sound of --NO--, DO NOT ADD to SCORE
-            }
-            else
-            {
-                //update the score
-                if (!healthPickedUp)
-                {
-                    healthPickedUp = true;
-                    healthVialTimer = 1.5f;
-                }
 
-                if (healthVialTimer <= 0)
-                {
-                    storedMedvial += Random.Range(other.GetComponent<HealthStation>().minMedvialOutput, other.GetComponent<HealthStation>().maxMedvialOutput);
-                    healthPickedUp = false;
-                    Debug.Log("Help");
-                    if (storedMedvial > maxMedvial)
-                        storedMedvial = maxMedvial;
-                }
-                other.GetComponent<Animator>().SetTrigger("Activated");
-                other.GetComponent<HealthStation>().activeState = false;
-                //play animation of healthstation deactivating
-            }
-        }
-
-        //rad jammer gonna block yo screen unless you destroy it with a detpack
+        //rad jammer gonna block yo screen unless you destroy it with a detpack		
         if (other.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
         {
-            //got more than 1 detpack, good, now make it go boom
+            //got more than 1 detpack, good, now make it go boom		
             if (storedDetPack >= 1 && other.gameObject.GetComponent<Jammer>().isJamming)
             {
                 other.gameObject.GetComponent<Jammer>().isJamming = false;
-
                 storedDetPack--;
             }
         }
 
-        if(other.gameObject.tag == "Locker" && Input.GetButtonDown("Interact"))
+        if (other.gameObject.tag == "Locker" && Input.GetButtonDown("Interact"))
         {
             if (!other.gameObject.GetComponent<ObjectLooting>().searched)
             {
-                if (other.gameObject.GetComponent<ObjectLooting>().healthUpgrade)
+                if (other.gameObject.GetComponent<ObjectLooting>().healthUpgrade)   //got more than 1 detpack, good, now make it go boom
                 {
-                    if (maxHealth < highestHealth)
-                        maxHealth += healthUpgradeIncrease;
+                    if (storedDetPack >= 1 && other.GetComponent<Jammer>().isJamming)
+                        if (maxHealth < highestHealth)
+                            maxHealth += healthUpgradeIncrease;
                 }
                 if (other.gameObject.GetComponent<ObjectLooting>().medvialUpgrade)
                 {
-                    if (maxMedvial < highestMedvial)
-                        maxMedvial += medvialUpgradeIncrease;
+                    if (maxMedvial < highestMedvial) other.GetComponent<Jammer>().isJamming = false;
+                    maxMedvial += medvialUpgradeIncrease;
+                    storedDetPack--;
                 }
                 if (other.gameObject.GetComponent<ObjectLooting>().powerCellUpgrade)
                 {
@@ -611,12 +685,16 @@ public class PlayerController : MonoBehaviour
                     if (storedDetPack < maxDetPack)
                         storedDetPack += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minDetpack, other.gameObject.GetComponent<ObjectLooting>().maxDetpack);
                 }
+
                 other.gameObject.GetComponent<ObjectLooting>().searched = true;
             }
             else
             {
-                //play --NO SOUND--
+                //play --NO SOUND--		
             }
+
+            other.GetComponent<Animator>().SetTrigger("Play");
+
 
         }
 
@@ -626,16 +704,11 @@ public class PlayerController : MonoBehaviour
             if (storedDetPack >= 1 && !other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow)
             {
                 other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow = true;
-
                 storedDetPack--;
             }
         }
     }
-
-    public void TeleportToAI()
-    {
-        controller.enabled = false;
-        controller.transform.SetPositionAndRotation(aiFollower.transform.position, aiFollower.transform.rotation);
-        controller.enabled = true;
-    }
 }
+
+
+

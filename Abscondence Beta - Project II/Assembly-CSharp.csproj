@@ -62,11 +62,13 @@
   <ItemGroup>
     <Compile Include="Assets\Default Folders\Example Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Default Folders\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\AIDialogueSystem.cs" />
     <Compile Include="Assets\Scripts\AITeleport.cs" />
     <Compile Include="Assets\Scripts\Attacking.cs" />
     <Compile Include="Assets\Scripts\BottomlessPit.cs" />
     <Compile Include="Assets\Scripts\CameraMovement.cs" />
     <Compile Include="Assets\Scripts\CardPanel.cs" />
+    <Compile Include="Assets\Scripts\ChargeBar.cs" />
     <Compile Include="Assets\Scripts\CreditsEnder.cs" />
     <Compile Include="Assets\Scripts\Enemy.cs" />
     <Compile Include="Assets\Scripts\HealthBarSystem.cs" />

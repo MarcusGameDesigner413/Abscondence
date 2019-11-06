@@ -51,7 +51,7 @@ public class PressurePlate : MonoBehaviour
                 if (roomPressurePlates[i].GetComponent<PressurePlate>().activated == false)
                     roomCheckPass = false;
 
-                Debug.Log(i + ": " + roomPressurePlates[i].GetComponent<PressurePlate>().activated);
+
             }
 
 

@@ -35,6 +35,7 @@ public class Sentry : MonoBehaviour
     public float damageRestTime;
     float damageRestTimer;
     public int sentryDamage;
+    public int sentryDamageToTrooper = 1;
     [Range(1,2)]
     public int variant;
     bool rotating = true;
@@ -168,7 +169,7 @@ public class Sentry : MonoBehaviour
                         hit.collider.GetComponent<TrooperBehaviour>().wasDamaged = true;
                         hit.collider.GetComponent<TrooperBehaviour>().KnockBack(transform.forward.normalized);
 
-                        hit.collider.GetComponent<TrooperBehaviour>().currentHealth -= sentryDamage;
+                        hit.collider.GetComponent<TrooperBehaviour>().currentHealth -= sentryDamageToTrooper;
                         Debug.Log("Get Lazored Lizard Boy");
                     }
 
