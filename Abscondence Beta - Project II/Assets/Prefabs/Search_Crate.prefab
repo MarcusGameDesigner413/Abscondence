@@ -9,9 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5092784805898593481}
+  - component: {fileID: 175282796}
+  - component: {fileID: 175282798}
+  - component: {fileID: 175282797}
   m_Layer: 0
   m_Name: Search_Crate
-  m_TagString: Untagged
+  m_TagString: Locker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -33,6 +36,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &175282796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5092784805898107113}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.099988, y: 0.5, z: 3.0000114}
+  m_Center: {x: -0.050006982, y: 0.25, z: 0.000011444642}
+--- !u!95 &175282798
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5092784805898107113}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 88fda22f21d653e4287749c73c38a51e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &175282797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5092784805898107113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef12abff488a8e8468e392f612e98cc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searched: 0
+  healthUpgrade: 0
+  medvialUpgrade: 0
+  medvialPickUp: 0
+  minMedvials: 0
+  maxMedvials: 0
+  powerCellUpgrade: 0
+  powerCellPickUp: 0
+  minPowerCell: 0
+  maxPowerCell: 0
+  detpackUpgrade: 0
+  detpackPickUp: 0
+  minDetpack: 0
+  maxDetpack: 0
 --- !u!1 &5092784805898107115
 GameObject:
   m_ObjectHideFlags: 0

@@ -157,8 +157,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.3999939, y: 0.9, z: 1.5999985}
-  m_Center: {x: 0.0000005364415, y: 0.45, z: 1.4999983}
+  m_Size: {x: 1.3999939, y: 0.9, z: 1.9000137}
+  m_Center: {x: 0.0000005364422, y: 0.45, z: 1.6500059}
 --- !u!114 &7471937314539912042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +196,6 @@ GameObject:
   - component: {fileID: 7314037611941493444}
   - component: {fileID: 7314037611942263522}
   - component: {fileID: 7314037611943393314}
-  - component: {fileID: 760402293329406185}
   m_Layer: 0
   m_Name: Search_Locker_Door
   m_TagString: Untagged
@@ -264,16 +263,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &760402293329406185
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7314037611941193444}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.9132001, y: 2.4132, z: 0.06085983}
-  m_Center: {x: 0.45335165, y: 0.000000059604645, z: 0.025000047}
