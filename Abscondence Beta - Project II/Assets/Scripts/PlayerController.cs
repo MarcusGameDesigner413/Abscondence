@@ -3,39 +3,55 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+    #region Health
     public int currentHealth = 6;
     public int maxHealth = 14;
     public int highestHealth = 14;
     public int healthUpgradeIncrease = 2;
-    public float walkSpeed = 5;
-    //public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
+    #endregion
+    #region Damage
     public int playerLightDamage = 1;
     public int playerHeavyDamage = 2;
+    #endregion
+    #region Movement
+    public float walkSpeed = 5;
+    //public float runSpeed = 10; // For Debug purposes [REMOVE IN ALPHA]
     public float turnSmoothTime = 0.1f;
     public float speedSmoothTime = 0.1f;
+    public float gravityModifier = 10.0f;
+    #endregion
+    #region Knockback
     public float invulnerabilityTime = 0.5f;
     public float knockBackForce = 150f;
     public float knockBackTime = 0.45f;
     private float knockBackCounter;
     public float slowDownAmount = 0.2f;
-    public float gravityModifier = 10.0f;
+    #endregion
+    #region Powercells
     public int storedPowerCell = 0;
     public int maxPowerCell = 3;
     public int highestPowerCell = 6;
     public int powerCellUpgradeIncrease = 1;
+    #endregion
+    #region DetPacks
     public int storedDetPack = 0;
     public int maxDetPack = 4;
     public int highestDetPack = 8;
     public int detPackUpgradeIncrease = 1;
+    #endregion
+    #region Medvials
     public int storedMedvial = 0;
     public int maxMedvial = 6;
     public int highestMedvial = 12;
     public int medvialUpgradeIncrease = 1;
     public float medvialScavengeMaxHoldTime = 2.0f;
     public float medvialPressTime = 0.35f;
+    #endregion
     public GameObject meleeWeapon;
+    #region Main Menu
     public string MainMenuName = "Main Menu";
     public bool DeathToMenu = false;
+    #endregion
 
     float turnSmoothVelocity;
     float speedSmoothVelocity;
@@ -44,6 +60,7 @@ public class PlayerController : MonoBehaviour
     Animator meleeSwipe;
     GameObject box;
 
+    #region Private Variables
     private CharacterController controller;
     private CapsuleCollider playerCollider;
     private AITeleport aiFollower;
@@ -53,14 +70,17 @@ public class PlayerController : MonoBehaviour
     private float fallAmount;
     private Vector3 velocity;
     private Vector3 gravity;
-    //private BottomlessPit ifFallen; - Alpha stuff
     private Vector2 input;
     private Vector3 relativePosition;
-    //private float healthVialTimer;
+    private float healthVialTimer;
     private bool healthPickedUp;
-    public float keyHoldTime = 0f;
+    private float keyHoldTime = 0f;
     private bool medvialPressed = false;
+    private SpinWheel spinWheel;
+    private bool wheelSpun = false;
+    #endregion
 
+    #region Hidden Variables
     [HideInInspector]
     public bool hasKey = false;
     [HideInInspector]
@@ -77,6 +97,11 @@ public class PlayerController : MonoBehaviour
     public bool heavyAttackUsed = false;
     [HideInInspector]
     public float medkitScavengeTimer;
+    [HideInInspector]
+    public float spinWheelTimer = 0f;
+    [HideInInspector]
+    public string chargingType;
+    #endregion
 
     enum DraggingState
     {
@@ -92,12 +117,12 @@ public class PlayerController : MonoBehaviour
         meleeSwipe = meleeWeapon.GetComponent<Animator>();
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
+        spinWheel = GameObject.FindGameObjectWithTag("SpinWheel").GetComponent<SpinWheel>();
         aiFollower = GameObject.Find("AIFollow").GetComponent<AITeleport>();
         startingHeight = transform.position.y;
         fallAmount = startingHeight + 5.0f;
         currentState = DraggingState.NONE;
         medkitScavengeTimer = medvialScavengeMaxHoldTime;
-        //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
@@ -105,6 +130,7 @@ public class PlayerController : MonoBehaviour
         // Ignore the collisions between the sword and the environment (mostly the enemy cause it would damage him)
         //Physics.IgnoreLayerCollision(0, 9, true);
 
+        #region Movement Update
         // Get the direction of input from the user
         Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         if (currentState == DraggingState.VERTICAL)
@@ -118,7 +144,6 @@ public class PlayerController : MonoBehaviour
         bool movementDisabled = false;
         // Debug addition to get around faster
         //bool running = Input.GetKey(KeyCode.LeftShift);
-        // Set to walkSpeed in alpha test
         float targetSpeed = (/*(running) ? runSpeed : */walkSpeed) * inputDir.magnitude;
         // Speed up the player overtime when they move
         currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
@@ -152,7 +177,9 @@ public class PlayerController : MonoBehaviour
         }
 
         controller.Move(velocity * Time.deltaTime);
+        #endregion
 
+        #region Knockback Update
         // Add gravity to the player
         velocity += gravity * Time.deltaTime;
 
@@ -162,16 +189,6 @@ public class PlayerController : MonoBehaviour
         // If the velocity gets below a certain threshold, set it to zero
         if (velocity.magnitude < 0.35f)
             velocity = Vector3.zero;
-
-        // Logic checks to make sure HealthBar array doesn't go out of bounds
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
-        else if (currentHealth <= 0)
-            currentHealth = 0;
-
-        // 14 is the magic number so shut up
-        if (maxHealth > 14)
-            maxHealth = 14;
 
         // Only use the timer if the counter has been activated
         if (knockBackCounter > 0)
@@ -184,7 +201,21 @@ public class PlayerController : MonoBehaviour
         {
             movementDisabled = false;
         }
+        #endregion
 
+        #region Health Update
+        // Logic checks to make sure HealthBar array doesn't go out of bounds
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        else if (currentHealth <= 0)
+            currentHealth = 0;
+
+        // 14 is the magic number so shut up
+        if (maxHealth > 14)
+            maxHealth = 14;
+        #endregion
+
+        #region Falling Update
         // If the player falls below a certain Y level, it will teleport to the AIFollower and take damage
         if (transform.position.y < -fallAmount)
         {
@@ -193,33 +224,39 @@ public class PlayerController : MonoBehaviour
             currentHealth -= 2; // Player takes damage upon falling into hole
             //playerFallen = false;
         }
+        #endregion
 
+        #region Death to Menu
         if (currentHealth == 0 && DeathToMenu == true)
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenuName);
             //UnityEngine.SceneManagement.SceneManager.LoadScene("Main_Menu");
         }
+        #endregion
 
+        #region Medvial Update
         if (Input.GetButtonDown("Medvial") && storedMedvial > 0 && currentHealth != maxHealth)
         {
             currentHealth++;
             storedMedvial--;
         }
+        #endregion
 
+        #region Interact Update
         if (Input.GetButtonDown("Interact")) // Check for key press
             keyHoldTime = 0;
         if (Input.GetButton("Interact")) // or key hold
             keyHoldTime += Time.deltaTime;
+        #endregion
 
-        if (keyHoldTime < medvialPressTime)
-            medvialPressed = true;
-
-        // Check if player took damage
-        PlayerTookDamage();
-
+        #region Animation Update
         // Check for animation plays
         PlayLightAnimation();
         PlayHeavyAnimation();
+        #endregion
+
+        // Check if player took damage
+        PlayerTookDamage();
 
         // Interact key clearing
         InteractKeyClear();
@@ -236,7 +273,6 @@ public class PlayerController : MonoBehaviour
                 Vector3 velocity = (targetPosition - box.transform.position) / Time.fixedDeltaTime;
 
                 box.GetComponent<Rigidbody>().AddForce(velocity * 40);
-                //box.GetComponent<Rigidbody>().velocity = velocity;
                 break;
 
             case DraggingState.HORIZONTAL:
@@ -250,6 +286,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region Animation Play
     public void PlayLightAnimation()
     {
         if (Input.GetButtonDown("LightAttack") && !gamePaused)
@@ -269,7 +306,7 @@ public class PlayerController : MonoBehaviour
             meleeSwipe.SetTrigger("ActiveRClick");
         }
 
-
+        #region Old Charge up code
         // ***OLD CODE FOR A CHARGE UP AND RELEASE ANIMATION***
         // No it doesn't work.
         /*float holdTimer = 0;
@@ -292,31 +329,12 @@ public class PlayerController : MonoBehaviour
                 meleeSwipe.SetBool("ActiveRClick", false);
             }
         }*/
+        #endregion
     }
-
-    // When the enemy hits the player, the player takes damage
-    void OnCollisionEnter(Collision other)
-    {
-        Debug.Log("Collision");
-        Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
-        playerHitDirection = playerHitDirection.normalized;
+    #endregion
 
 
-
-        if (other.gameObject.tag == "EnemySword")
-        {
-            //TrooperBehaviour enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<TrooperBehaviour>();
-            TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
-            if (enemy.xIsDownedX == false)
-            {
-                playerWasDamaged = true;
-                KnockBack(playerHitDirection);
-                currentHealth -= enemy.enemyAttackStrength;
-            }
-
-        }
-    }
-
+    #region Player Damage
     // Function to call when the player takes damage
     void PlayerTookDamage()
     {
@@ -357,6 +375,7 @@ public class PlayerController : MonoBehaviour
         // Apply velocity relative to the direction the player has been knocked back
         velocity += playerMoveDirection;
     }
+    #endregion
 
     public void TeleportToAI()
     {
@@ -372,16 +391,37 @@ public class PlayerController : MonoBehaviour
         {
             medkitScavengeTimer = 2f;
             medvialPressed = false;
-            keyHoldTime = 0;
+            keyHoldTime = 0f;
+            spinWheelTimer = 0f;
             currentState = DraggingState.NONE;
             box = null;
+            chargingType = null;
+        }
+    }
+
+    // When the enemy hits the player, the player takes damage
+    void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("Collision");
+        Vector3 playerHitDirection = other.transform.forward /*other.transform.position - transform.position*/;
+        playerHitDirection = playerHitDirection.normalized;
+
+        if (other.gameObject.tag == "EnemySword")
+        {
+            TrooperBehaviour enemy = other.gameObject.GetComponentInParent<TrooperBehaviour>();
+            if (enemy.xIsDownedX == false)
+            {
+                playerWasDamaged = true;
+                KnockBack(playerHitDirection);
+                currentHealth -= enemy.enemyAttackStrength;
+            }
         }
     }
 
     //updated with on trigger stay
     void OnTriggerStay(Collider other)
     {
-        // Block Dragging
+        #region Block Dragging
         if (currentState == DraggingState.NONE)
         {
             if (other.name == "TopCollider" && Input.GetButton("Interact") || other.name == "BottomCollider" && Input.GetButton("Interact"))
@@ -409,7 +449,9 @@ public class PlayerController : MonoBehaviour
                 currentState = DraggingState.HORIZONTAL;
             }
         }
+        #endregion
 
+        #region Enemy
         //execution of enemy
         if (other.tag == "Enemy")
         {
@@ -419,7 +461,9 @@ public class PlayerController : MonoBehaviour
                 other.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
+        #endregion
 
+        #region Powercell & Door
         // Powercell pickup
         if (other.tag == "PowerCell" && Input.GetButtonDown("Interact"))
         {
@@ -457,14 +501,15 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
         }
+        #endregion
 
+        #region Health & Scavenge
         // Medkit scavenge
         if (other.tag == "Health" && Input.GetButton("Interact"))
         {
-            Debug.Log("Key down was triggered");
+            chargingType = "Health";
 
             medkitScavengeTimer -= Time.deltaTime;
-            medvialPressed = true;
 
             int medvialAmount = 0;
             int healthAmount = other.gameObject.GetComponent<HealthPickup>().healthRestoreAmount;
@@ -494,7 +539,6 @@ public class PlayerController : MonoBehaviour
                 // Update the score
                 if (medkitScavengeTimer <= 0)
                 {
-
                     storedMedvial += medvialAmount;
                     healthPickedUp = true;
                     if (storedMedvial > maxMedvial)
@@ -511,7 +555,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Health interact
-        if (other.tag == "Health" && Input.GetButtonUp("Interact") && medvialPressed)
+        if (other.tag == "Health" && Input.GetButtonUp("Interact") && keyHoldTime < medvialPressTime)
         {
             //if the player has less than max health
             if (currentHealth < maxHealth)
@@ -558,11 +602,11 @@ public class PlayerController : MonoBehaviour
 
                 //if (healthVialTimer <= 0)
                 //{
-                    storedMedvial += Random.Range(other.GetComponent<HealthStation>().minMedvialOutput, other.GetComponent<HealthStation>().maxMedvialOutput);
-                    healthPickedUp = false;
-                    Debug.Log("Help");
-                    if (storedMedvial > maxMedvial)
-                        storedMedvial = maxMedvial;
+                storedMedvial += Random.Range(other.GetComponent<HealthStation>().minMedvialOutput, other.GetComponent<HealthStation>().maxMedvialOutput);
+                healthPickedUp = false;
+                Debug.Log("Help");
+                if (storedMedvial > maxMedvial)
+                    storedMedvial = maxMedvial;
                 //}
                 //other.GetComponent<Animator>().SetTrigger("Play");
                 other.GetComponent<HealthStation>().activeState = false;
@@ -570,7 +614,9 @@ public class PlayerController : MonoBehaviour
                 //healthVialTimer -= Time.deltaTime;
             }
         }
+        #endregion
 
+        #region Card & Panel
         if (other.tag == "Card" && Input.GetButtonDown("Interact"))
         {
             if (other.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
@@ -587,7 +633,6 @@ public class PlayerController : MonoBehaviour
             //delete the card
             Destroy(other.gameObject);
         }
-
 
         if (other.tag == "CardPanel" && Input.GetButtonDown("Interact"))
         {
@@ -614,9 +659,10 @@ public class PlayerController : MonoBehaviour
                 //play sound effect of --NO--, DO NOT REMOVE FROM SCORE
             }
         }
+        #endregion
 
-        // Detpack pickup
-        if (other.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
+        #region DetPack w/ Interactables
+        if (other.tag == "DetPack" && Input.GetButtonDown("Interact"))
         {
             if (storedDetPack >= maxDetPack)
             {
@@ -632,7 +678,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
         //rad jammer gonna block yo screen unless you destroy it with a detpack		
         if (other.gameObject.tag == "Jammer" && Input.GetButtonDown("Interact"))
         {
@@ -644,21 +689,31 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (other.tag == "WallDestroy" && Input.GetButtonDown("Interact"))
+        {
+            //got more than 1 detpack, good, now make it go boom
+            if (storedDetPack >= 1 && !other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow)
+            {
+                other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow = true;
+                storedDetPack--;
+            }
+        }
+        #endregion
+
+        #region Locker & Crate search
         if (other.gameObject.tag == "Locker" && Input.GetButtonDown("Interact"))
         {
             if (!other.gameObject.GetComponent<ObjectLooting>().searched)
             {
                 if (other.gameObject.GetComponent<ObjectLooting>().healthUpgrade)   //got more than 1 detpack, good, now make it go boom
                 {
-                    if (storedDetPack >= 1 && other.GetComponent<Jammer>().isJamming)
-                        if (maxHealth < highestHealth)
-                            maxHealth += healthUpgradeIncrease;
+                    if (maxHealth < highestHealth)
+                        maxHealth += healthUpgradeIncrease;
                 }
                 if (other.gameObject.GetComponent<ObjectLooting>().medvialUpgrade)
                 {
-                    if (maxMedvial < highestMedvial) other.GetComponent<Jammer>().isJamming = false;
-                    maxMedvial += medvialUpgradeIncrease;
-                    storedDetPack--;
+                    if (maxMedvial < highestMedvial)
+                        maxMedvial += medvialUpgradeIncrease;
                 }
                 if (other.gameObject.GetComponent<ObjectLooting>().powerCellUpgrade)
                 {
@@ -695,18 +750,28 @@ public class PlayerController : MonoBehaviour
 
             other.GetComponent<Animator>().SetTrigger("Play");
 
-
         }
+        #endregion
 
-        if (other.gameObject.tag == "WallDestroy" && Input.GetButtonDown("Interact"))
+        #region SpinWheel
+        if (other.tag == "SpinWheel" && Input.GetButton("Interact"))
         {
-            //got more than 1 detpack, good, now make it go boom
-            if (storedDetPack >= 1 && !other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow)
+            chargingType = "SpinWheel";
+
+            spinWheelTimer += Time.deltaTime;
+
+            if (spinWheelTimer >= spinWheel.interactTime)
             {
-                other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow = true;
-                storedDetPack--;
+                spinWheel.wheelSpinComplete = true;
+                wheelSpun = true;
+            }
+
+            if (wheelSpun)
+            {
+                spinWheelTimer = 0f;
             }
         }
+        #endregion
     }
 }
 

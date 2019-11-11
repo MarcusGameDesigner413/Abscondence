@@ -35,7 +35,7 @@ public class Sentry : MonoBehaviour
     public float damageRestTime;
     float damageRestTimer;
     public int sentryDamage;
-    public int sentryDamageToTrooper = 1;
+    public int sentryDamageToTrooper;
     [Range(1,2)]
     public int variant;
     bool rotating = true;

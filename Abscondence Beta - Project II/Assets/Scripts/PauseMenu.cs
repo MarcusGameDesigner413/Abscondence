@@ -29,17 +29,19 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        if (Paused)
+        if (Paused) //not paused
         {
             Paused = false;
             Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.None;
             playerController.gamePaused = false;
             pauseMenu.SetActive(false);
         }
         else
-        {
+        { // game is paused
             Paused = true;
             Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
             playerController.gamePaused = true;
             pauseMenu.SetActive(true);
         }

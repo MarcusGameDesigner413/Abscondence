@@ -22,7 +22,7 @@ public class TrooperBehaviour : MonoBehaviour
     }
 
     //the state the trooper is currently in
-    private trooperState currentState;
+    public trooperState currentState;
 
     //the hitbox used when the enemy takes damage
     private BoxCollider hitCollision;
@@ -181,31 +181,31 @@ public class TrooperBehaviour : MonoBehaviour
     //public float idleSoundTimer = 10;
     //private float idleSoundIterator = 0;
 
-    ////blade itself swing (shwoooosh)
+    ////blade itself swing (shwoooosh) 690ish
     //public AudioSource heavyAttackSound;
 
-    ////grunts made by trooper when attacking
+    ////grunts made by trooper when attacking 690ish
     //public AudioSource[] trooperAttackGrunt;
 
-    ////ouch i got hit by a human
+    ////ouch i got hit by a human (895  -ish)
     //public AudioSource trooperRecievedDamage;
 
-    ////scream as they get downed
+    ////scream as they get downed (710 ish)
     //public AudioSource trooperJustDowned;
 
-    ////scream as they die
+    ////scream as they die 795 ish
     //public AudioSource trooperNormalDeath;
 
-    ////long scream that goes away from mic if they fall off edge
+    ////long scream that goes away from mic if they fall off edge 810 ish
     //public AudioSource trooperPitDeath;
 
     ////huh? as they see player (lines 620-623)
     //public AudioSource trooperJustSuspicious;
 
-    ////grrr as they chase the player
+    ////grrr as they chase the player (669 ish)
     //public AudioSource trooperJustAlert;
 
-    //// angry confuzzled noise when they lose the player
+    //// angry confuzzled noise when they lose the player 277 ish
     //public AudioSource trooperJustLostPlayer;
 
     ////multiple grunts by trooper when they are in idle (lines 376-399)
@@ -273,6 +273,12 @@ public class TrooperBehaviour : MonoBehaviour
         //if you just saw the player but do not currently see them, start timer 
         if (justSawPlayer && !canSeePlayer)
         {
+            //if you just saw the player but cannot see them for first frame audio queue
+            //if(seePlayerIterator == 0)
+            //{
+            //    trooperJustLostPlayer.Play();
+            //}
+
             seePlayerIterator += 1 * Time.deltaTime;
 
             if (seePlayerIterator >= seePlayerTimer)
@@ -665,7 +671,9 @@ public class TrooperBehaviour : MonoBehaviour
         //if inside the alert radius
         if (distance <= maxAlertRadius)
         {
-            
+            //play alert audio
+            //trooperJustAlert.Play();
+
             //change the state to alert
             currentState = (trooperState)2;
         }
@@ -689,7 +697,12 @@ public class TrooperBehaviour : MonoBehaviour
             RotateTowards(playerPos);
             gameObject.GetComponent<NavMeshAgent>().isStopped = true;
             PlayAttackAnimation();
-            
+
+            //audio for blade swing and grunt
+            //heavyAttackSound.Play();
+            //int i = Random.Range(0, trooperAttackGrunt.Length)
+            //trooperAttackGrunt[i].Play;
+
         }
         else
         {
@@ -706,8 +719,17 @@ public class TrooperBehaviour : MonoBehaviour
 
     void UpdateDowned()
     {
-        //downed animation
-        //PlayDownedAnimation();
+        //if downed counter == 0
+        //if(downedCounter == 0)
+        //{
+            //downed animation
+            //PlayDownedAnimation();
+
+            //play downed audio
+            //trooperJustDowned.Play();
+
+        //}
+
 
         xIsDownedX = true;
 
@@ -769,8 +791,11 @@ public class TrooperBehaviour : MonoBehaviour
         {
             //play death animation
 
+            //play death audio
+            //trooperNormalDeath.Play();
+
             //if the troop can spawn an item on death
-            if(canSpawnOnDeath)
+            if (canSpawnOnDeath)
             {
                 //spawn death object on self
                 Instantiate(deathItem, transform.position, transform.rotation);
@@ -779,6 +804,12 @@ public class TrooperBehaviour : MonoBehaviour
         }
         else //since you died to a pit
         {
+            //if(FallDeathIterator == 0)
+            //{
+                //play falldeath audio
+                //trooperPitDeath.Play();
+            //}
+
             FallDeathIterator += 1 * Time.deltaTime;
 
             
@@ -892,6 +923,11 @@ public class TrooperBehaviour : MonoBehaviour
         // If the enemy took damage turn off the box collider
         if (wasDamaged)
         {
+            //audio queue for taking damage
+            //if(wasHitTimer == 0)
+            //{
+                //trooperRecievedDamage.Play();
+            //}
             wasHitTimer += Time.deltaTime;
             EnemyInvulnerabilityOn();
             if(player.lightAttackUsed)
