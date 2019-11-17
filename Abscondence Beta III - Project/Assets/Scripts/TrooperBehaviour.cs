@@ -22,8 +22,12 @@ public class TrooperBehaviour : MonoBehaviour
     }
 
     //the state the trooper is currently in
+<<<<<<< HEAD
     [HideInInspector]
     public trooperState currentState;
+=======
+    private trooperState currentState;
+>>>>>>> master
 
     //the hitbox used when the enemy takes damage
     private BoxCollider hitCollision;
@@ -78,11 +82,14 @@ public class TrooperBehaviour : MonoBehaviour
     //public float accesed by player script when they get damaged by this enemy
     public int enemyAttackStrength = 1;
 
+<<<<<<< HEAD
     //delay between attacks
     public float attackTimerMax = 1.5f;
     private float attackTimerIterator = 0;
     private bool firstAttack = true;
 
+=======
+>>>>>>> master
     //how close the enemy can walk to the player
     public float MeleeRotation = 2;
 
@@ -138,8 +145,11 @@ public class TrooperBehaviour : MonoBehaviour
     //the object that the enemy sword is
     public GameObject meleeWeapon;
 
+<<<<<<< HEAD
     public GameObject TrooperMesh;
 
+=======
+>>>>>>> master
     //animator tool?
     Animator trooperAnimation;
 
@@ -184,6 +194,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     public float FallSpeed = 5;
 
+<<<<<<< HEAD
     //array of smoke particle effects (used when dead)
     public ParticleSystem[] DeathParticles;
 
@@ -223,6 +234,42 @@ public class TrooperBehaviour : MonoBehaviour
 
     ////multiple grunts by trooper when they are in idle (lines 376-399)
     public AudioSource[] trooperIdleGrunts;
+=======
+    ////-------------------Audio Sources
+
+    //public float idleSoundTimer = 10;
+    //private float idleSoundIterator = 0;
+
+    ////blade itself swing (shwoooosh)
+    //public AudioSource heavyAttackSound;
+
+    ////grunts made by trooper when attacking
+    //public AudioSource[] trooperAttackGrunt;
+
+    ////ouch i got hit by a human
+    //public AudioSource trooperRecievedDamage;
+
+    ////scream as they get downed
+    //public AudioSource trooperJustDowned;
+
+    ////scream as they die
+    //public AudioSource trooperNormalDeath;
+
+    ////long scream that goes away from mic if they fall off edge
+    //public AudioSource trooperPitDeath;
+
+    ////huh? as they see player (lines 620-623)
+    //public AudioSource trooperJustSuspicious;
+
+    ////grrr as they chase the player
+    //public AudioSource trooperJustAlert;
+
+    //// angry confuzzled noise when they lose the player
+    //public AudioSource trooperJustLostPlayer;
+
+    ////multiple grunts by trooper when they are in idle (lines 376-399)
+    //public AudioSource[] trooperIdleGrunts;
+>>>>>>> master
 
 
 
@@ -236,8 +283,12 @@ public class TrooperBehaviour : MonoBehaviour
         //downedCollision.gameObject.SetActive(false);
         downedCollision.enabled = false;
 
+<<<<<<< HEAD
         //swap once animations get completed
         trooperAnimation = TrooperMesh.GetComponent<Animator>();
+=======
+        trooperAnimation = meleeWeapon.GetComponent<Animator>();
+>>>>>>> master
         //trooperAnimation = GetComponent<Animator>();
 
         //ensure own rigidbody is correct
@@ -271,6 +322,7 @@ public class TrooperBehaviour : MonoBehaviour
         lastKnownPlayerPosition = this.transform.position;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+<<<<<<< HEAD
 
         //turn death particles off
         for (int i = 0; i < DeathParticles.Length; i++)
@@ -280,6 +332,8 @@ public class TrooperBehaviour : MonoBehaviour
             DeathParticles[i].Stop();
         }
 
+=======
+>>>>>>> master
     }
 
     // Update is called once per frame
@@ -296,18 +350,24 @@ public class TrooperBehaviour : MonoBehaviour
         //if you just saw the player but do not currently see them, start timer 
         if (justSawPlayer && !canSeePlayer)
         {
+<<<<<<< HEAD
             //if you just saw the player but cannot see them for first frame audio queue
             if (seePlayerIterator == 0)
                 {
                     trooperJustLostPlayer.Play();
                 }
 
+=======
+>>>>>>> master
             seePlayerIterator += 1 * Time.deltaTime;
 
             if (seePlayerIterator >= seePlayerTimer)
             {
                 justSawPlayer = false;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
             }
         }
         else
@@ -392,7 +452,11 @@ public class TrooperBehaviour : MonoBehaviour
             //once the iteration is greater than or equal to the respawn time
             if (respawnIteration >= respawnInvincibleTime)
             {
+<<<<<<< HEAD
                 //you are no longer just revived
+=======
+                //you are no lo9nger just revived
+>>>>>>> master
                 justRevived = false;
 
                 //you can now be hit
@@ -400,8 +464,11 @@ public class TrooperBehaviour : MonoBehaviour
 
                 //reset the iteration
                 respawnIteration = 0;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master
             }
         }
 
@@ -415,6 +482,7 @@ public class TrooperBehaviour : MonoBehaviour
     //in this state the ai walks around randomly in a set area
     void UpdateIdle()
     {
+<<<<<<< HEAD
         //get the player position to check if it is in range
         Vector3 playerPos = GameObject.Find("Player").GetComponent<Transform>().position;
 
@@ -447,6 +515,33 @@ public class TrooperBehaviour : MonoBehaviour
         {
             idleSoundIterator = 0;
         }
+=======
+
+        //if the ai state is the idle state or it cant see the player
+        //if (currentState == (trooperState)0 || !canSeePlayer)
+        //{
+
+        //    //idle iteration sound loop
+        //    idleSoundIterator += 1 * Time.deltaTime;
+
+        //    //once iterated through, play random sound and reset iterator
+        //    if(idleSoundIterator >= idleSoundTimer)
+        //    {
+        //        float idleGruntLength = trooperIdleGrunts.Length;
+        //        float playedSound = Random.Range(0, idleGruntLength);
+
+        //        int playedSoundInt = (int)playedSound;
+
+        //        trooperIdleGrunts[playedSoundInt].Play();
+
+        //        idleSoundIterator = 0;
+        //    }
+        //}
+        //else
+        //{
+        //    idleSoundIterator = 0;
+        //}
+>>>>>>> master
 
 
         //choose random direction, 1 = left, 2 = right, 3 = forward, 4 = backward
@@ -550,6 +645,17 @@ public class TrooperBehaviour : MonoBehaviour
             //idleReturning = false;
         }
 
+<<<<<<< HEAD
+=======
+        //setup to check if 
+        //Vector3 positionPlusIdleTravelDistance = idleCentrePosition;
+        //positionPlusIdleTravelDistance.x = positionPlusIdleTravelDistance.x + maxIdleTravelDistanceRadius;
+        //positionPlusIdleTravelDistance.z = positionPlusIdleTravelDistance.z + maxIdleTravelDistanceRadius;
+
+        
+
+
+>>>>>>> master
         float inRadiusIdlePositive = Vector3.Distance(transform.position, idleCentrePosition);
         //float inRadiusIdleNegative = Vector3.Distance(transform.position, positionPlusIdleTravelDistance);
 
@@ -596,9 +702,16 @@ public class TrooperBehaviour : MonoBehaviour
 
         }
 
+<<<<<<< HEAD
         
 
         
+=======
+        //get the player position to check if it is in range
+        Vector3 playerPos = GameObject.Find("Player").GetComponent<Transform>().position;
+
+        float distance = Vector3.Distance(playerPos, transform.position);
+>>>>>>> master
         //if inside the radius
         if (distance <= maxSuspiciousRadius)
         {
@@ -643,13 +756,17 @@ public class TrooperBehaviour : MonoBehaviour
                 //play lost player sound
                 //trooperJustLostPlayer.Play();
 
+<<<<<<< HEAD
                 canSeePlayer = false;
 
+=======
+>>>>>>> master
                 //do idle movement
                 UpdateIdle();
             }
             else 
             {
+<<<<<<< HEAD
                 //if you did not just see the player, play sound
                 if (!canSeePlayer)
                 {
@@ -657,6 +774,9 @@ public class TrooperBehaviour : MonoBehaviour
                     //Debug.Log("AAAAAAAAAB");
                 }
 
+=======
+                
+>>>>>>> master
                 //update last known player position
                 lastKnownPlayerPosition = playerPos;
 
@@ -666,7 +786,15 @@ public class TrooperBehaviour : MonoBehaviour
                 //you can see the player
                 canSeePlayer = true;
 
+<<<<<<< HEAD
                 
+=======
+                ////if you did not just see the player, play sound
+                //if(!justSawPlayer)
+                //{
+                //    trooperJustSuspicious.Play();
+                //}
+>>>>>>> master
 
                 //you just saw the player
                 justSawPlayer = true;
@@ -697,11 +825,17 @@ public class TrooperBehaviour : MonoBehaviour
         }
 
         //if inside the alert radius
+<<<<<<< HEAD
         if (distance < maxAlertRadius)
         {
             //play alert audio
             trooperJustAlert.Play();
 
+=======
+        if (distance <= maxAlertRadius)
+        {
+            
+>>>>>>> master
             //change the state to alert
             currentState = (trooperState)2;
         }
@@ -720,6 +854,7 @@ public class TrooperBehaviour : MonoBehaviour
         float distance = Vector3.Distance(playerPos, transform.position);
 
         //attack if close
+<<<<<<< HEAD
         if(distance <= attackRadius)
         {
            
@@ -742,12 +877,23 @@ public class TrooperBehaviour : MonoBehaviour
 
            attackTimerIterator += 1 * Time.deltaTime;
 
+=======
+        if(distance < attackRadius)
+        {
+            RotateTowards(playerPos);
+            gameObject.GetComponent<NavMeshAgent>().isStopped = true;
+            PlayAttackAnimation();
+            
+>>>>>>> master
         }
         else
         {
             gameObject.GetComponent<NavMeshAgent>().isStopped = false;
+<<<<<<< HEAD
             attackTimerIterator = 0;
             firstAttack = true;
+=======
+>>>>>>> master
         }
 
         //if outside alert radius become suspicious
@@ -760,6 +906,7 @@ public class TrooperBehaviour : MonoBehaviour
 
     void UpdateDowned()
     {
+<<<<<<< HEAD
         //right before you get downed properly
         if (!xIsDownedX)
         {
@@ -771,6 +918,10 @@ public class TrooperBehaviour : MonoBehaviour
             //Debug.Log("AAAAAAA");
         }
 
+=======
+        //downed animation
+        //PlayDownedAnimation();
+>>>>>>> master
 
         xIsDownedX = true;
 
@@ -783,10 +934,15 @@ public class TrooperBehaviour : MonoBehaviour
             gameObject.GetComponent<NavMeshAgent>().isStopped = true;
         }
         
+<<<<<<< HEAD
         //replace with animation above
         //transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
 
         
+=======
+
+        transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
+>>>>>>> master
 
         //settup timer
         if (downedCounter >= downedTimeUntilAlive)
@@ -794,8 +950,13 @@ public class TrooperBehaviour : MonoBehaviour
             //restore the health set in revive health
             currentHealth = reviveHealthGain;
 
+<<<<<<< HEAD
             //play the walk cycle animation
             PlayWalkCycleAnimation();
+=======
+            //play getup animation
+            //PlayGetUpFromDownedAnimation();
+>>>>>>> master
 
             //the trooper can now take damage from normal attacks
             //hitCollision.gameObject.SetActive(true);
@@ -808,8 +969,12 @@ public class TrooperBehaviour : MonoBehaviour
             //reset dead counter
             downedCounter = 0;
 
+<<<<<<< HEAD
             //comment out when animation is in
             //transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
+=======
+            transform.rotation = Quaternion.AngleAxis(90, Vector3.back);
+>>>>>>> master
 
             gameObject.GetComponent<NavMeshAgent>().isStopped = false;
 
@@ -835,6 +1000,7 @@ public class TrooperBehaviour : MonoBehaviour
         {
             //play death animation
 
+<<<<<<< HEAD
             
 
             //play death audio
@@ -889,15 +1055,44 @@ public class TrooperBehaviour : MonoBehaviour
 
             if (FallDeathIterator >= FallDeathTimer)
             {
+=======
+            //if the troop can spawn an item on death
+            if(canSpawnOnDeath)
+            {
+                //spawn death object on self
+                Instantiate(deathItem, transform.position, transform.rotation);
+            }
+            fellToDeath = true;
+        }
+        else //since you died to a pit
+        {
+            FallDeathIterator += 1 * Time.deltaTime;
+
+            
+                Vector3 down = new Vector3(0, -FallSpeed, 0);
+                //downwards knockback
+                KnockBack(down);
+            
+
+            if (FallDeathIterator >= FallDeathTimer)
+            {
+                //play falling scream audio???
+>>>>>>> master
 
                 fellToDeath = true;
             }
 
+<<<<<<< HEAD
+=======
+            
+            
+>>>>>>> master
         }
 
         //actually allowed to die?
         if(fellToDeath)
         {
+<<<<<<< HEAD
             //if the troop can spawn an item on death
             if (canSpawnOnDeath && !deathByPit)
             {
@@ -906,6 +1101,9 @@ public class TrooperBehaviour : MonoBehaviour
             }
 
             //you are invisible if you were spawned in a door or a river to save memory (thank you finn and will)
+=======
+            //you are invisible if you were spawned in a door or a river to save memory (thanks finn and will)
+>>>>>>> master
             if (wasSpawnedInDoor || wasSpawnedInRiver)
             {
                 FallDeathIterator = 0;
@@ -930,6 +1128,7 @@ public class TrooperBehaviour : MonoBehaviour
 
         //play jump animation
 
+<<<<<<< HEAD
         //this state was a scrapped feature. If ever set to this somehow, go to idle
         currentState = (trooperState)0;
     }
@@ -939,6 +1138,17 @@ public class TrooperBehaviour : MonoBehaviour
     {
         //play jump through door animation
         //this state was a scrapped feature. If ever set to this somehow, go to idle
+=======
+
+        currentState = (trooperState)0;
+    }
+
+
+    void UpdateDoorSpawn()
+    {
+        //play jump through door animation
+
+>>>>>>> master
         currentState = (trooperState)0;
     }
 
@@ -996,11 +1206,14 @@ public class TrooperBehaviour : MonoBehaviour
         // If the enemy took damage turn off the box collider
         if (wasDamaged)
         {
+<<<<<<< HEAD
             //audio queue for taking damage
             if (wasHitTimer == 0)
             {
                 trooperRecievedDamage.Play();
             }
+=======
+>>>>>>> master
             wasHitTimer += Time.deltaTime;
             EnemyInvulnerabilityOn();
             if(player.lightAttackUsed)
@@ -1048,8 +1261,12 @@ public class TrooperBehaviour : MonoBehaviour
         enemyRigidbody.AddForce(enemyMoveDirection, ForceMode.Impulse);
     }
 
+<<<<<<< HEAD
     //makes a sphare to match the size of the enemys "lookRadius" in the scene view
     private void OnDrawGizmosSelected() 
+=======
+    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
+>>>>>>> master
     {
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
@@ -1063,6 +1280,7 @@ public class TrooperBehaviour : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, maxIdleTravelDistanceRadius);
 
+<<<<<<< HEAD
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, idleBarkRadius);
     }
@@ -1080,25 +1298,51 @@ public class TrooperBehaviour : MonoBehaviour
     {
         Debug.Log("ive fallen");
         //enemy falling over and looping on ground
+=======
+
+    }
+
+
+    public void PlayAttackAnimation()
+    {
+        //attack the player swing, should have colliderson sword turned on and off during animation
+       trooperAnimation.SetTrigger("AttackAnimation");
+        
+    }
+
+    public void PlayisDownedAnimation()
+    {
+        //enemy falling over
+>>>>>>> master
         trooperAnimation.SetTrigger("isDownedAnimation");
 
     }
 
+<<<<<<< HEAD
     //triggered when: default, getting up from downed
+=======
+>>>>>>> master
     public void PlayWalkCycleAnimation()
     {
         //should play Alien_WalkCycle
         trooperAnimation.SetTrigger("WalkAnimation");
     }
 
+<<<<<<< HEAD
     //idk if we are having it
+=======
+>>>>>>> master
     public void EnemyIdleAnimation()
     {
         //should play Enemy_Idle
         trooperAnimation.SetTrigger("IdleAnimation");
     }
 
+<<<<<<< HEAD
     //idk if we are having it
+=======
+
+>>>>>>> master
     public void EnemySuspiciousAnimation()
     {
         //should play Enemy_Suspicious
@@ -1106,7 +1350,10 @@ public class TrooperBehaviour : MonoBehaviour
 
     }
 
+<<<<<<< HEAD
     //idk if we are having it
+=======
+>>>>>>> master
     public void EnemyExecutionAnimation()
     {
         //should play Enemy_Death
@@ -1114,8 +1361,11 @@ public class TrooperBehaviour : MonoBehaviour
 
     }
 
+<<<<<<< HEAD
     //below animations we are definetely not having!!!
 
+=======
+>>>>>>> master
     //public void EnemyLostPlayerAnimation()
     //{
     //    //should play Enemy_LostPlayer

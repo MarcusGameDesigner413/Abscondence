@@ -5,6 +5,7 @@ using TMPro;
 
 public class AIDialogueSystem : MonoBehaviour
 {
+<<<<<<< HEAD
     public string[] nextTextLine;
     public GameObject aI;
     public GameObject aIDialogueTextBox;
@@ -52,11 +53,22 @@ public class AIDialogueSystem : MonoBehaviour
         triggerBox5 = GameObject.Find("TriggerBox (5)").GetComponent<TutorialTriggerBox>();
         triggerBox6 = GameObject.Find("TriggerBox (6)").GetComponent<TutorialTriggerBox>();
         triggerBox4.GetComponent<BoxCollider>().enabled = false;
+=======
+    bool beenEntered = false;
+    public string nextTextLine;
+    public GameObject aI;
+    public GameObject aIDialogueTextBox;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+>>>>>>> master
     }
 
     // Update is called once per frame
     void Update()
     {
+<<<<<<< HEAD
         // Debug Destroy baton
         if (Input.GetKeyDown(KeyCode.Delete))
         {
@@ -228,10 +240,25 @@ public class AIDialogueSystem : MonoBehaviour
             for (int i = 0; i < counter; i++)
             {
                 startText[i] = true;
+=======
+        
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!beenEntered)
+        {
+            if (other.gameObject.tag == "Player")
+            {
+                aI.SetActive(true);
+                aIDialogueTextBox.GetComponent<TextMeshProUGUI>().text = nextTextLine;
+                beenEntered = true;
+>>>>>>> master
             }
         }
     }
 
+<<<<<<< HEAD
     private void RemoveTextAfterDelay()
     {
         timerStarted = true;
@@ -255,3 +282,11 @@ public class AIDialogueSystem : MonoBehaviour
     }
 
 }
+=======
+    private void OnTriggerExit(Collider other)
+    {
+        aIDialogueTextBox.GetComponent<TextMeshProUGUI>().text = "";
+        aI.gameObject.SetActive(false);
+    }
+}
+>>>>>>> master

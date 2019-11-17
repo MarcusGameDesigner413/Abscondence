@@ -35,7 +35,11 @@ public class Sentry : MonoBehaviour
     public float damageRestTime;
     float damageRestTimer;
     public int sentryDamage;
+<<<<<<< HEAD
     public int sentryDamageToTrooper;
+=======
+    public int sentryDamageToTrooper = 1;
+>>>>>>> master
     [Range(1,2)]
     public int variant;
     bool rotating = true;
@@ -158,7 +162,10 @@ public class Sentry : MonoBehaviour
                         {
                             hit.collider.GetComponent<PlayerController>().currentHealth -= sentryDamage;
                             damageRestTimer = damageRestTime;
+<<<<<<< HEAD
                             hit.collider.GetComponent<PlayerController>().PlayerTookDamageAudio.Play();
+=======
+>>>>>>> master
                         }
 
                         Debug.Log("Get Lazored Nerd");

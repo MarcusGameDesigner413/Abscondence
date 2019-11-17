@@ -4882,7 +4882,7 @@ MonoBehaviour:
   maxBeamDistance: 100
   yOffset: 0
   maxShootingTime: 3.5
-  knockBackForce: 2
+  knockBackForce: 0.0001
   damageRestTime: 1
   sentryDamage: 1
   variant: 1

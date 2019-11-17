@@ -9,9 +9,12 @@ public class TeleportRemoveCard : MonoBehaviour
     [HideInInspector]
     public bool playerTeleported = false;
 
+<<<<<<< HEAD
     
     public GameObject[] MiniMapIcons;
 
+=======
+>>>>>>> master
     private void OnTriggerEnter(Collider other)
     {
         Vector3 teleportDestination = teleportTarget.transform.position - other.transform.position;
@@ -33,12 +36,15 @@ public class TeleportRemoveCard : MonoBehaviour
             other.GetComponent<PlayerController>().hasKey = false;
             other.GetComponent<PlayerController>().hasUniqueKey = false;
             //other.GetComponent<PlayerController>().keyType = 0;
+<<<<<<< HEAD
 
             foreach (GameObject MiniMapIcon in MiniMapIcons)
             {
                 MiniMapIcon.SetActive(false);
             }
 
+=======
+>>>>>>> master
         }
 
     }

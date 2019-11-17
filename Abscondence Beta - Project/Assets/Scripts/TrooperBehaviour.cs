@@ -252,6 +252,20 @@ public class TrooperBehaviour : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
+    private void OnDrawGizmosSelected() //makes a sphare to match the size of the enemys "lookRadius" in the scene view
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, maxAlertRadius);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, maxSuspiciousRadius);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, minIdleTimerRange);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, maxIdleTimerRange);
+    }
+
     // Update is called once per frame
     void Update()
     {

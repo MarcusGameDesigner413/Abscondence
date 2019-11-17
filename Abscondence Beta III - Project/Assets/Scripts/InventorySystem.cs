@@ -70,6 +70,18 @@ public class InventorySystem : MonoBehaviour
             inventory.Find("PowerCell_Counter").GetComponent<TextMeshProUGUI>().color = orange;
         }
 
+<<<<<<< HEAD
+=======
+        if (playerController.storedMedvial >= 10)
+        {
+            inventory.Find("Medvial_Counter").GetComponent<TextMeshProUGUI>().fontSize = 20.0f;
+        }
+        else
+        {
+            inventory.Find("Medvial_Counter").GetComponent<TextMeshProUGUI>().fontSize = 30.0f;
+        }
+
+>>>>>>> master
 
     }
 }

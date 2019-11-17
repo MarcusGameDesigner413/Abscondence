@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public string MainMenuName = "Main Menu";
     public bool DeathToMenu = false;
 
+<<<<<<< HEAD
     public float DeathToMenuTimer = 4;
     private float DeathToMenuIterator = 0;
     [HideInInspector]
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
     
     public bool hasWeapon = false;
 
+=======
+>>>>>>> master
     float turnSmoothVelocity;
     float speedSmoothVelocity;
     float currentSpeed;
@@ -61,10 +64,17 @@ public class PlayerController : MonoBehaviour
     private float fallAmount;
     private Vector3 velocity;
     private Vector3 gravity;
+<<<<<<< HEAD
     private BottomlessPit ifFallen;
     private Vector2 input;
     private Vector3 relativePosition;
     private float healthVialTimer;
+=======
+    //private BottomlessPit ifFallen; - Alpha stuff
+    private Vector2 input;
+    private Vector3 relativePosition;
+    //private float healthVialTimer;
+>>>>>>> master
     private bool healthPickedUp;
     public float keyHoldTime = 0f;
     private bool medvialPressed = false;
@@ -86,6 +96,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float medkitScavengeTimer;
 
+<<<<<<< HEAD
     public GameObject ProtagMesh;
 
     public GameObject[] MiniMapIcons;
@@ -103,6 +114,8 @@ public class PlayerController : MonoBehaviour
     //when the player does a heavy attack (322ish)
     public AudioSource PlayerHeavyAttackAudio;
 
+=======
+>>>>>>> master
     enum DraggingState
     {
         NONE,
@@ -114,10 +127,14 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gravity = Physics.gravity * gravityModifier;
+<<<<<<< HEAD
         //meleeSwipe = meleeWeapon.GetComponent<Animator>();
 
         meleeSwipe = ProtagMesh.GetComponent<Animator>();
 
+=======
+        meleeSwipe = meleeWeapon.GetComponent<Animator>();
+>>>>>>> master
         playerCollider = GetComponent<CapsuleCollider>();
         controller = GetComponent<CharacterController>();
         aiFollower = GameObject.Find("AIFollow").GetComponent<AITeleport>();
@@ -125,6 +142,7 @@ public class PlayerController : MonoBehaviour
         fallAmount = startingHeight + 5.0f;
         currentState = DraggingState.NONE;
         medkitScavengeTimer = medvialScavengeMaxHoldTime;
+<<<<<<< HEAD
 
         meleeWeapon.SetActive(false);
         //MiniMapIcons = GameObject.FindGameObjectsWithTag("MiniMapIcon");
@@ -134,11 +152,14 @@ public class PlayerController : MonoBehaviour
             MiniMapIcon.SetActive(false);
         }
 
+=======
+>>>>>>> master
         //ifFallen = GameObject.Find("BottomlessPit_Half").GetComponent<BottomlessPit>();
     }
 
     void Update()
     {
+<<<<<<< HEAD
         //do normal code if not dying
         if (!isDying)
         {
@@ -298,6 +319,129 @@ public class PlayerController : MonoBehaviour
 
             DeathToMenuIterator += 1 * Time.deltaTime;
         }
+=======
+        // Ignore the collisions between the sword and the environment (mostly the enemy cause it would damage him)
+        //Physics.IgnoreLayerCollision(0, 9, true);
+
+        // Get the direction of input from the user
+        Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (currentState == DraggingState.VERTICAL)
+            input.x = 0;
+        else if (currentState == DraggingState.HORIZONTAL)
+            input.y = 0;
+
+        // Normalize the input
+        Vector2 inputDir = input.normalized;
+
+        bool movementDisabled = false;
+        // Debug addition to get around faster
+        //bool running = Input.GetKey(KeyCode.LeftShift);
+        // Set to walkSpeed in alpha test
+        float targetSpeed = (/*(running) ? runSpeed : */walkSpeed) * inputDir.magnitude;
+        // Speed up the player overtime when they move
+        currentSpeed = Mathf.SmoothDamp(currentSpeed, targetSpeed, ref speedSmoothVelocity, speedSmoothTime);
+
+        if (inputDir != Vector2.zero)
+        {
+            /* ***THIS CODE LOCKS THE PLAYER ROTATION WHEN ATTACKING ANIMATION IS PLAYING***
+            if (!(meleeSwipe.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1) && !meleeSwipe.IsInTransition(0))
+            {*/
+            if (currentState == DraggingState.NONE)
+            {
+                // Set the target rotation to be equal to the direction that the player is facing
+                float targetRotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg;
+                // Change the rotation to the player to be equal to that direction with smoothing
+                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+
+                // Move the character relevant to the set current speed
+                //transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
+                if (!movementDisabled/* && !ifFallen*/)
+                    controller.Move((transform.forward * currentSpeed) * Time.deltaTime);
+            }
+            else
+            {
+                Vector3 dir = new Vector3(inputDir.x, 0, inputDir.y);
+
+                if (!movementDisabled/* && !ifFallen*/)
+                    controller.Move((dir * currentSpeed) * Time.deltaTime);
+
+            }
+            //}
+        }
+
+        controller.Move(velocity * Time.deltaTime);
+
+        // Add gravity to the player
+        velocity += gravity * Time.deltaTime;
+
+        // Subtract the velocity by the slowDownAmount to slow down the knockback
+        velocity -= velocity * slowDownAmount;
+
+        // If the velocity gets below a certain threshold, set it to zero
+        if (velocity.magnitude < 0.35f)
+            velocity = Vector3.zero;
+
+        // Logic checks to make sure HealthBar array doesn't go out of bounds
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        else if (currentHealth <= 0)
+            currentHealth = 0;
+
+        // 14 is the magic number so shut up
+        if (maxHealth > 14)
+            maxHealth = 14;
+
+        // Only use the timer if the counter has been activated
+        if (knockBackCounter > 0)
+        {
+            movementDisabled = true;
+            knockBackCounter -= Time.deltaTime;
+        }
+        // Once the Counter reaches 0, removes the force applied to the enemy
+        else if (knockBackCounter <= 0)
+        {
+            movementDisabled = false;
+        }
+
+        // If the player falls below a certain Y level, it will teleport to the AIFollower and take damage
+        if (transform.position.y < -fallAmount)
+        {
+            Debug.Log("Player fallen off map");
+            TeleportToAI();
+            currentHealth -= 2; // Player takes damage upon falling into hole
+            //playerFallen = false;
+        }
+
+        if (currentHealth == 0 && DeathToMenu == true)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenuName);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene("Main_Menu");
+        }
+
+        if (Input.GetButtonDown("Medvial") && storedMedvial > 0 && currentHealth != maxHealth)
+        {
+            currentHealth++;
+            storedMedvial--;
+        }
+
+        if (Input.GetButtonDown("Interact")) // Check for key press
+            keyHoldTime = 0;
+        if (Input.GetButton("Interact")) // or key hold
+            keyHoldTime += Time.deltaTime;
+
+        if (keyHoldTime < medvialPressTime)
+            medvialPressed = true;
+
+        // Check if player took damage
+        PlayerTookDamage();
+
+        // Check for animation plays
+        PlayLightAnimation();
+        PlayHeavyAnimation();
+
+        // Interact key clearing
+        InteractKeyClear();
+>>>>>>> master
     }
 
     private void FixedUpdate()
@@ -329,9 +473,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("LightAttack") && !gamePaused)
         {
+<<<<<<< HEAD
             Debug.Log("LightSWOOSH");
             PlayerLightAttackAudio.Play();
 
+=======
+>>>>>>> master
             lightAttackUsed = true;
             heavyAttackUsed = false;
             meleeSwipe.SetTrigger("ActiveLClick");
@@ -342,9 +489,12 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown("SpinAttack") && !gamePaused)
         {
+<<<<<<< HEAD
             Debug.Log("HEAVYSHWWOOOSH");
             PlayerHeavyAttackAudio.Play();
 
+=======
+>>>>>>> master
             heavyAttackUsed = true;
             lightAttackUsed = false;
             meleeSwipe.SetTrigger("ActiveRClick");
@@ -401,6 +551,7 @@ public class PlayerController : MonoBehaviour
     // Function to call when the player takes damage
     void PlayerTookDamage()
     {
+<<<<<<< HEAD
 
         // If the enemy took damage turn off the box collider
         if (playerWasDamaged)
@@ -411,6 +562,11 @@ public class PlayerController : MonoBehaviour
                 PlayerTookDamageAudio.Play();
             }
 
+=======
+        // If the enemy took damage turn off the box collider
+        if (playerWasDamaged)
+        {
+>>>>>>> master
             PlayerInvulnerabilityOn();
             timer += Time.deltaTime;
         }
@@ -469,6 +625,7 @@ public class PlayerController : MonoBehaviour
     //updated with on trigger stay
     void OnTriggerStay(Collider other)
     {
+<<<<<<< HEAD
         //BATON CODE
         if(other.name == "Baton" && Input.GetButton("Interact") && !hasWeapon)
         {
@@ -478,6 +635,8 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
         }
 
+=======
+>>>>>>> master
         // Block Dragging
         if (currentState == DraggingState.NONE)
         {
@@ -513,7 +672,10 @@ public class PlayerController : MonoBehaviour
             bool enemyDeadCheck = other.GetComponent<TrooperBehaviour>().xIsDownedX;
             if (other.tag == "Enemy" && Input.GetButtonDown("Interact") && enemyDeadCheck == true)
             {
+<<<<<<< HEAD
                 PlayExecutionAnimation();
+=======
+>>>>>>> master
                 other.GetComponent<TrooperBehaviour>().xIsDeadX = true;
             }
         }
@@ -527,8 +689,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
 
+=======
+>>>>>>> master
                 //update the score
                 storedPowerCell++;
 
@@ -544,7 +709,10 @@ public class PlayerController : MonoBehaviour
             //if the player has 1 or more power cells and the panel has not been activated before
             if (storedPowerCell >= 1 && !other.GetComponent<Panel>().xActivatedX) // panel activatd = false
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
+=======
+>>>>>>> master
                 //open the door
                 storedPowerCell--;
 
@@ -563,7 +731,10 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Health" && Input.GetButton("Interact"))
         {
             Debug.Log("Key down was triggered");
+<<<<<<< HEAD
             PlayInteractAnimation();
+=======
+>>>>>>> master
 
             medkitScavengeTimer -= Time.deltaTime;
             medvialPressed = true;
@@ -618,7 +789,10 @@ public class PlayerController : MonoBehaviour
             //if the player has less than max health
             if (currentHealth < maxHealth)
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
+=======
+>>>>>>> master
                 //sets up the amount to heal
                 int healthGained = other.GetComponent<HealthPickup>().healthRestoreAmount;
 
@@ -644,7 +818,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // Health Station
+<<<<<<< HEAD
         if (other.gameObject.tag == "HealthStation" && Input.GetButtonDown("Interact") || healthPickedUp)
+=======
+        if (other.gameObject.tag == "HealthStation" && Input.GetButtonDown("Interact") /*|| healthPickedUp*/)
+>>>>>>> master
         {
             if (storedMedvial >= maxMedvial || (!other.GetComponent<HealthStation>().activeState && !healthPickedUp))
             {
@@ -652,6 +830,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
                 //update the score
                 if (!healthPickedUp)
@@ -662,22 +841,44 @@ public class PlayerController : MonoBehaviour
 
                 if (healthVialTimer <= 0)
                 {
+=======
+                //update the score
+                //if (!healthPickedUp)
+                //{
+                //    healthPickedUp = true;
+                //    healthVialTimer = 1.5f;
+                //}
+
+                //if (healthVialTimer <= 0)
+                //{
+>>>>>>> master
                     storedMedvial += Random.Range(other.GetComponent<HealthStation>().minMedvialOutput, other.GetComponent<HealthStation>().maxMedvialOutput);
                     healthPickedUp = false;
                     Debug.Log("Help");
                     if (storedMedvial > maxMedvial)
                         storedMedvial = maxMedvial;
+<<<<<<< HEAD
                 }
                 other.GetComponent<Animator>().SetTrigger("Activated");
                 other.GetComponent<HealthStation>().activeState = false;
                 //play animation of healthstation deactivating
+=======
+                //}
+                //other.GetComponent<Animator>().SetTrigger("Play");
+                other.GetComponent<HealthStation>().activeState = false;
+                //play animation of healthstation deactivating
+                //healthVialTimer -= Time.deltaTime;
+>>>>>>> master
             }
         }
 
         if (other.tag == "Card" && Input.GetButtonDown("Interact"))
         {
+<<<<<<< HEAD
             PlayInteractAnimation();
 
+=======
+>>>>>>> master
             if (other.gameObject.GetComponent<KeyCard>().CurrentLevel == 6)
             {
                 hasUniqueKey = true;
@@ -700,8 +901,11 @@ public class PlayerController : MonoBehaviour
             if (other.GetComponent<CardPanel>().requiresMaster && hasUniqueKey == true
                 && !other.GetComponent<CardPanel>().xActivatedX)
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
 
+=======
+>>>>>>> master
                 other.GetComponent<CardPanel>().xActivatedX = true;
             }
 
@@ -709,9 +913,12 @@ public class PlayerController : MonoBehaviour
             if (hasKey == true && !other.GetComponent<CardPanel>().xActivatedX
                 && !other.GetComponent<CardPanel>().requiresMaster)
             {
+<<<<<<< HEAD
 
                 PlayInteractAnimation();
 
+=======
+>>>>>>> master
                 //play sound effect of door opening
 
                 //destroy the door
@@ -726,7 +933,11 @@ public class PlayerController : MonoBehaviour
         }
 
         // Detpack pickup
+<<<<<<< HEAD
         if (other.tag == "DetPack" && Input.GetButtonDown("Interact"))
+=======
+        if (other.gameObject.tag == "DetPack" && Input.GetButtonDown("Interact"))
+>>>>>>> master
         {
             if (storedDetPack >= maxDetPack)
             {
@@ -734,8 +945,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
 
+=======
+>>>>>>> master
                 //update the score
                 storedDetPack++;
 
@@ -751,13 +965,17 @@ public class PlayerController : MonoBehaviour
             //got more than 1 detpack, good, now make it go boom		
             if (storedDetPack >= 1 && other.gameObject.GetComponent<Jammer>().isJamming)
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
 
+=======
+>>>>>>> master
                 other.gameObject.GetComponent<Jammer>().isJamming = false;
                 storedDetPack--;
             }
         }
 
+<<<<<<< HEAD
         //map terminal go beep and turn on stuffs	
         if (other.gameObject.tag == "MapTerminal" && Input.GetButtonDown("Interact"))
         {
@@ -824,19 +1042,78 @@ public class PlayerController : MonoBehaviour
         //        //play--NO SOUND--
         //    }
         //}
+=======
+        if (other.gameObject.tag == "Locker" && Input.GetButtonDown("Interact"))
+        {
+            if (!other.gameObject.GetComponent<ObjectLooting>().searched)
+            {
+                if (other.gameObject.GetComponent<ObjectLooting>().healthUpgrade)   //got more than 1 detpack, good, now make it go boom
+                {
+                    if (storedDetPack >= 1 && other.GetComponent<Jammer>().isJamming)
+                        if (maxHealth < highestHealth)
+                            maxHealth += healthUpgradeIncrease;
+                }
+                if (other.gameObject.GetComponent<ObjectLooting>().medvialUpgrade)
+                {
+                    if (maxMedvial < highestMedvial) other.GetComponent<Jammer>().isJamming = false;
+                    maxMedvial += medvialUpgradeIncrease;
+                    storedDetPack--;
+                }
+                if (other.gameObject.GetComponent<ObjectLooting>().powerCellUpgrade)
+                {
+                    if (maxPowerCell < highestPowerCell)
+                        maxPowerCell += powerCellUpgradeIncrease;
+                }
+                if (other.gameObject.GetComponent<ObjectLooting>().detpackUpgrade)
+                {
+                    if (maxDetPack < highestDetPack)
+                        maxDetPack += detPackUpgradeIncrease;
+                }
+                if (other.gameObject.GetComponent<ObjectLooting>().medvialPickUp)
+                {
+                    if (storedMedvial < maxMedvial)
+                        storedMedvial += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minMedvials, other.gameObject.GetComponent<ObjectLooting>().maxMedvials);
+                }
+                if (other.gameObject.GetComponent<ObjectLooting>().powerCellPickUp)
+                {
+                    if (storedPowerCell < maxPowerCell)
+                        storedPowerCell += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minPowerCell, other.gameObject.GetComponent<ObjectLooting>().maxPowerCell);
+                }
+                if (other.gameObject.GetComponent<ObjectLooting>().detpackPickUp)
+                {
+                    if (storedDetPack < maxDetPack)
+                        storedDetPack += Random.Range(other.gameObject.GetComponent<ObjectLooting>().minDetpack, other.gameObject.GetComponent<ObjectLooting>().maxDetpack);
+                }
+
+                other.gameObject.GetComponent<ObjectLooting>().searched = true;
+            }
+            else
+            {
+                //play --NO SOUND--		
+            }
+
+            other.GetComponent<Animator>().SetTrigger("Play");
+
+
+        }
+>>>>>>> master
 
         if (other.gameObject.tag == "WallDestroy" && Input.GetButtonDown("Interact"))
         {
             //got more than 1 detpack, good, now make it go boom
             if (storedDetPack >= 1 && !other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow)
             {
+<<<<<<< HEAD
                 PlayInteractAnimation();
 
+=======
+>>>>>>> master
                 other.gameObject.GetComponent<WeakWallDestroy>().isGonnaBlow = true;
                 storedDetPack--;
             }
         }
     }
+<<<<<<< HEAD
 
     //animations (excluding attacks)-----------------------------------------------------------------------------------------------------------------
 
@@ -886,6 +1163,8 @@ public class PlayerController : MonoBehaviour
     }
 
 
+=======
+>>>>>>> master
 }
 
 

@@ -51,7 +51,11 @@ public class PressurePlate : MonoBehaviour
                 if (roomPressurePlates[i].GetComponent<PressurePlate>().activated == false)
                     roomCheckPass = false;
 
+<<<<<<< HEAD
                 Debug.Log(i + ": " + roomPressurePlates[i].GetComponent<PressurePlate>().activated);
+=======
+
+>>>>>>> master
             }
 
 
@@ -69,6 +73,10 @@ public class PressurePlate : MonoBehaviour
         activated = false;
         activateSound.Play();
         gameObject.GetComponent<MeshRenderer>().material = unactive;
+<<<<<<< HEAD
+=======
+        deactivateTarget.gameObject.SetActive(true);
+>>>>>>> master
     }
 }
 

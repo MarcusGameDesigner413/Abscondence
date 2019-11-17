@@ -366,12 +366,30 @@
     </Reference>
     <Reference Include="UnityEditor.Purchasing">
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Beta - Project/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+<<<<<<< HEAD
+=======
+=======
+      <HintPath>E:/Final Project Year one/Abscondence - Project/Abscondence/Abscondence Beta - Project/Library/PackageCache/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Editor">
+      <HintPath>E:/Final Project Year one/Abscondence - Project/Abscondence/Abscondence Beta - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>E:/Final Project Year one/Abscondence - Project/Abscondence/Abscondence Beta - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>E:/Final Project Year one/Abscondence - Project/Abscondence/Abscondence Beta - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Purchasing">
+      <HintPath>E:/Final Project Year one/Abscondence - Project/Abscondence/Abscondence Beta - Project/Library/PackageCache/com.unity.purchasing@2.0.3/Editor/UnityEditor.Purchasing.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

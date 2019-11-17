@@ -51,7 +51,11 @@ Material:
     - _Cutoff: 0.5
     - _DstBlend: 0
     - _GlossMapScale: 1
+<<<<<<< HEAD
     - _Glossiness: 0.5
+=======
+    - _Glossiness: 0
+>>>>>>> master
     - _GlossyReflections: 1
     - _Metallic: 0
     - _OcclusionStrength: 1

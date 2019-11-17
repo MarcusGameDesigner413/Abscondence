@@ -9,7 +9,11 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
+<<<<<<< HEAD
     <ProjectGuid>{19FF2E62-D674-4098-1E5B-41B914F05F52}</ProjectGuid>
+=======
+    <ProjectGuid>{05D3611E-DF2E-6D45-6F6A-8FACD06BCE29}</ProjectGuid>
+>>>>>>> master
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -62,7 +66,10 @@
   <ItemGroup>
     <Compile Include="Assets\Default Folders\Example Scripts\SimpleCameraController.cs" />
     <Compile Include="Assets\Default Folders\TutorialInfo\Scripts\Readme.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\AIDialogueBoxes.cs" />
+=======
+>>>>>>> master
     <Compile Include="Assets\Scripts\AIDialogueSystem.cs" />
     <Compile Include="Assets\Scripts\AITeleport.cs" />
     <Compile Include="Assets\Scripts\Attacking.cs" />
@@ -90,7 +97,10 @@
     <Compile Include="Assets\Scripts\MoveLeft.cs" />
     <Compile Include="Assets\Scripts\MoveRight.cs" />
     <Compile Include="Assets\Scripts\ObjectLooting.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\OnOffSwitch.cs" />
+=======
+>>>>>>> master
     <Compile Include="Assets\Scripts\OperationKonami.cs" />
     <Compile Include="Assets\Scripts\Panel.cs" />
     <Compile Include="Assets\Scripts\PauseMenu.cs" />
@@ -104,7 +114,10 @@
     <Compile Include="Assets\Scripts\TeleportPlayer.cs" />
     <Compile Include="Assets\Scripts\TeleportRemoveCard.cs" />
     <Compile Include="Assets\Scripts\TrooperBehaviour.cs" />
+<<<<<<< HEAD
     <Compile Include="Assets\Scripts\TutorialTriggerBox.cs" />
+=======
+>>>>>>> master
     <Compile Include="Assets\Scripts\VentScript.cs" />
     <Compile Include="Assets\Scripts\WeakWallDestroy.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
@@ -125,6 +138,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <Reference Include="Unity.ProGrids">
+<<<<<<< HEAD
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Beta III - Project/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.Editor">
@@ -168,6 +182,51 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Beta III - Project/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+=======
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.ProGrids.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ProGrids.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.ProGrids.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Lightweight.Runtime">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.RenderPipelines.Lightweight.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Lightweight.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.RenderPipelines.Lightweight.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.PackageManagerUI.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.CollabProxy.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.Postprocessing.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.ShaderGraph.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.DataPrivacy">
+      <HintPath>E:/Abscondence Beta - Project II/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -371,6 +430,7 @@
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
+<<<<<<< HEAD
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Beta III - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
@@ -378,6 +438,15 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>C:/Users/s172973/Desktop/Abscondence/Abscondence/Abscondence Beta III - Project/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+=======
+      <HintPath>E:/Abscondence Beta - Project II/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.StandardEvents">
+      <HintPath>E:/Abscondence Beta - Project II/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.StandardEvents.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Analytics.Tracker">
+      <HintPath>E:/Abscondence Beta - Project II/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+>>>>>>> master
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity 2018.3.8f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

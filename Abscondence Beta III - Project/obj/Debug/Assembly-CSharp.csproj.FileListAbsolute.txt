@@ -904,6 +904,7 @@ C:\Users\s172973\Desktop\Abscondence\Abscondence\Abscondence Beta - Project II\o
 C:\Users\s172973\Desktop\Abscondence\Abscondence\Abscondence Beta - Project II\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\s172973\Desktop\Abscondence\Abscondence\Abscondence Beta - Project II\obj\Debug\Assembly-CSharp.dll
 C:\Users\s172973\Desktop\Abscondence\Abscondence\Abscondence Beta - Project II\obj\Debug\Assembly-CSharp.pdb
+<<<<<<< HEAD
 E:\Abscondence Beta III - Project\Temp\bin\Debug\Assembly-CSharp.dll
 E:\Abscondence Beta III - Project\Temp\bin\Debug\Assembly-CSharp.pdb
 E:\Abscondence Beta III - Project\Temp\bin\Debug\Microsoft.Win32.Primitives.dll
@@ -1206,3 +1207,5 @@ E:\Abscondence Beta III - Project\obj\Debug\Assembly-CSharp.csproj.CoreCompileIn
 E:\Abscondence Beta III - Project\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 E:\Abscondence Beta III - Project\obj\Debug\Assembly-CSharp.dll
 E:\Abscondence Beta III - Project\obj\Debug\Assembly-CSharp.pdb
+=======
+>>>>>>> master

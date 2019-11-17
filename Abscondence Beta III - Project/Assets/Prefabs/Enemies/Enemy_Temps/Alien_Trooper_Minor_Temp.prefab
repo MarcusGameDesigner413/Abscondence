@@ -1,5 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< HEAD
 --- !u!1 &2284062289173910915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,6 +1389,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+=======
+>>>>>>> master
 --- !u!1 &6710621110806932415
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,7 +1428,10 @@ Transform:
   - {fileID: 4571735675971254874}
   - {fileID: 6710621112154757143}
   - {fileID: 6710621110885747785}
+<<<<<<< HEAD
   - {fileID: 2786179606560326183}
+=======
+>>>>>>> master
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1488,7 +1494,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   invulnerable: {fileID: 2100000, guid: 81f1c113b7511984e97ee011636978c0, type: 2}
   vulnerable: {fileID: 2100000, guid: f1531745cfb02ca498d9e15a0715855c, type: 2}
+<<<<<<< HEAD
   currentState: 0
+=======
+>>>>>>> master
   canSpawnOnDeath: 0
   deathItem: {fileID: 0}
   enemyAI: {fileID: 6710621110806932413}
@@ -1500,13 +1509,19 @@ MonoBehaviour:
   currentHealth: 2
   reviveHealthGain: 2
   downedHealth: 0
+<<<<<<< HEAD
   deathByPit: 0
+=======
+>>>>>>> master
   downedTimeUntilAlive: 5
   maxSuspiciousRadius: 15
   maxAlertRadius: 8
   attackRadius: 3
   enemyAttackStrength: 1
+<<<<<<< HEAD
   attackTimerMax: 1.5
+=======
+>>>>>>> master
   MeleeRotation: 100
   maxIdleTravelDistanceRadius: 10
   idleCanWalkUpDown: 1
@@ -1525,6 +1540,7 @@ MonoBehaviour:
   seePlayerIterator: 0
   xIsDownedX: 0
   xIsDeadX: 0
+<<<<<<< HEAD
   FallDeathTimer: 5
   FallSpeed: 5
   DeathParticles: []
@@ -1546,6 +1562,8 @@ MonoBehaviour:
   - {fileID: 6753901433701072166}
   - {fileID: 8885903416046496507}
   - {fileID: 5025807124700769455}
+=======
+>>>>>>> master
 --- !u!136 &6710621110806932411
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2128,7 +2146,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.83333325
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 100012, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+=======
+    - target: {fileID: 100010, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+>>>>>>> master
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2136,7 +2158,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 100010, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+=======
+    - target: {fileID: 100012, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+>>>>>>> master
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -2144,11 +2170,19 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f1531745cfb02ca498d9e15a0715855c, type: 2}
+<<<<<<< HEAD
     - target: {fileID: 2300004, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 415a9606365ede24781d34271c8be24c, type: 2}
     - target: {fileID: 2300002, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+=======
+    - target: {fileID: 2300002, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 415a9606365ede24781d34271c8be24c, type: 2}
+    - target: {fileID: 2300004, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+>>>>>>> master
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 415a9606365ede24781d34271c8be24c, type: 2}

@@ -111,6 +111,10 @@ MonoBehaviour:
   currentHealth: 2
   reviveHealthGain: 2
   downedHealth: 0
+<<<<<<< HEAD
+=======
+  deathByPit: 0
+>>>>>>> master
   downedTimeUntilAlive: 5
   maxSuspiciousRadius: 15
   maxAlertRadius: 8
@@ -128,8 +132,19 @@ MonoBehaviour:
   wasDamaged: 0
   meleeWeapon: {fileID: 6710621110885747789}
   respawnInvincibleTime: 2
+<<<<<<< HEAD
   xIsDownedX: 0
   xIsDeadX: 0
+=======
+  canSeePlayer: 0
+  justSawPlayer: 0
+  seePlayerTimer: 5
+  seePlayerIterator: 0
+  xIsDownedX: 0
+  xIsDeadX: 0
+  FallDeathTimer: 5
+  FallSpeed: 0.5
+>>>>>>> master
 --- !u!136 &6710621110806932411
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -656,6 +671,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alien _Small
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 100000, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+>>>>>>> master
     - target: {fileID: 400002, guid: cac67df73d87ce7408f9403fe7b4f119, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

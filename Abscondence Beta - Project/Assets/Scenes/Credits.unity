@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5250f17aebbe904c846c9cc0e5857c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeLeft: 180
+  timeLeft: 90
   countdown: {fileID: 966834370}
   MainMenuName: Main_Menu
 --- !u!1001 &5384308886180170379

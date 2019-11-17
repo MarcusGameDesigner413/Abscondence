@@ -22,7 +22,10 @@ TagManager:
   - Sentry
   - Locker
   - MiniMapIcon
+<<<<<<< HEAD
   - MapTerminal
+=======
+>>>>>>> master
   layers:
   - Default
   - TransparentFX

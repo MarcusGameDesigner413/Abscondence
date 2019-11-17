@@ -118,7 +118,11 @@ PlayerSettings:
     16:10: 0
     16:9: 0
     Others: 0
+<<<<<<< HEAD
   bundleVersion: Beta 4.0.4
+=======
+  bundleVersion: Beta 4.0.6
+>>>>>>> master
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0

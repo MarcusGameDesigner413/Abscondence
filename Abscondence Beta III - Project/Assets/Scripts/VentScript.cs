@@ -32,6 +32,10 @@ public class VentScript : MonoBehaviour
             if (index + 1 == ventPoints.Length)
             {
                 inVent = false;
+<<<<<<< HEAD
+=======
+                //player.SetActive(true);
+>>>>>>> master
                 player.GetComponent<CharacterController>().enabled = false;
                 player.GetComponent<CharacterController>().transform.SetPositionAndRotation(targetVent.transform.position + teleportOffset, player.transform.rotation);
                 player.GetComponent<CharacterController>().enabled = true;
@@ -96,7 +100,12 @@ public class VentScript : MonoBehaviour
                     inVent = true;
                     cameraOffset = gameCamera.transform.position - ventPoints[index].transform.position;
                     miniMapCameraOffset = miniMapCamera.transform.position - ventPoints[index].transform.position;
+<<<<<<< HEAD
                    // miniMapCameraOffset.y = miniMapCamera.transform.position.y;
+=======
+                    //miniMapCameraOffset.y = miniMapCamera.transform.position.y;
+                    //player.gameObject.SetActive(false);
+>>>>>>> master
                     player.gameObject.GetComponent<MeshRenderer>().enabled = false;
                     player.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameCamera.gameObject.GetComponent<CameraMovement>().enabled = false;
